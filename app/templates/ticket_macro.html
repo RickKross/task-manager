@@ -1,4 +1,4 @@
-{% macro ticket(_id, name, date, state, priority="Normal", description="", users=[]) %}
+{% macro ticket(_id, name, date, state, priority="Normal", app="", description="", users=[]) %}
     <div class="col-md-6">
         <div id="ticket_{{ _id }}" class="panel border-left-lg border-left-primary">
             <div class="panel-body">

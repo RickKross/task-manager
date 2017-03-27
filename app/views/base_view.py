@@ -14,11 +14,3 @@ def root():
         return redirect(url_for('dashboard'))
     else:
         return redirect(oauth_request_user_url())
-
-
-@app.route('/clear-sesion')
-def clear():
-    session.clear()
-    return redirect(url_for('root'))
-
-

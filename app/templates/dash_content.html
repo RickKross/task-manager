@@ -1,5 +1,8 @@
 {% extends "dash_header_footer.html" %}
 {% from "ticket_macro.html" import ticket %}
+{% block title %}
+    {{ title }}
+{% endblock %}
 {% block content %}
 
     <div class="page-container" style="min-height:403px">
@@ -344,8 +347,8 @@
                 </div>
 
                 <div class="row">
-                    {{ ticket(1, 'Делать диплом', '25 февраля 2017', 'Open', 'High') }}
-                    {{ ticket(2, 'Делать Дашин диплом', '15 февраля 2017', 'Open', 'Highest') }}
+                    {{ ticket(1, 'ticket #1', '25 февраля 2017', 'Open', 'High') }}
+                    {{ ticket(2, 'ticket #2', '15 февраля 2017', 'Open', 'Highest') }}
                 </div>
 
                 <!-- /tasks grid -->

@@ -1,16 +1,18 @@
+import json
 from urllib.parse import urlencode, urlsplit, parse_qsl
 import requests
 from flask import session
 
 from uuid import uuid4
-from app import CLIENT_ID, CLIENT_SECRET
-from app.controllers.base_controller import d
+from app import g
+from app.models.users import User
+from app.utils import myprint
 
 
 def oauth_request_user_url():
     state = get_state()
     params = {
-        'client_id': CLIENT_ID,
+        'client_id': g.CLIENT_ID,
         'state': state,
         'scope': 'user, public_repo, repo, repo_deployment, delete_repo'
     }
@@ -20,8 +22,8 @@ def oauth_request_user_url():
 def oauth_exchange_code_to_token(code):
     state = get_state()
     params = {
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
+        'client_id': g.CLIENT_ID,
+        'client_secret': g.CLIENT_SECRET,
         'state': state,
         'code': code
     }
@@ -36,3 +38,18 @@ def oauth_exchange_code_to_token(code):
 def get_state():
     state = session['state'] = session.get('state', str(uuid4()))
     return state
+
+
+def get_user():
+    if session.get('token'):
+        if not g.user:
+            r = requests.get('https://api.github.com/user', {'access_token': session['token']})
+            if r.status_code == 200 and r.text:
+                r = json.loads(r.text)
+                g.user = User.query.filter_by(id=r['id']).first() or User(id=r['id'], login=r['login'],
+                                                                  name=r['name'].encode('utf-8'), email=r['email'],
+                                                                  api_url=r['url'],
+                                                                  github_url=r['html_url'], avatar_url=r['avatar_url'])
+    else:
+        # TODO вывод сообщения об ошибке
+        pass

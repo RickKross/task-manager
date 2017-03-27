@@ -1,716 +1,734 @@
-{% include "base.html" %}
+{% extends "base.html" %}
+{% block base_content %}
 
+    <body class="navbar-bottom sidebar-xs">
 
-<body class="navbar-bottom sidebar-xs">
+    <div class="page-header page-header-inverse">
 
-<div class="page-header page-header-inverse">
+        <!-- Main navbar -->
+        <div class="navbar navbar-inverse navbar-transparent">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><img src="../static/limitless/images/logo_light.png" alt=""></a>
 
-    <!-- Main navbar -->
-    <div class="navbar navbar-inverse navbar-transparent">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="../static/limitless/images/logo_light.png" alt=""></a>
+                <ul class="nav navbar-nav pull-right visible-xs-block">
+                    <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-grid3"></i></a></li>
+                    <li><a class="sidebar-mobile-secondary-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+                </ul>
+            </div>
 
-            <ul class="nav navbar-nav pull-right visible-xs-block">
-                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-grid3"></i></a></li>
-                <li><a class="sidebar-mobile-secondary-toggle"><i class="icon-paragraph-justify3"></i></a></li>
-            </ul>
-        </div>
+            <div class="navbar-collapse collapse" id="navbar-mobile">
+                <p class="navbar-text"><span class="label bg-success-400">Premium</span></p>
 
-        <div class="navbar-collapse collapse" id="navbar-mobile">
-            <p class="navbar-text"><span class="label bg-success-400">Premium</span></p>
-
-            <ul class="nav navbar-nav">
-                <li><a href="#">Upgrade</a></li>
-            </ul>
-
-            <div class="navbar-right">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-bell2"></i>
-                            <span class="visible-xs-inline-block position-right">Activity</span>
-                            <span class="status-mark border-pink-300"></span>
-                        </a>
+                    <li><a href="#">Upgrade</a></li>
+                </ul>
+
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-bell2"></i>
+                                <span class="visible-xs-inline-block position-right">Activity</span>
+                                <span class="status-mark border-pink-300"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-content">
+                                <div class="dropdown-content-heading">
+                                    Activity
+                                    <ul class="icons-list">
+                                        <li><a href="#"><i class="icon-menu7"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <ul class="media-list dropdown-content-body width-350">
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-success-400 btn-rounded btn-icon btn-xs"><i
+                                                    class="icon-mention"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#">Taylor Swift</a> mentioned you in a post "Angular JS. Tips and
+                                            tricks"
+                                            <div class="media-annotation">4 minutes ago</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-pink-400 btn-rounded btn-icon btn-xs"><i
+                                                    class="icon-paperplane"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            Special offers have been sent to subscribed users by <a href="#">Donna
+                                            Gordon</a>
+                                            <div class="media-annotation">36 minutes ago</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-blue btn-rounded btn-icon btn-xs"><i
+                                                    class="icon-plus3"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#">Chris Arney</a> created a new <span
+                                                class="text-semibold">Design</span> branch in <span
+                                                class="text-semibold">Limitless</span>
+                                            repository
+                                            <div class="media-annotation">2 hours ago</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-purple-300 btn-rounded btn-icon btn-xs"><i
+                                                    class="icon-truck"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            Shipping cost to the Netherlands has been reduced, database updated
+                                            <div class="media-annotation">Feb 8, 11:30</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-warning-400 btn-rounded btn-icon btn-xs"><i
+                                                    class="icon-bubble8"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            New review received on <a href="#">Server side integration</a> services
+                                            <div class="media-annotation">Feb 2, 10:20</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-teal-400 btn-rounded btn-icon btn-xs"><i
+                                                    class="icon-spinner11"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <strong>January, 2016</strong> - 1320 new users, 3284 orders, $49,390
+                                            revenue
+                                            <div class="media-annotation">Feb 1, 05:46</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-bubble8"></i>
+                                <span class="visible-xs-inline-block position-right">Messages</span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-content width-350">
+                                <div class="dropdown-content-heading">
+                                    Messages
+                                    <ul class="icons-list">
+                                        <li><a href="#"><i class="icon-menu7"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <ul class="media-list dropdown-content-body">
+                                    <li class="media">
+                                        <div class="media-left">
+                                            {#                                        <img src="../static/limitless/images/demo/users/face10.jpg" class="img-circle img-sm"#}
+                                            {#                                             alt="">#}
+                                            <span class="badge bg-danger-400 media-badge">5</span>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">James Alexander</span>
+                                                <span class="media-annotation pull-right">04:58</span>
+                                            </a>
+
+                                            <span class="text-muted">who knows, maybe that would be the best thing for me...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            {#                                        <img src="../static/limitless/images/demo/users/face3.jpg" class="img-circle img-sm"#}
+                                            {#                                             alt="">#}
+                                            <span class="badge bg-danger-400 media-badge">4</span>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">Margo Baker</span>
+                                                <span class="media-annotation pull-right">12:16</span>
+                                            </a>
+
+                                            <span class="text-muted">That was something he was unable to do because...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            {#                                        <img src="../static/limitless/images/demo/users/face24.jpg"#}
+                                            {#                                                                 class="img-circle img-sm" alt="">#}
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">Jeremy Victorino</span>
+                                                <span class="media-annotation pull-right">22:48</span>
+                                            </a>
+
+                                            <span class="text-muted">But that would be extremely strained and suspicious...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            {#                                        <img src="../static/limitless/images/demo/users/face4.jpg"#}
+                                            {#                                                                 class="img-circle img-sm" alt="">#}
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">Beatrix Diaz</span>
+                                                <span class="media-annotation pull-right">Tue</span>
+                                            </a>
+
+                                            <span class="text-muted">What a strenuous career it is that I've chosen...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            {#                                        <img src="../static/limitless/images/demo/users/face25.jpg"#}
+                                            {#                                                                 class="img-circle img-sm" alt="">#}
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">Richard Vango</span>
+                                                <span class="media-annotation pull-right">Mon</span>
+                                            </a>
+
+                                            <span class="text-muted">Other travelling salesmen live a life of luxury...</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="dropdown dropdown-user">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                {% if user and user.id %}
+                                    <img src="{{ user.avatar_url }}" alt="">
+                                    <span>{{ user.login }}</span>
+                                    <i class="caret"></i>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="/user/{{ user.login }}"><i class="icon-user-plus"></i> My profile</a></li>
+{#                                        <li><a href="/user/RickKross"><i class="icon-user-plus"></i> My profile</a></li>#}
+                                        {#                            <li><a href="#"><span class="badge bg-blue pull-right">26</span> <i#}
+                                        {#                                    class="icon-comment-discussion"></i> Messages</a></li>#}
+                                        {#                            <li class="divider"></li>#}
+                                        <li><a href="/settings/{{ user.login }}"><i class="icon-cog5"></i> Account settings</a></li>
+                                        <li><a class="logout" href="#"><i class="icon-switch2"></i> Logout</a></li>
+                                    </ul>
+                                {% else %}
+                                    <img src="../static/images/users/man-placeholder.png" alt="">
+                                    <span>UserName</span>
+                                {% endif %}
+
+                            </a>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /main navbar -->
+
+
+        <!-- Page header content -->
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4>{{ title }}</h4>
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+
+            <div class="heading-elements">
+                <ul class="breadcrumb heading-text">
+                    <li><a href="#"><i class="icon-home2 position-right "></i> Home</a></li>
+                    <li><a href="#">Task manager</a></li>
+                    <li class="active">Grid</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header content -->
+
+
+        <!-- Second navbar -->
+        <div class="navbar navbar-inverse navbar-transparent" id="navbar-second">
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i
+                        class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+
+            <div class="navbar-collapse collapse" id="navbar-second-toggle">
+                <ul class="nav navbar-nav navbar-nav-material">
+                    <li><a href="#">Dashboard</a></li>
+
+                    <li class="dropdown mega-menu mega-menu-wide">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Components <span
+                                class="caret"></span></a>
 
                         <div class="dropdown-menu dropdown-content">
-                            <div class="dropdown-content-heading">
-                                Activity
-                                <ul class="icons-list">
-                                    <li><a href="#"><i class="icon-menu7"></i></a></li>
-                                </ul>
+                            <div class="dropdown-content-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <span class="menu-heading underlined">Forms</span>
+                                        <div class="dd-wrapper" id="dd-wrapper-0">
+                                            <div id="dd-header-0" class="dd-header"><h6>Back to parent</h6></div>
+                                            <ul class="menu-list has-children dd-menu"
+                                                style="overflow: hidden; outline: none;" tabindex="0">
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-pencil3"></i> Form
+                                                        components<span class="dd-icon"></span></a>
+                                                    <ul rel="11" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Basic inputs</a></li>
+                                                        <li><a href="#">Checkboxes &amp; radios</a></li>
+                                                        <li><a href="#">Input groups</a></li>
+                                                        <li><a href="#">Extended controls</a></li>
+                                                        <li><a href="#">Floating labels</a></li>
+                                                        <li class="dd-parent">
+                                                            <a href="#" class="dd-parent-a">Selects<span
+                                                                    class="dd-icon"></span></a>
+                                                            <ul rel="4" style="margin-right: 0; margin-top: 0;">
+                                                                <li><a href="#">Select2 selects</a></li>
+                                                                <li><a href="#">Bootstrap multiselect</a></li>
+                                                                <li><a href="#">SelectBoxIt selects</a></li>
+                                                                <li class="last"><a href="#">Bootstrap selects</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li><a href="#">Tag inputs</a></li>
+                                                        <li><a href="#">Dual Listboxes</a></li>
+                                                        <li><a href="#">Editable forms</a></li>
+                                                        <li><a href="#">Validation</a></li>
+                                                        <li class="last"><a href="#">Inputs grid</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-file-css"></i> JSON
+                                                        forms<span
+                                                                class="dd-icon"></span></a>
+                                                    <ul rel="3" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Basic inputs</a></li>
+                                                        <li><a href="#">Advanced inputs</a></li>
+                                                        <li class="last"><a href="#">Controls</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-footprint"></i>
+                                                        Wizards<span class="dd-icon"></span></a>
+                                                    <ul rel="3" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Steps wizard</a></li>
+                                                        <li><a href="#">Form wizard</a></li>
+                                                        <li class="last"><a href="#">Stepy wizard</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-spell-check"></i>
+                                                        Editors<span
+                                                                class="dd-icon"></span></a>
+                                                    <ul rel="4" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Summernote editor</a></li>
+                                                        <li><a href="#">CKEditor</a></li>
+                                                        <li><a href="#">WYSIHTML5 editor</a></li>
+                                                        <li class="last"><a href="#">Code editor</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-select2"></i>
+                                                        Pickers<span class="dd-icon"></span></a>
+                                                    <ul rel="3" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Date &amp; time pickers</a></li>
+                                                        <li><a href="#">Color pickers</a></li>
+                                                        <li class="last"><a href="#">Location pickers</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent last">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-insert-template"></i>
+                                                        Form layouts<span class="dd-icon"></span></a>
+                                                    <ul rel="2" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Vertical form</a></li>
+                                                        <li class="last"><a href="#">Horizontal form</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="menu-heading underlined">Appearance</span>
+                                        <div class="dd-wrapper" id="dd-wrapper-1">
+                                            <div id="dd-header-1" class="dd-header"><h6>Back to parent</h6></div>
+                                            <ul class="menu-list has-children dd-menu"
+                                                style="overflow: hidden; outline: none;" tabindex="1">
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-grid"></i>
+                                                        Components<span class="dd-icon"></span></a>
+                                                    <ul rel="18" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Modals</a></li>
+                                                        <li><a href="#">Dropdown menus</a></li>
+                                                        <li><a href="#">Tabs component</a></li>
+                                                        <li><a href="#">Pills component</a></li>
+                                                        <li><a href="#">Accordion and navs</a></li>
+                                                        <li><a href="#">Buttons</a></li>
+                                                        <li><a href="#">PNotify notifications</a></li>
+                                                        <li><a href="#">Other notifications</a></li>
+                                                        <li><a href="#">Tooltips and popovers</a></li>
+                                                        <li><a href="#">Alerts</a></li>
+                                                        <li><a href="#">Pagination</a></li>
+                                                        <li><a href="#">Labels and badges</a></li>
+                                                        <li><a href="#">Loaders and bars</a></li>
+                                                        <li><a href="#">Thumbnails</a></li>
+                                                        <li><a href="#">Page header</a></li>
+                                                        <li><a href="#">Breadcrumbs</a></li>
+                                                        <li><a href="#">Media objects</a></li>
+                                                        <li class="last"><a href="#">Affix and Scrollspy</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-browser"></i> Content
+                                                        panels<span class="dd-icon"></span></a>
+                                                    <ul rel="4" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Panels</a></li>
+                                                        <li><a href="#">Heading elements</a></li>
+                                                        <li><a href="#">Footer elements</a></li>
+                                                        <li class="last"><a href="#">Draggable panels</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-droplets"></i>
+                                                        Content
+                                                        styling<span class="dd-icon"></span></a>
+                                                    <ul rel="5" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Text styling</a></li>
+                                                        <li><a href="#">Typography</a></li>
+                                                        <li><a href="#">Helper classes</a></li>
+                                                        <li><a href="#">Syntax highlighter</a></li>
+                                                        <li class="last"><a href="#">Grid system</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-gift"></i> Extra
+                                                        components<span class="dd-icon"></span></a>
+                                                    <ul rel="5" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">NoUI sliders</a></li>
+                                                        <li><a href="#">Ion range sliders</a></li>
+                                                        <li><a href="#">Dynamic tree views</a></li>
+                                                        <li><a href="#">Context menu</a></li>
+                                                        <li class="last"><a href="#">Floating action buttons</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent last">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-wrench3"></i>
+                                                        Tools<span
+                                                                class="dd-icon"></span></a>
+                                                    <ul rel="2" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Session timeout</a></li>
+                                                        <li class="last"><a href="#">Idle timeout</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="menu-heading underlined">Extensions</span>
+                                        <div class="dd-wrapper" id="dd-wrapper-2">
+                                            <div id="dd-header-2" class="dd-header"><h6>Back to parent</h6></div>
+                                            <ul class="menu-list has-children dd-menu"
+                                                style="overflow: hidden; outline: none;" tabindex="2">
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-puzzle4"></i>
+                                                        Extensions<span class="dd-icon"></span></a>
+                                                    <ul rel="3" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Image cropper</a></li>
+                                                        <li><a href="#">Block UI</a></li>
+                                                        <li class="last"><a href="#">Drag and drop</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-popout"></i> JQuery
+                                                        UI<span class="dd-icon"></span></a>
+                                                    <ul rel="5" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Interactions</a></li>
+                                                        <li><a href="#">Forms</a></li>
+                                                        <li><a href="#">Components</a></li>
+                                                        <li><a href="#">Sliders</a></li>
+                                                        <li class="last"><a href="#">Navigation</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-upload"></i> File
+                                                        uploaders<span class="dd-icon"></span></a>
+                                                    <ul rel="3" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Plupload</a></li>
+                                                        <li><a href="#">Bootstrap file uploader</a></li>
+                                                        <li class="last"><a href="#">Dropzone</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-calendar3"></i> Event
+                                                        calendars<span class="dd-icon"></span></a>
+                                                    <ul rel="4" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Basic views</a></li>
+                                                        <li><a href="#">Event styling</a></li>
+                                                        <li><a href="#">Language and time</a></li>
+                                                        <li class="last"><a href="#">Advanced usage</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent last">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-sphere"></i>
+                                                        Internationalization<span class="dd-icon"></span></a>
+                                                    <ul rel="6" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Direct translation</a></li>
+                                                        <li><a href="#">Querystring parameter</a></li>
+                                                        <li><a href="#">Set language on init</a></li>
+                                                        <li><a href="#">Set language after init</a></li>
+                                                        <li><a href="#">Language fallback</a></li>
+                                                        <li class="last"><a href="#">Callbacks</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="menu-heading underlined">Tables</span>
+                                        <div class="dd-wrapper" id="dd-wrapper-3">
+                                            <div id="dd-header-3" class="dd-header"><h6>Back to parent</h6></div>
+                                            <ul class="menu-list has-children dd-menu"
+                                                style="overflow: hidden; outline: none;" tabindex="3">
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-table2"></i> Basic
+                                                        tables<span
+                                                                class="dd-icon"></span></a>
+                                                    <ul rel="5" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Basic examples</a></li>
+                                                        <li><a href="#">Table sizing</a></li>
+                                                        <li><a href="#">Table borders</a></li>
+                                                        <li><a href="#">Table styling</a></li>
+                                                        <li class="last"><a href="#">Table elements</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-grid7"></i> Data
+                                                        tables<span class="dd-icon"></span></a>
+                                                    <ul rel="6" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Basic initialization</a></li>
+                                                        <li><a href="#">Basic styling</a></li>
+                                                        <li><a href="#">Advanced examples</a></li>
+                                                        <li><a href="#">Sorting options</a></li>
+                                                        <li><a href="#">Using API</a></li>
+                                                        <li class="last"><a href="#">Data sources</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i
+                                                            class="icon-alignment-unalign"></i>
+                                                        Data tables extensions<span class="dd-icon"></span></a>
+                                                    <ul rel="10" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Columns reorder</a></li>
+                                                        <li><a href="#">Row reorder</a></li>
+                                                        <li><a href="#">Fixed columns</a></li>
+                                                        <li><a href="#">Fixed header</a></li>
+                                                        <li><a href="#">Auto fill</a></li>
+                                                        <li><a href="#">Key table</a></li>
+                                                        <li><a href="#">Scroller</a></li>
+                                                        <li><a href="#">Select</a></li>
+                                                        <li class="dd-parent">
+                                                            <a href="#" class="dd-parent-a">Buttons<span
+                                                                    class="dd-icon"></span></a>
+                                                            <ul rel="4" style="margin-right: 0; margin-top: 0;">
+                                                                <li><a href="#">Initialization</a></li>
+                                                                <li><a href="#">Flash buttons</a></li>
+                                                                <li><a href="#">Print buttons</a></li>
+                                                                <li class="last"><a href="#">HTML5 buttons</a></li>
+                                                            </ul>
+                                                        </li>
+
+                                                        <li class="last"><a href="#">Columns visibility</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent">
+                                                    <a href="#" class="dd-parent-a"><i
+                                                            class="icon-file-spreadsheet"></i>
+                                                        Handsontable<span class="dd-icon"></span></a>
+                                                    <ul rel="9" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Basic configuration</a></li>
+                                                        <li><a href="#">Advanced setup</a></li>
+                                                        <li><a href="#">Column features</a></li>
+                                                        <li><a href="#">Cell features</a></li>
+                                                        <li><a href="#">Basic cell types</a></li>
+                                                        <li><a href="#">Custom &amp; checkboxes</a></li>
+                                                        <li><a href="#">Autocomplete &amp; password</a></li>
+                                                        <li><a href="#">Search</a></li>
+                                                        <li class="last"><a href="#">Context menu</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dd-parent last">
+                                                    <a href="#" class="dd-parent-a"><i class="icon-versions"></i>
+                                                        Responsive
+                                                        options<span class="dd-icon"></span></a>
+                                                    <ul rel="2" style="margin-right: 0; margin-top: 0;">
+                                                        <li><a href="#">Responsive basic tables</a></li>
+                                                        <li class="last"><a href="#">Responsive data tables</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
-                            <ul class="media-list dropdown-content-body width-350">
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#" class="btn bg-success-400 btn-rounded btn-icon btn-xs"><i
-                                                class="icon-mention"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <a href="#">Taylor Swift</a> mentioned you in a post "Angular JS. Tips and
-                                        tricks"
-                                        <div class="media-annotation">4 minutes ago</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#" class="btn bg-pink-400 btn-rounded btn-icon btn-xs"><i
-                                                class="icon-paperplane"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        Special offers have been sent to subscribed users by <a href="#">Donna
-                                        Gordon</a>
-                                        <div class="media-annotation">36 minutes ago</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#" class="btn bg-blue btn-rounded btn-icon btn-xs"><i
-                                                class="icon-plus3"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <a href="#">Chris Arney</a> created a new <span
-                                            class="text-semibold">Design</span> branch in <span class="text-semibold">Limitless</span>
-                                        repository
-                                        <div class="media-annotation">2 hours ago</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#" class="btn bg-purple-300 btn-rounded btn-icon btn-xs"><i
-                                                class="icon-truck"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        Shipping cost to the Netherlands has been reduced, database updated
-                                        <div class="media-annotation">Feb 8, 11:30</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#" class="btn bg-warning-400 btn-rounded btn-icon btn-xs"><i
-                                                class="icon-bubble8"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        New review received on <a href="#">Server side integration</a> services
-                                        <div class="media-annotation">Feb 2, 10:20</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#" class="btn bg-teal-400 btn-rounded btn-icon btn-xs"><i
-                                                class="icon-spinner11"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <strong>January, 2016</strong> - 1320 new users, 3284 orders, $49,390 revenue
-                                        <div class="media-annotation">Feb 1, 05:46</div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr"
+                                 style="padding-right: 0.5; width: 3; z-index: 1000; cursor: default; position: absolute; top: 0; left: -3.5; height: 0; display: none;">
+                                <div class="nicescroll-cursors"
+                                     style="position: relative; top: 0; float: right; width: 3; height: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
+                            </div>
+                            <div id="ascrail2000-hr" class="nicescroll-rails nicescroll-rails-hr"
+                                 style="height: 3; z-index: 1000; top: -3; left: 0; position: absolute; cursor: default; display: none;">
+                                <div class="nicescroll-cursors"
+                                     style="position: absolute; top: 0; height: 3; width: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
+                            </div>
+                            <div id="ascrail2001" class="nicescroll-rails nicescroll-rails-vr"
+                                 style="padding-right: 0.5; width: 3; z-index: 1000; cursor: default; position: absolute; top: 0; left: -3.5; height: 0; display: none;">
+                                <div class="nicescroll-cursors"
+                                     style="position: relative; top: 0; float: right; width: 3; height: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
+                            </div>
+                            <div id="ascrail2001-hr" class="nicescroll-rails nicescroll-rails-hr"
+                                 style="height: 3; z-index: 1000; top: -3; left: 0; position: absolute; cursor: default; display: none;">
+                                <div class="nicescroll-cursors"
+                                     style="position: absolute; top: 0; height: 3; width: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
+                            </div>
+                            <div id="ascrail2002" class="nicescroll-rails nicescroll-rails-vr"
+                                 style="padding-right: 0.5; width: 3; z-index: 1000; cursor: default; position: absolute; top: 0; left: -3.5; height: 0; display: none;">
+                                <div class="nicescroll-cursors"
+                                     style="position: relative; top: 0; float: right; width: 3; height: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
+                            </div>
+                            <div id="ascrail2002-hr" class="nicescroll-rails nicescroll-rails-hr"
+                                 style="height: 3; z-index: 1000; top: -3; left: 0; position: absolute; cursor: default; display: none;">
+                                <div class="nicescroll-cursors"
+                                     style="position: absolute; top: 0; height: 3; width: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
+                            </div>
+                            <div id="ascrail2003" class="nicescroll-rails nicescroll-rails-vr"
+                                 style="padding-right: 0.5; width: 3; z-index: 1000; cursor: default; position: absolute; top: 0; left: -3.5; height: 0; display: none;">
+                                <div class="nicescroll-cursors"
+                                     style="position: relative; top: 0; float: right; width: 3; height: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
+                            </div>
+                            <div id="ascrail2003-hr" class="nicescroll-rails nicescroll-rails-hr"
+                                 style="height: 3; z-index: 1000; top: -3; left: 0; position: absolute; cursor: default; display: none;">
+                                <div class="nicescroll-cursors"
+                                     style="position: absolute; top: 0; height: 3; width: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
+                            </div>
                         </div>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-nav-material navbar-right">
+                    <li>
+                        <a href="#">
+                            <span class="status-mark status-mark-inline border-success-300 position-left"></span>
+                            Changelog
+                        </a>
                     </li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-bubble8"></i>
-                            <span class="visible-xs-inline-block position-right">Messages</span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-content width-350">
-                            <div class="dropdown-content-heading">
-                                Messages
-                                <ul class="icons-list">
-                                    <li><a href="#"><i class="icon-menu7"></i></a></li>
-                                </ul>
-                            </div>
-
-                            <ul class="media-list dropdown-content-body">
-                                <li class="media">
-                                    <div class="media-left">
-{#                                        <img src="../static/limitless/images/demo/users/face10.jpg" class="img-circle img-sm"#}
-{#                                             alt="">#}
-                                        <span class="badge bg-danger-400 media-badge">5</span>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <a href="#" class="media-heading">
-                                            <span class="text-semibold">James Alexander</span>
-                                            <span class="media-annotation pull-right">04:58</span>
-                                        </a>
-
-                                        <span class="text-muted">who knows, maybe that would be the best thing for me...</span>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-{#                                        <img src="../static/limitless/images/demo/users/face3.jpg" class="img-circle img-sm"#}
-{#                                             alt="">#}
-                                        <span class="badge bg-danger-400 media-badge">4</span>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <a href="#" class="media-heading">
-                                            <span class="text-semibold">Margo Baker</span>
-                                            <span class="media-annotation pull-right">12:16</span>
-                                        </a>
-
-                                        <span class="text-muted">That was something he was unable to do because...</span>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-{#                                        <img src="../static/limitless/images/demo/users/face24.jpg"#}
-{#                                                                 class="img-circle img-sm" alt="">#}
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#" class="media-heading">
-                                            <span class="text-semibold">Jeremy Victorino</span>
-                                            <span class="media-annotation pull-right">22:48</span>
-                                        </a>
-
-                                        <span class="text-muted">But that would be extremely strained and suspicious...</span>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-{#                                        <img src="../static/limitless/images/demo/users/face4.jpg"#}
-{#                                                                 class="img-circle img-sm" alt="">#}
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#" class="media-heading">
-                                            <span class="text-semibold">Beatrix Diaz</span>
-                                            <span class="media-annotation pull-right">Tue</span>
-                                        </a>
-
-                                        <span class="text-muted">What a strenuous career it is that I've chosen...</span>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left">
-{#                                        <img src="../static/limitless/images/demo/users/face25.jpg"#}
-{#                                                                 class="img-circle img-sm" alt="">#}
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#" class="media-heading">
-                                            <span class="text-semibold">Richard Vango</span>
-                                            <span class="media-annotation pull-right">Mon</span>
-                                        </a>
-
-                                        <span class="text-muted">Other travelling salesmen live a life of luxury...</span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="dropdown dropdown-user">
-                        <a class="dropdown-toggle" data-toggle="dropdown">
-{#                            <img src="../static/limitless/images/demo/users/face11.jpg" alt="">#}
-                            <span>Victoria</span>
-                            <i class="caret"></i>
+                            <i class="icon-cog3"></i>
+                            <span class="visible-xs-inline-block position-right">Settings</span>
+                            <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
-                            <li><a href="#"><i class="icon-coins"></i> My balance</a></li>
-                            <li><a href="#"><span class="badge bg-blue pull-right">26</span> <i
-                                    class="icon-comment-discussion"></i> Messages</a></li>
+                            <li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+                            <li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+                            <li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
                             <li class="divider"></li>
-                            <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-                            <li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
+                            <li><a href="#"><i class="icon-gear"></i> All settings</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
+        <!-- /second navbar -->
+
+
+        <!-- Sidebar controls -->
+        <ul class="fab-menu fab-menu-top-left hidden-xs" data-fab-toggle="hover">
+            <li>
+                <a class="fab-menu-btn btn btn-default btn-float btn-rounded btn-icon sidebar-control sidebar-secondary-hide">
+                    <i class="icon-indent-decrease"></i>
+                </a>
+            </li>
+        </ul>
+        <!-- /sidebar controls -->
+
+
+        <!-- Floating menu -->
+        <ul class="fab-menu fab-menu-top-right" data-fab-toggle="click">
+            <li>
+                <a class="fab-menu-btn btn bg-pink-300 btn-float btn-rounded btn-icon">
+                    <i class="fab-icon-open icon-plus3"></i>
+                    <i class="fab-icon-close icon-cross2"></i>
+                </a>
+
+                <ul class="fab-menu-inner">
+                    <li>
+                        <div data-fab-label="Compose email">
+                            <a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
+                                <i class="icon-pencil"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div data-fab-label="Conversations">
+                            <a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
+                                <i class="icon-bubbles7"></i>
+                            </a>
+                            <span class="badge bg-primary-400">5</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div data-fab-label="Chat with Jack">
+                            <a href="#" class="btn bg-pink-400 btn-rounded btn-icon btn-float">
+                                <img src="../static/images/users/man-placeholder.png" class="img-responsive" alt="">
+                            </a>
+                            <span class="status-mark border-pink-400"></span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /floating menu -->
+
     </div>
-    <!-- /main navbar -->
+    {% block content %}
 
-
-    <!-- Page header content -->
-    <div class="page-header-content">
-        <div class="page-title">
-            <h4>{{ title }}</h4>
-            <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
-
-        <div class="heading-elements">
-            <ul class="breadcrumb heading-text">
-                <li><a href="#"><i class="icon-home2 position-left"></i> Home</a></li>
-                <li><a href="#">Task manager</a></li>
-                <li class="active">Grid</li>
-            </ul>
-        </div>
-    </div>
-    <!-- /page header content -->
-
-
-    <!-- Second navbar -->
-    <div class="navbar navbar-inverse navbar-transparent" id="navbar-second">
+        {#  TODO main part  #}
+    {% endblock %}
+    <div class="navbar navbar-default navbar-fixed-bottom footer">
         <ul class="nav navbar-nav visible-xs-block">
-            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i
-                    class="icon-paragraph-justify3"></i></a></li>
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#footer"><i
+                    class="icon-circle-up2"></i></a></li>
         </ul>
 
-        <div class="navbar-collapse collapse" id="navbar-second-toggle">
-            <ul class="nav navbar-nav navbar-nav-material">
-                <li><a href="#">Dashboard</a></li>
-
-                <li class="dropdown mega-menu mega-menu-wide">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Components <span
-                            class="caret"></span></a>
-
-                    <div class="dropdown-menu dropdown-content">
-                        <div class="dropdown-content-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <span class="menu-heading underlined">Forms</span>
-                                    <div class="dd-wrapper" id="dd-wrapper-0">
-                                        <div id="dd-header-0" class="dd-header"><h6>Back to parent</h6></div>
-                                        <ul class="menu-list has-children dd-menu"
-                                            style="overflow: hidden; outline: none;" tabindex="0">
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-pencil3"></i> Form
-                                                    components<span class="dd-icon"></span></a>
-                                                <ul rel="11" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Basic inputs</a></li>
-                                                    <li><a href="#">Checkboxes &amp; radios</a></li>
-                                                    <li><a href="#">Input groups</a></li>
-                                                    <li><a href="#">Extended controls</a></li>
-                                                    <li><a href="#">Floating labels</a></li>
-                                                    <li class="dd-parent">
-                                                        <a href="#" class="dd-parent-a">Selects<span
-                                                                class="dd-icon"></span></a>
-                                                        <ul rel="4" style="margin-right: 0; margin-top: 0;">
-                                                            <li><a href="#">Select2 selects</a></li>
-                                                            <li><a href="#">Bootstrap multiselect</a></li>
-                                                            <li><a href="#">SelectBoxIt selects</a></li>
-                                                            <li class="last"><a href="#">Bootstrap selects</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Tag inputs</a></li>
-                                                    <li><a href="#">Dual Listboxes</a></li>
-                                                    <li><a href="#">Editable forms</a></li>
-                                                    <li><a href="#">Validation</a></li>
-                                                    <li class="last"><a href="#">Inputs grid</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-file-css"></i> JSON forms<span
-                                                        class="dd-icon"></span></a>
-                                                <ul rel="3" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Basic inputs</a></li>
-                                                    <li><a href="#">Advanced inputs</a></li>
-                                                    <li class="last"><a href="#">Controls</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-footprint"></i>
-                                                    Wizards<span class="dd-icon"></span></a>
-                                                <ul rel="3" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Steps wizard</a></li>
-                                                    <li><a href="#">Form wizard</a></li>
-                                                    <li class="last"><a href="#">Stepy wizard</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-spell-check"></i> Editors<span
-                                                        class="dd-icon"></span></a>
-                                                <ul rel="4" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Summernote editor</a></li>
-                                                    <li><a href="#">CKEditor</a></li>
-                                                    <li><a href="#">WYSIHTML5 editor</a></li>
-                                                    <li class="last"><a href="#">Code editor</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-select2"></i>
-                                                    Pickers<span class="dd-icon"></span></a>
-                                                <ul rel="3" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Date &amp; time pickers</a></li>
-                                                    <li><a href="#">Color pickers</a></li>
-                                                    <li class="last"><a href="#">Location pickers</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent last">
-                                                <a href="#" class="dd-parent-a"><i class="icon-insert-template"></i>
-                                                    Form layouts<span class="dd-icon"></span></a>
-                                                <ul rel="2" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Vertical form</a></li>
-                                                    <li class="last"><a href="#">Horizontal form</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="menu-heading underlined">Appearance</span>
-                                    <div class="dd-wrapper" id="dd-wrapper-1">
-                                        <div id="dd-header-1" class="dd-header"><h6>Back to parent</h6></div>
-                                        <ul class="menu-list has-children dd-menu"
-                                            style="overflow: hidden; outline: none;" tabindex="1">
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-grid"></i>
-                                                    Components<span class="dd-icon"></span></a>
-                                                <ul rel="18" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Modals</a></li>
-                                                    <li><a href="#">Dropdown menus</a></li>
-                                                    <li><a href="#">Tabs component</a></li>
-                                                    <li><a href="#">Pills component</a></li>
-                                                    <li><a href="#">Accordion and navs</a></li>
-                                                    <li><a href="#">Buttons</a></li>
-                                                    <li><a href="#">PNotify notifications</a></li>
-                                                    <li><a href="#">Other notifications</a></li>
-                                                    <li><a href="#">Tooltips and popovers</a></li>
-                                                    <li><a href="#">Alerts</a></li>
-                                                    <li><a href="#">Pagination</a></li>
-                                                    <li><a href="#">Labels and badges</a></li>
-                                                    <li><a href="#">Loaders and bars</a></li>
-                                                    <li><a href="#">Thumbnails</a></li>
-                                                    <li><a href="#">Page header</a></li>
-                                                    <li><a href="#">Breadcrumbs</a></li>
-                                                    <li><a href="#">Media objects</a></li>
-                                                    <li class="last"><a href="#">Affix and Scrollspy</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-browser"></i> Content
-                                                    panels<span class="dd-icon"></span></a>
-                                                <ul rel="4" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Panels</a></li>
-                                                    <li><a href="#">Heading elements</a></li>
-                                                    <li><a href="#">Footer elements</a></li>
-                                                    <li class="last"><a href="#">Draggable panels</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-droplets"></i> Content
-                                                    styling<span class="dd-icon"></span></a>
-                                                <ul rel="5" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Text styling</a></li>
-                                                    <li><a href="#">Typography</a></li>
-                                                    <li><a href="#">Helper classes</a></li>
-                                                    <li><a href="#">Syntax highlighter</a></li>
-                                                    <li class="last"><a href="#">Grid system</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-gift"></i> Extra
-                                                    components<span class="dd-icon"></span></a>
-                                                <ul rel="5" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">NoUI sliders</a></li>
-                                                    <li><a href="#">Ion range sliders</a></li>
-                                                    <li><a href="#">Dynamic tree views</a></li>
-                                                    <li><a href="#">Context menu</a></li>
-                                                    <li class="last"><a href="#">Floating action buttons</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent last">
-                                                <a href="#" class="dd-parent-a"><i class="icon-wrench3"></i> Tools<span
-                                                        class="dd-icon"></span></a>
-                                                <ul rel="2" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Session timeout</a></li>
-                                                    <li class="last"><a href="#">Idle timeout</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="menu-heading underlined">Extensions</span>
-                                    <div class="dd-wrapper" id="dd-wrapper-2">
-                                        <div id="dd-header-2" class="dd-header"><h6>Back to parent</h6></div>
-                                        <ul class="menu-list has-children dd-menu"
-                                            style="overflow: hidden; outline: none;" tabindex="2">
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-puzzle4"></i>
-                                                    Extensions<span class="dd-icon"></span></a>
-                                                <ul rel="3" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Image cropper</a></li>
-                                                    <li><a href="#">Block UI</a></li>
-                                                    <li class="last"><a href="#">Drag and drop</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-popout"></i> JQuery
-                                                    UI<span class="dd-icon"></span></a>
-                                                <ul rel="5" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Interactions</a></li>
-                                                    <li><a href="#">Forms</a></li>
-                                                    <li><a href="#">Components</a></li>
-                                                    <li><a href="#">Sliders</a></li>
-                                                    <li class="last"><a href="#">Navigation</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-upload"></i> File
-                                                    uploaders<span class="dd-icon"></span></a>
-                                                <ul rel="3" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Plupload</a></li>
-                                                    <li><a href="#">Bootstrap file uploader</a></li>
-                                                    <li class="last"><a href="#">Dropzone</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-calendar3"></i> Event
-                                                    calendars<span class="dd-icon"></span></a>
-                                                <ul rel="4" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Basic views</a></li>
-                                                    <li><a href="#">Event styling</a></li>
-                                                    <li><a href="#">Language and time</a></li>
-                                                    <li class="last"><a href="#">Advanced usage</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent last">
-                                                <a href="#" class="dd-parent-a"><i class="icon-sphere"></i>
-                                                    Internationalization<span class="dd-icon"></span></a>
-                                                <ul rel="6" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Direct translation</a></li>
-                                                    <li><a href="#">Querystring parameter</a></li>
-                                                    <li><a href="#">Set language on init</a></li>
-                                                    <li><a href="#">Set language after init</a></li>
-                                                    <li><a href="#">Language fallback</a></li>
-                                                    <li class="last"><a href="#">Callbacks</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="menu-heading underlined">Tables</span>
-                                    <div class="dd-wrapper" id="dd-wrapper-3">
-                                        <div id="dd-header-3" class="dd-header"><h6>Back to parent</h6></div>
-                                        <ul class="menu-list has-children dd-menu"
-                                            style="overflow: hidden; outline: none;" tabindex="3">
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-table2"></i> Basic tables<span
-                                                        class="dd-icon"></span></a>
-                                                <ul rel="5" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Basic examples</a></li>
-                                                    <li><a href="#">Table sizing</a></li>
-                                                    <li><a href="#">Table borders</a></li>
-                                                    <li><a href="#">Table styling</a></li>
-                                                    <li class="last"><a href="#">Table elements</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-grid7"></i> Data
-                                                    tables<span class="dd-icon"></span></a>
-                                                <ul rel="6" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Basic initialization</a></li>
-                                                    <li><a href="#">Basic styling</a></li>
-                                                    <li><a href="#">Advanced examples</a></li>
-                                                    <li><a href="#">Sorting options</a></li>
-                                                    <li><a href="#">Using API</a></li>
-                                                    <li class="last"><a href="#">Data sources</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-alignment-unalign"></i>
-                                                    Data tables extensions<span class="dd-icon"></span></a>
-                                                <ul rel="10" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Columns reorder</a></li>
-                                                    <li><a href="#">Row reorder</a></li>
-                                                    <li><a href="#">Fixed columns</a></li>
-                                                    <li><a href="#">Fixed header</a></li>
-                                                    <li><a href="#">Auto fill</a></li>
-                                                    <li><a href="#">Key table</a></li>
-                                                    <li><a href="#">Scroller</a></li>
-                                                    <li><a href="#">Select</a></li>
-                                                    <li class="dd-parent">
-                                                        <a href="#" class="dd-parent-a">Buttons<span
-                                                                class="dd-icon"></span></a>
-                                                        <ul rel="4" style="margin-right: 0; margin-top: 0;">
-                                                            <li><a href="#">Initialization</a></li>
-                                                            <li><a href="#">Flash buttons</a></li>
-                                                            <li><a href="#">Print buttons</a></li>
-                                                            <li class="last"><a href="#">HTML5 buttons</a></li>
-                                                        </ul>
-                                                    </li>
-
-                                                    <li class="last"><a href="#">Columns visibility</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent">
-                                                <a href="#" class="dd-parent-a"><i class="icon-file-spreadsheet"></i>
-                                                    Handsontable<span class="dd-icon"></span></a>
-                                                <ul rel="9" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Basic configuration</a></li>
-                                                    <li><a href="#">Advanced setup</a></li>
-                                                    <li><a href="#">Column features</a></li>
-                                                    <li><a href="#">Cell features</a></li>
-                                                    <li><a href="#">Basic cell types</a></li>
-                                                    <li><a href="#">Custom &amp; checkboxes</a></li>
-                                                    <li><a href="#">Autocomplete &amp; password</a></li>
-                                                    <li><a href="#">Search</a></li>
-                                                    <li class="last"><a href="#">Context menu</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dd-parent last">
-                                                <a href="#" class="dd-parent-a"><i class="icon-versions"></i> Responsive
-                                                    options<span class="dd-icon"></span></a>
-                                                <ul rel="2" style="margin-right: 0; margin-top: 0;">
-                                                    <li><a href="#">Responsive basic tables</a></li>
-                                                    <li class="last"><a href="#">Responsive data tables</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr"
-                             style="padding-right: 0.5; width: 3; z-index: 1000; cursor: default; position: absolute; top: 0; left: -3.5; height: 0; display: none;">
-                            <div class="nicescroll-cursors"
-                                 style="position: relative; top: 0; float: right; width: 3; height: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
-                        </div>
-                        <div id="ascrail2000-hr" class="nicescroll-rails nicescroll-rails-hr"
-                             style="height: 3; z-index: 1000; top: -3; left: 0; position: absolute; cursor: default; display: none;">
-                            <div class="nicescroll-cursors"
-                                 style="position: absolute; top: 0; height: 3; width: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
-                        </div>
-                        <div id="ascrail2001" class="nicescroll-rails nicescroll-rails-vr"
-                             style="padding-right: 0.5; width: 3; z-index: 1000; cursor: default; position: absolute; top: 0; left: -3.5; height: 0; display: none;">
-                            <div class="nicescroll-cursors"
-                                 style="position: relative; top: 0; float: right; width: 3; height: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
-                        </div>
-                        <div id="ascrail2001-hr" class="nicescroll-rails nicescroll-rails-hr"
-                             style="height: 3; z-index: 1000; top: -3; left: 0; position: absolute; cursor: default; display: none;">
-                            <div class="nicescroll-cursors"
-                                 style="position: absolute; top: 0; height: 3; width: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
-                        </div>
-                        <div id="ascrail2002" class="nicescroll-rails nicescroll-rails-vr"
-                             style="padding-right: 0.5; width: 3; z-index: 1000; cursor: default; position: absolute; top: 0; left: -3.5; height: 0; display: none;">
-                            <div class="nicescroll-cursors"
-                                 style="position: relative; top: 0; float: right; width: 3; height: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
-                        </div>
-                        <div id="ascrail2002-hr" class="nicescroll-rails nicescroll-rails-hr"
-                             style="height: 3; z-index: 1000; top: -3; left: 0; position: absolute; cursor: default; display: none;">
-                            <div class="nicescroll-cursors"
-                                 style="position: absolute; top: 0; height: 3; width: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
-                        </div>
-                        <div id="ascrail2003" class="nicescroll-rails nicescroll-rails-vr"
-                             style="padding-right: 0.5; width: 3; z-index: 1000; cursor: default; position: absolute; top: 0; left: -3.5; height: 0; display: none;">
-                            <div class="nicescroll-cursors"
-                                 style="position: relative; top: 0; float: right; width: 3; height: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
-                        </div>
-                        <div id="ascrail2003-hr" class="nicescroll-rails nicescroll-rails-hr"
-                             style="height: 3; z-index: 1000; top: -3; left: 0; position: absolute; cursor: default; display: none;">
-                            <div class="nicescroll-cursors"
-                                 style="position: absolute; top: 0; height: 3; width: 0; background-color: rgb(204, 204, 204); background-clip: padding-box; border-radius: 5;"></div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-
-            <ul class="nav navbar-nav navbar-nav-material navbar-right">
-                <li>
-                    <a href="#">
-                        <span class="status-mark status-mark-inline border-success-300 position-left"></span>
-                        Changelog
-                    </a>
-                </li>
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-cog3"></i>
-                        <span class="visible-xs-inline-block position-right">Settings</span>
-                        <span class="caret"></span>
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
-                        <li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
-                        <li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><i class="icon-gear"></i> All settings</a></li>
-                    </ul>
-                </li>
-            </ul>
+        <div class="navbar-collapse collapse" id="footer">
+            <div class="navbar-text">
+                © 2017. <a href="#" class="navbar-link">Task manager</a> by <a href="#" class="navbar-link"
+                                                                               target="_blank">Eugene
+                Stolyarov</a>
+            </div>
         </div>
     </div>
-    <!-- /second navbar -->
 
 
-    <!-- Sidebar controls -->
-    <ul class="fab-menu fab-menu-top-left hidden-xs" data-fab-toggle="hover">
-        <li>
-            <a class="fab-menu-btn btn btn-default btn-float btn-rounded btn-icon sidebar-control sidebar-secondary-hide">
-                <i class="icon-indent-decrease"></i>
-            </a>
-        </li>
-    </ul>
-    <!-- /sidebar controls -->
-
-
-    <!-- Floating menu -->
-    <ul class="fab-menu fab-menu-top-right" data-fab-toggle="click">
-        <li>
-            <a class="fab-menu-btn btn bg-pink-300 btn-float btn-rounded btn-icon">
-                <i class="fab-icon-open icon-plus3"></i>
-                <i class="fab-icon-close icon-cross2"></i>
-            </a>
-
-            <ul class="fab-menu-inner">
-                <li>
-                    <div data-fab-label="Compose email">
-                        <a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
-                            <i class="icon-pencil"></i>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div data-fab-label="Conversations">
-                        <a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
-                            <i class="icon-bubbles7"></i>
-                        </a>
-                        <span class="badge bg-primary-400">5</span>
-                    </div>
-                </li>
-                <li>
-                    <div data-fab-label="Chat with Jack">
-                        <a href="#" class="btn bg-pink-400 btn-rounded btn-icon btn-float">
-                            <img src="../static/images/users/man-placeholder.png" class="img-responsive" alt="">
-                        </a>
-                        <span class="status-mark border-pink-400"></span>
-                    </div>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    <!-- /floating menu -->
-
-</div>
-{% block content %}
-
-    {#  TODO main part  #}
+    </body>
 {% endblock %}
-<div class="navbar navbar-default navbar-fixed-bottom footer">
-    <ul class="nav navbar-nav visible-xs-block">
-        <li><a class="text-center collapsed" data-toggle="collapse" data-target="#footer"><i
-                class="icon-circle-up2"></i></a></li>
-    </ul>
-
-    <div class="navbar-collapse collapse" id="footer">
-        <div class="navbar-text">
-            © 2017. <a href="#" class="navbar-link">Task manager</a> by <a href="#" class="navbar-link" target="_blank">Eugene
-            Stolyarov</a>
-        </div>
-    </div>
-</div>
-
-
-</body>
