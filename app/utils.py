@@ -57,4 +57,4 @@ def myprint(*args, color=30, end='\n', separate=True):
         pprint.pprint(arg)
         if separate and len(args) > 1:
             print()
-    print('\033[1;37m ', end=end)
+    print('\033[1;30m ', end=end)

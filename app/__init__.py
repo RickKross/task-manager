@@ -6,7 +6,7 @@ from app.utils import A
 app = Flask(__name__)
 app.config.from_object('config')
 
-g = A()  # cuz global context sux
+g = A()  # cuz global context sux .-.
 g.user = ''
 g.CLIENT_ID = 'fd3ec610b0a0f02435c3'
 g.CLIENT_SECRET = '622c8b9ed8089369fbd3d4ccfb626a7891946689'

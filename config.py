@@ -7,5 +7,5 @@ DB_NAME = 'tm_diplom'
 DB_HOST = 'localhost'
 
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}/{}'.format(DB_USER, DB_PASS, DB_HOST, DB_NAME)
+SQLALCHEMY_DATABASE_URI = 'mysql://{}:{}@{}/{}?charset=utf8'.format(DB_USER, DB_PASS, DB_HOST, DB_NAME)
 SQLALCHEMY_TRACK_MODIFICATIONS = True

@@ -1,19 +1,19 @@
 import json
 from urllib.parse import urlencode, urlsplit, parse_qsl
+from uuid import uuid4
+
 import requests
 from flask import session
 
-from uuid import uuid4
 from app import g
-from app.models.users import User
+from app.models.tables.users import Users
 from app.utils import myprint
 
 
 def oauth_request_user_url():
-    state = get_state()
     params = {
         'client_id': g.CLIENT_ID,
-        'state': state,
+        'state': get_state(),
         'scope': 'user, public_repo, repo, repo_deployment, delete_repo'
     }
     return 'https://github.com/login/oauth/authorize?' + urlencode(params)
@@ -42,14 +42,22 @@ def get_state():
 
 def get_user():
     if session.get('token'):
-        if not g.user:
+        if g.user and g.user.login:
+            return g.user
+        else:
             r = requests.get('https://api.github.com/user', {'access_token': session['token']})
             if r.status_code == 200 and r.text:
                 r = json.loads(r.text)
-                g.user = User.query.filter_by(id=r['id']).first() or User(id=r['id'], login=r['login'],
-                                                                  name=r['name'].encode('utf-8'), email=r['email'],
-                                                                  api_url=r['url'],
-                                                                  github_url=r['html_url'], avatar_url=r['avatar_url'])
+                g.user = Users.query.filter_by(id=r['id']).first() or Users(id=r['id'],
+                                                                            login=r['login'],
+                                                                            name=r['name'],
+                                                                            email=r['email'],
+                                                                            api_url=r['url'],
+                                                                            github_url=r['html_url'],
+                                                                            avatar_url=r['avatar_url'])
+            else:
+                # TODO err with http code
+                pass
     else:
-        # TODO вывод сообщения об ошибке
+        # TODO session token err
         pass
