@@ -19,7 +19,7 @@ class Users(db.Model):
     def __init__(self, id, login, name, email, api_url, github_url, avatar_url, commit=True):
         self.id = id
         self.login = login
-        self.name = name.encode()
+        self.name = name
         self.email = email
         self.api_url = api_url
         self.github_url = github_url

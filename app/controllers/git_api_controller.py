@@ -48,6 +48,7 @@ def get_user():
             r = requests.get('https://api.github.com/user', {'access_token': session['token']})
             if r.status_code == 200 and r.text:
                 r = json.loads(r.text)
+                myprint(r, color=32)
                 g.user = Users.query.filter_by(id=r['id']).first() or Users(id=r['id'],
                                                                             login=r['login'],
                                                                             name=r['name'],
