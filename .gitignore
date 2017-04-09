@@ -91,3 +91,5 @@ ENV/
 .idea/
 limitless/
 migrations/
+
+app/upload/

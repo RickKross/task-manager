@@ -180,7 +180,7 @@
 {% macro project(project_el) %}
     <div class="panel panel-flat" style="max-height: 450px">
         <div class="panel-heading" style="padding-bottom: 10px; padding-top: 10px">
-            <h3 class="panel-title">project name <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+            <h3 class="panel-title">{{ project_el.name if project_el else 'Project name' }}<a class="heading-elements-toggle"><i class="icon-more"></i></a>
             </h3>
             <div class="heading-elements">
                 <a href="#" class="text-default">
@@ -203,8 +203,14 @@
                     <!-- Project thumbnail -->
                     <div class="panel text-center panel-image">
                         <div class="panel-body">
-                            <img class="img-circle img-responsive" src="../static/images/projects/proj_demo_1.png"
-                                 alt="" style="">
+                            {% if project_el %}
+                                <img class="img-circle img-responsive" src="{{ project_el.avatar_path}}"
+                                     alt="">
+
+                            {% else %}
+                                <img class="img-circle img-responsive" src="../static/images/projects/proj_demo_1.png"
+                                     alt="">
+                            {% endif %}
                             {#                            <div class="caption">#}
                             {#                                <span>#}
                             {#                                    <a href="#" class="btn bg-success-400 btn-icon btn-xs"#}
@@ -215,11 +221,11 @@
                             {#                                </span>#}
                             {#                            </div>#}
                             <div class="caption ">
-                                <h6 class="text-semibold no-margin">Project name
-                                    <small class="display-block">Company name</small>
+                                <h6 class="text-semibold no-margin">{{ project_el.name if project_el else 'Project name' }}
+                                    <small class="display-block">{{ project_el.companyName if project_el else 'Company name' }}</small>
                                 </h6>
                                 <div class="text-size-mini text-muted">
-                                    <i class="icon-pin text-size-small"></i> &nbsp;Company location
+                                    <i class="icon-pin text-size-small"></i> &nbsp;{{ project_el.companyLocation if project_el else 'Company location' }}
                                 </div>
                             </div>
                             <ul class="icons-list mt-15">
@@ -245,7 +251,7 @@
                             </h6>
                         </div>
                         <div class="panel-body text-default description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                            {{ project_el.description if project_el else """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                             Ipsum
                             has been the industry's standard dummy text ever since the 1500s, when an unknown
                             printer took a galley of type and scrambled it to make a type specimen book. It has
@@ -268,34 +274,35 @@
                             ipsum' will uncover many web sites still in their infancy. Various versions have
                             evolved
                             over the years, sometimes by accident, sometimes on purpose (injected humour and the
-                            like).
+                            like).""" }}
                         </div>
                         <div class="panel-footer">
-{#                                <span class="heading-text">Active user:</span>#}
-                                <ul class="heading-thumbnails text-center">
-                                    <li>
-                                        <a class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"><i class="icon-person"></i></a>
+                            {#                                <span class="heading-text">Active user:</span>#}
+                            <ul class="heading-thumbnails text-center">
+                                <li>
+                                    <a class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"><i
+                                            class="icon-person"></i></a>
 
-                                        <span class="badge bg-danger">5</span>
-                                    </li>
-                                    <li>
-                                        <a class="btn border-success text-success btn-flat btn-rounded btn-xs valign-text-bottom">LOW</a>
-                                        <span class="badge bg-danger">1</span>
-                                    </li>
-                                    <li>
-                                        <a class="btn border-primary text-primary btn-flat btn-rounded btn-xs valign-text-bottom">NORMAL</a>
-                                        <span class="badge bg-danger">2</span>
-                                    </li>
-                                    <li>
-                                        <a class="btn border-info text-info btn-flat btn-rounded btn-xs valign-text-bottom">HIGH</a>
-                                        <span class="badge bg-danger">3</span>
-                                    </li>
-                                    <li>
-                                        <a class="btn border-danger text-danger btn-flat btn-rounded btn-xs valign-text-bottom">HIGHEST</a>
-                                        <span class="badge bg-danger">4</span>
-                                    </li>
+                                    <span class="badge bg-danger">5</span>
+                                </li>
+                                <li>
+                                    <a class="btn border-success text-success btn-flat btn-rounded btn-xs valign-text-bottom">LOW</a>
+                                    <span class="badge bg-danger">1</span>
+                                </li>
+                                <li>
+                                    <a class="btn border-primary text-primary btn-flat btn-rounded btn-xs valign-text-bottom">NORMAL</a>
+                                    <span class="badge bg-danger">2</span>
+                                </li>
+                                <li>
+                                    <a class="btn border-info text-info btn-flat btn-rounded btn-xs valign-text-bottom">HIGH</a>
+                                    <span class="badge bg-danger">3</span>
+                                </li>
+                                <li>
+                                    <a class="btn border-danger text-danger btn-flat btn-rounded btn-xs valign-text-bottom">HIGHEST</a>
+                                    <span class="badge bg-danger">4</span>
+                                </li>
 
-                                </ul>
+                            </ul>
                         </div>
 
                     </div>
@@ -316,6 +323,7 @@
                 footer_height = $desc.siblings('.panel-footer').outerHeight(),
                 padding = 40,
                 height = Math.floor(img_panel_height - header_height - footer_height - padding);
+            $desc.height(height);
             $desc.dotdotdot({
                 ellipsis: '...',
                 wrap: 'word',
@@ -333,3 +341,22 @@
     </script>
 {% endmacro %}
 
+{% macro add_project_form(form) %}
+    <form action="#" method="POST">
+        <div class="modal-body">
+            <div class="form-group">
+                {{ render_field(form.name, 'Наименование', '') }}
+                {{ render_field(form.companyName, 'Наименование компании', '') }}
+                {{ render_field(form.companyLocation, 'Местонахождение компании', '') }}
+                {{ render_field(form.githubLink, 'Ccылка', '') }}
+                {{ render_field(form.avatar, 'Аватар', '') }}
+                {{ render_field(form.description, 'описание', '') }}
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit form</button>
+        </div>
+    </form>
+{% endmacro %}

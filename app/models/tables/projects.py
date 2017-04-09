@@ -10,15 +10,26 @@ class Projects(db.Model):
     __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(UnicodeString(1024))
+    companyName = db.Column(UnicodeString(1024))
+    companyLocation = db.Column(UnicodeString(1024))
+    link = db.Column(UnicodeString(1024))
+    avatar_path = db.Column(UnicodeString(1024))
+    description = db.Column(UnicodeString(4096))
 
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     owner = relationship('Users', backref='projects')
 
     # TODO projects <-> users assotiation
 
-    def __init__(self, id, name, owner_id=None, owner=None):
-        self.id = id
+    def __init__(self, name, companyName='', companyLocation='', link='', avatar_path='', description='', owner_id=None, owner=None):
         self.name = name
+        self.companyName = companyName
+        self.companyLocation = companyLocation
+
+        self.link = link
+        self.avatar_path = avatar_path
+        self.description = description
+
         if owner:
             self.owner = owner
         elif owner_id:
@@ -31,7 +42,7 @@ class Projects(db.Model):
 # ticket(_id, name, date, state, priority="Normal", app="", description="", users=[])
 class Tickets(db.Model):
     now = datetime.datetime.now()
-    __tablename__ = 'Tickets'
+    __tablename__ = 'tickets'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(UnicodeString(1024))
     state = db.Column(UnicodeString(512))

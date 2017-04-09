@@ -1,499 +1,692 @@
 {% extends "main_navbar.html" %}
-{% from "macros.html" import project, timeline_el %}
+{% from "macros.html" import project, timeline_el, add_project_form %}
 {% block title %}
-{{ title }}
+    {{ title }}
 {% endblock %}
 {% block content %}
 
-<div class="content-wrapper">
+    <div class="content-wrapper">
 
-				<!-- Page header -->
-				<div class="page-header">
+        <!-- Page header -->
+        <div class="page-header">
 
-					<!-- Header content -->
-					<div class="page-header-content">
-						<div class="page-title">
-							<h4><i class="icon-user position-left"></i> <span class="text-semibold">{{ title }}</span></h4>
+            <!-- Header content -->
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-user position-left"></i> <span class="text-semibold">{{ title }}</span></h4>
 
-							<ul class="breadcrumb position-right">
-                                <li class="active">Profile</li>
-                                <li><a href="/dashboard">Dashboard</a></li>
-							</ul>
-						<a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+                    <ul class="breadcrumb position-right">
+                        <li class="active">Profile</li>
+                        <li><a href="/dashboard">Dashboard</a></li>
+                    </ul>
+                    <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
 
-						<div class="heading-elements">
-							<div class="heading-btn-group">
-								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
-								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
-								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
-							</div>
-						</div>
-					</div>
-					<!-- /header content -->
-
-
-					<!-- Toolbar -->
-					<div class="navbar navbar-default navbar-component navbar-xs">
-						<ul class="nav navbar-nav visible-xs-block">
-							<li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
-						</ul>
-
-						<div class="navbar-collapse collapse" id="navbar-filter">
-							<ul class="nav navbar-nav">
-								<li class="active"><a href="#activity" data-toggle="tab"><i class="icon-menu7 position-left"></i> Activity</a></li>
-								<li><a href="#schedule" data-toggle="tab"><i class="icon-calendar3 position-left"></i> Schedule <span class="badge badge-success badge-inline position-right">32</span></a></li>
-								<li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> Settings</a></li>
-							</ul>
-
-							<div class="navbar-right">
-								<ul class="nav navbar-nav">
-									<li><a href="#"><i class="icon-stack-text position-left"></i> Notes</a></li>
-									<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
-									<li><a href="#"><i class="icon-images3 position-left"></i> Photos</a></li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
-										<ul class="dropdown-menu dropdown-menu-right">
-											<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
-											<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
-											<li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
-											<li class="divider"></li>
-											<li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
-											<li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<!-- /toolbar -->
-
-				</div>
-				<!-- /page header -->
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                        <a href="#" class="btn btn-link btn-float has-text"><i
+                                class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                        <a href="#" class="btn btn-link btn-float has-text"><i class="icon-calculator text-primary"></i>
+                            <span>Invoices</span></a>
+                        <a href="#" class="btn btn-link btn-float has-text"><i class="icon-calendar5 text-primary"></i>
+                            <span>Schedule</span></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /header content -->
 
 
-				<!-- Content area -->
-				<div class="content">
+            <!-- Toolbar -->
+            <div class="navbar navbar-default navbar-component navbar-xs">
+                <ul class="nav navbar-nav visible-xs-block">
+                    <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i
+                            class="icon-menu7"></i></a></li>
+                </ul>
 
-					<!-- User profile -->
-					<div class="row">
-						<div class="col-lg-9">
-							<div class="tabbable">
-								<div class="tab-content">
-									<div class="tab-pane fade in active" id="activity">
+                <div class="navbar-collapse collapse" id="navbar-filter">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#activity" data-toggle="tab"><i
+                                class="icon-menu7 position-left"></i> Activity</a></li>
+                        <li><a href="#schedule" data-toggle="tab"><i class="icon-calendar3 position-left"></i> Schedule
+                            <span class="badge badge-success badge-inline position-right">32</span></a></li>
+                        <li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> Settings</a>
+                        </li>
+                    </ul>
 
-										<!-- Timeline -->
-										<div class="timeline timeline-left content-group">
-											<div class="timeline-container">
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#" data-toggle="modal" data-target="#modal_default"><i
+                                    class="add-project icon-stack-text position-left"></i>Добавить проект</a>
+                            </li>
+                            <li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
+                            <li><a href="#"><i class="icon-images3 position-left"></i> Photos</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i>
+                                    <span class="visible-xs-inline-block position-right"> Options</span> <span
+                                            class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
+                                    <li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
+                                    <li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
+                                    <li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /toolbar -->
 
-												<!-- Sales stats -->
-                                                {{ timeline_el(None, project(None)) }}
-                                                {{ timeline_el(None, project(None)) }}
-												<!-- /sales stats -->
+        </div>
+        <!-- /page header -->
 
 
-												<!-- Blog post -->
-												<div class="timeline-row">
-													<div class="timeline-icon">
-														<img src="" alt="">
-													</div>
+        <!-- Content area -->
+        <div class="content">
 
-													<div class="panel panel-flat timeline-content">
-														<div class="panel-heading">
-															<h6 class="panel-title">Himalayan sunset<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-															<div class="heading-elements">
-																<span class="heading-text"><i class="icon-checkmark-circle position-left text-success"></i> 49 minutes ago</span>
-																<ul class="icons-list">
-																	<li class="dropdown">
-																		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-																			<i class="icon-arrow-down12"></i>
-																		</a>
+            <!-- User profile -->
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="tabbable">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="activity">
 
-																		<ul class="dropdown-menu dropdown-menu-right">
-																			<li><a href="#"><i class="icon-user-lock"></i> Hide user posts</a></li>
-																			<li><a href="#"><i class="icon-user-block"></i> Block user</a></li>
-																			<li><a href="#"><i class="icon-user-minus"></i> Unfollow user</a></li>
-																			<li class="divider"></li>
-																			<li><a href="#"><i class="icon-embed"></i> Embed post</a></li>
-																			<li><a href="#"><i class="icon-blocked"></i> Report this post</a></li>
-																		</ul>
-																	</li>
-											                	</ul>
-										                	</div>
-														</div>
+                                <!-- Timeline -->
+                                <div class="timeline timeline-left content-group">
+                                    <div class="timeline-container">
 
-														<div class="panel-body">
-															<a href="#" class="display-block content-group">
-																<img src="" class="img-responsive content-group" alt="">
-															</a>
+                                        <!-- Sales stats -->
 
-															<h6 class="content-group">
-																<i class="icon-comment-discussion position-left"></i>
-																Comment from <a href="#">Jason Ansley</a>:
-															</h6>
+                                        {{ timeline_el(user, project(projects[0])) }}
+                                        {{ timeline_el(None, project(None)) }}
+                                        {{ timeline_el(None, project(None)) }}
+                                        <!-- /sales stats -->
 
-															<blockquote>
-																<p>When suspiciously goodness labrador understood rethought yawned grew piously endearingly inarticulate oh goodness jeez trout distinct hence cobra despite taped laughed the much audacious less inside tiger groaned darn stuffily metaphoric unihibitedly inside cobra.</p>
-																<footer>Jason, <cite title="Source Title">10:39 am</cite></footer>
-															</blockquote>
-														</div>
 
-														<div class="panel-footer panel-footer-transparent"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
-															<div class="heading-elements">
-																<ul class="list-inline list-inline-condensed heading-text">
-																	<li><a href="#" class="text-default"><i class="icon-eye4 position-left"></i> 438</a></li>
-																	<li><a href="#" class="text-default"><i class="icon-comment-discussion position-left"></i> 71</a></li>
-																</ul>
+                                        <!-- Blog post -->
+                                        <div class="timeline-row">
+                                            <div class="timeline-icon">
+                                                <img src="" alt="">
+                                            </div>
 
-																<span class="heading-btn pull-right">
-																	<a href="#" class="btn btn-link">Read post <i class="icon-arrow-right14 position-right"></i></a>
+                                            <div class="panel panel-flat timeline-content">
+                                                <div class="panel-heading">
+                                                    <h6 class="panel-title">Himalayan sunset<a
+                                                            class="heading-elements-toggle"><i
+                                                            class="icon-more"></i></a></h6>
+                                                    <div class="heading-elements">
+                                                        <span class="heading-text"><i
+                                                                class="icon-checkmark-circle position-left text-success"></i> 49 minutes ago</span>
+                                                        <ul class="icons-list">
+                                                            <li class="dropdown">
+                                                                <a href="#" class="dropdown-toggle"
+                                                                   data-toggle="dropdown">
+                                                                    <i class="icon-arrow-down12"></i>
+                                                                </a>
+
+                                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                                    <li><a href="#"><i class="icon-user-lock"></i> Hide
+                                                                        user posts</a></li>
+                                                                    <li><a href="#"><i class="icon-user-block"></i>
+                                                                        Block user</a></li>
+                                                                    <li><a href="#"><i class="icon-user-minus"></i>
+                                                                        Unfollow user</a></li>
+                                                                    <li class="divider"></li>
+                                                                    <li><a href="#"><i class="icon-embed"></i> Embed
+                                                                        post</a></li>
+                                                                    <li><a href="#"><i class="icon-blocked"></i> Report
+                                                                        this post</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="panel-body">
+                                                    <a href="#" class="display-block content-group">
+                                                        <img src="" class="img-responsive content-group" alt="">
+                                                    </a>
+
+                                                    <h6 class="content-group">
+                                                        <i class="icon-comment-discussion position-left"></i>
+                                                        Comment from <a href="#">Jason Ansley</a>:
+                                                    </h6>
+
+                                                    <blockquote>
+                                                        <p>When suspiciously goodness labrador understood rethought
+                                                            yawned grew piously endearingly inarticulate oh goodness
+                                                            jeez trout distinct hence cobra despite taped laughed the
+                                                            much audacious less inside tiger groaned darn stuffily
+                                                            metaphoric unihibitedly inside cobra.</p>
+                                                        <footer>Jason, <cite title="Source Title">10:39 am</cite>
+                                                        </footer>
+                                                    </blockquote>
+                                                </div>
+
+                                                <div class="panel-footer panel-footer-transparent"><a
+                                                        class="heading-elements-toggle"><i class="icon-more"></i></a>
+                                                    <div class="heading-elements">
+                                                        <ul class="list-inline list-inline-condensed heading-text">
+                                                            <li><a href="#" class="text-default"><i
+                                                                    class="icon-eye4 position-left"></i> 438</a></li>
+                                                            <li><a href="#" class="text-default"><i
+                                                                    class="icon-comment-discussion position-left"></i>
+                                                                71</a></li>
+                                                        </ul>
+
+                                                        <span class="heading-btn pull-right">
+																	<a href="#" class="btn btn-link">Read post <i
+                                                                            class="icon-arrow-right14 position-right"></i></a>
 																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<!-- /blog post -->
-											</div>
-									    </div>
-									    <!-- /timeline -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /blog post -->
+                                    </div>
+                                </div>
+                                <!-- /timeline -->
 
-									</div>
-
-
-									<div class="tab-pane fade" id="schedule">
-
-										<!-- Available hours -->
-										<div class="panel panel-flat">
-											<div class="panel-heading">
-												<h6 class="panel-title">Available hours<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-												<div class="heading-elements">
-													<ul class="icons-list">
-								                		<li><a data-action="collapse"></a></li>
-								                		<li><a data-action="reload"></a></li>
-								                		<li><a data-action="close"></a></li>
-								                	</ul>
-							                	</div>
-											</div>
-
-											<div class="panel-body">
-												<div class="chart-container">
-													<div class="chart has-fixed-height" id="plans" _echarts_instance_="1491670329633" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0);"><div style="position: relative; overflow: hidden; width: 100px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none;"></div><canvas width="100" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="100" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="100" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas></div></div>
-												</div>
-											</div>
-										</div>
-										<!-- /available hours -->
+                            </div>
 
 
-										<!-- Calendar -->
-										<div class="panel panel-flat">
-											<div class="panel-heading">
-												<h6 class="panel-title">My schedule<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-												<div class="heading-elements">
-													<ul class="icons-list">
-								                		<li><a data-action="collapse"></a></li>
-								                		<li><a data-action="reload"></a></li>
-								                		<li><a data-action="close"></a></li>
-								                	</ul>
-							                	</div>
-											</div>
+                            <div class="tab-pane fade" id="schedule">
 
-											<div class="panel-body">
-												<div class="schedule fc fc-unthemed fc-ltr"><div class="fc-toolbar"><div class="fc-left"><div class="fc-button-group"><button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button><button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button></div><button type="button" class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right">today</button></div><div class="fc-right"><div class="fc-button-group"><button type="button" class="fc-month-button fc-button fc-state-default fc-corner-left fc-state-active">month</button><button type="button" class="fc-agendaWeek-button fc-button fc-state-default">week</button><button type="button" class="fc-agendaDay-button fc-button fc-state-default fc-corner-right">day</button></div></div><div class="fc-center"><h2>&nbsp;</h2></div><div class="fc-clear"></div></div><div class="fc-view-container"><div class="fc-view fc-month-view"></div></div></div>
-											</div>
-										</div>
-										<!-- /calendar -->
+                                <!-- Available hours -->
+                                <div class="panel panel-flat">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Available hours<a class="heading-elements-toggle"><i
+                                                class="icon-more"></i></a></h6>
+                                        <div class="heading-elements">
+                                            <ul class="icons-list">
+                                                <li><a data-action="collapse"></a></li>
+                                                <li><a data-action="reload"></a></li>
+                                                <li><a data-action="close"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
 
-									</div>
-
-
-									<div class="tab-pane fade" id="settings">
-
-										<!-- Profile info -->
-										<div class="panel panel-flat">
-											<div class="panel-heading">
-												<h6 class="panel-title">Profile information<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-												<div class="heading-elements">
-													<ul class="icons-list">
-								                		<li><a data-action="collapse"></a></li>
-								                		<li><a data-action="reload"></a></li>
-								                		<li><a data-action="close"></a></li>
-								                	</ul>
-							                	</div>
-											</div>
-
-											<div class="panel-body">
-												<form action="#">
-													<div class="form-group">
-														<div class="row">
-															<div class="col-md-6">
-																<label>Username</label>
-																<input type="text" value="Eugene" class="form-control">
-															</div>
-															<div class="col-md-6">
-																<label>Full name</label>
-																<input type="text" value="Kopyov" class="form-control">
-															</div>
-														</div>
-													</div>
-
-													<div class="form-group">
-														<div class="row">
-															<div class="col-md-6">
-																<label>Address line 1</label>
-																<input type="text" value="Ring street 12" class="form-control">
-															</div>
-															<div class="col-md-6">
-																<label>Address line 2</label>
-																<input type="text" value="building D, flat #67" class="form-control">
-															</div>
-														</div>
-													</div>
-
-													<div class="form-group">
-														<div class="row">
-															<div class="col-md-4">
-																<label>City</label>
-																<input type="text" value="Munich" class="form-control">
-															</div>
-															<div class="col-md-4">
-																<label>State/Province</label>
-																<input type="text" value="Bayern" class="form-control">
-															</div>
-															<div class="col-md-4">
-																<label>ZIP code</label>
-																<input type="text" value="1031" class="form-control">
-															</div>
-														</div>
-													</div>
-
-													<div class="form-group">
-														<div class="row">
-															<div class="col-md-6">
-																<label>Email</label>
-																<input type="text" readonly="readonly" value="eugene@kopyov.com" class="form-control">
-															</div>
-															<div class="col-md-6">
-									                            <label>Your country</label>
-									                            <select class="select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-									                                <option value="germany" selected="selected">Germany</option>
-									                                <option value="france">France</option>
-									                                <option value="spain">Spain</option>
-									                                <option value="netherlands">Netherlands</option>
-									                                <option value="other">...</option>
-									                                <option value="uk">United Kingdom</option>
-									                            </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-ht9h-container"><span class="select2-selection__rendered" id="select2-ht9h-container" title="Germany">Germany</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-															</div>
-														</div>
-													</div>
-
-							                        <div class="form-group">
-							                        	<div class="row">
-							                        		<div class="col-md-6">
-																<label>Phone #</label>
-																<input type="text" value="+99-99-9999-9999" class="form-control">
-																<span class="help-block">+99-99-9999-9999</span>
-							                        		</div>
-
-															<div class="col-md-6">
-																<label class="display-block">Upload profile image</label>
-							                                    <div class="uploader"><input type="file" class="file-styled"><span class="filename" style="user-select: none;">No file selected</span><span class="action btn bg-warning" style="user-select: none;">Choose File</span></div>
-							                                    <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
-															</div>
-							                        	</div>
-							                        </div>
-
-							                        <div class="text-right">
-							                        	<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
-							                        </div>
-												</form>
-											</div>
-										</div>
-										<!-- /profile info -->
+                                    <div class="panel-body">
+                                        <div class="chart-container">
+                                            <div class="chart has-fixed-height" id="plans"
+                                                 _echarts_instance_="1491670329633"
+                                                 style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0);">
+                                                <div style="position: relative; overflow: hidden; width: 100px; height: 400px;">
+                                                    <div data-zr-dom-id="bg" class="zr-element"
+                                                         style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none;"></div>
+                                                    <canvas width="100" height="400" data-zr-dom-id="0"
+                                                            class="zr-element"
+                                                            style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+                                                    <canvas width="100" height="400" data-zr-dom-id="1"
+                                                            class="zr-element"
+                                                            style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+                                                    <canvas width="100" height="400" data-zr-dom-id="_zrender_hover_"
+                                                            class="zr-element"
+                                                            style="position: absolute; left: 0px; top: 0px; width: 100px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /available hours -->
 
 
-										<!-- Account settings -->
-										<div class="panel panel-flat">
-											<div class="panel-heading">
-												<h6 class="panel-title">Account settings<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-												<div class="heading-elements">
-													<ul class="icons-list">
-								                		<li><a data-action="collapse"></a></li>
-								                		<li><a data-action="reload"></a></li>
-								                		<li><a data-action="close"></a></li>
-								                	</ul>
-							                	</div>
-											</div>
+                                <!-- Calendar -->
+                                <div class="panel panel-flat">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">My schedule<a class="heading-elements-toggle"><i
+                                                class="icon-more"></i></a></h6>
+                                        <div class="heading-elements">
+                                            <ul class="icons-list">
+                                                <li><a data-action="collapse"></a></li>
+                                                <li><a data-action="reload"></a></li>
+                                                <li><a data-action="close"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
 
-											<div class="panel-body">
-												<form action="#">
-													<div class="form-group">
-														<div class="row">
-															<div class="col-md-6">
-																<label>Username</label>
-																<input type="text" value="Kopyov" readonly="readonly" class="form-control">
-															</div>
+                                    <div class="panel-body">
+                                        <div class="schedule fc fc-unthemed fc-ltr">
+                                            <div class="fc-toolbar">
+                                                <div class="fc-left">
+                                                    <div class="fc-button-group">
+                                                        <button type="button"
+                                                                class="fc-prev-button fc-button fc-state-default fc-corner-left">
+                                                            <span class="fc-icon fc-icon-left-single-arrow"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                                class="fc-next-button fc-button fc-state-default fc-corner-right">
+                                                            <span class="fc-icon fc-icon-right-single-arrow"></span>
+                                                        </button>
+                                                    </div>
+                                                    <button type="button"
+                                                            class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right">
+                                                        today
+                                                    </button>
+                                                </div>
+                                                <div class="fc-right">
+                                                    <div class="fc-button-group">
+                                                        <button type="button"
+                                                                class="fc-month-button fc-button fc-state-default fc-corner-left fc-state-active">
+                                                            month
+                                                        </button>
+                                                        <button type="button"
+                                                                class="fc-agendaWeek-button fc-button fc-state-default">
+                                                            week
+                                                        </button>
+                                                        <button type="button"
+                                                                class="fc-agendaDay-button fc-button fc-state-default fc-corner-right">
+                                                            day
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="fc-center"><h2>&nbsp;</h2></div>
+                                                <div class="fc-clear"></div>
+                                            </div>
+                                            <div class="fc-view-container">
+                                                <div class="fc-view fc-month-view"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /calendar -->
 
-															<div class="col-md-6">
-																<label>Current password</label>
-																<input type="password" value="password" readonly="readonly" class="form-control">
-															</div>
-														</div>
-													</div>
+                            </div>
 
-													<div class="form-group">
-														<div class="row">
-															<div class="col-md-6">
-																<label>New password</label>
-																<input type="password" placeholder="Enter new password" class="form-control">
-															</div>
 
-															<div class="col-md-6">
-																<label>Repeat password</label>
-																<input type="password" placeholder="Repeat new password" class="form-control">
-															</div>
-														</div>
-													</div>
+                            <div class="tab-pane fade" id="settings">
 
-													<div class="form-group">
-														<div class="row">
-															<div class="col-md-6">
-																<label>Profile visibility</label>
+                                <!-- Profile info -->
+                                <div class="panel panel-flat">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Profile information<a class="heading-elements-toggle"><i
+                                                class="icon-more"></i></a></h6>
+                                        <div class="heading-elements">
+                                            <ul class="icons-list">
+                                                <li><a data-action="collapse"></a></li>
+                                                <li><a data-action="reload"></a></li>
+                                                <li><a data-action="close"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
 
-																<div class="radio">
-																	<label>
-																		<div class="choice"><span class="checked"><input type="radio" name="visibility" class="styled" checked="checked"></span></div>
-																		Visible to everyone
-																	</label>
-																</div>
+                                    <div class="panel-body">
+                                        <form action="#">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Username</label>
+                                                        <input type="text" value="Eugene" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label>Full name</label>
+                                                        <input type="text" value="Kopyov" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
 
-																<div class="radio">
-																	<label>
-																		<div class="choice"><span><input type="radio" name="visibility" class="styled"></span></div>
-																		Visible to friends only
-																	</label>
-																</div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Address line 1</label>
+                                                        <input type="text" value="Ring street 12" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label>Address line 2</label>
+                                                        <input type="text" value="building D, flat #67"
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
 
-																<div class="radio">
-																	<label>
-																		<div class="choice"><span><input type="radio" name="visibility" class="styled"></span></div>
-																		Visible to my connections only
-																	</label>
-																</div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>City</label>
+                                                        <input type="text" value="Munich" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>State/Province</label>
+                                                        <input type="text" value="Bayern" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>ZIP code</label>
+                                                        <input type="text" value="1031" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
 
-																<div class="radio">
-																	<label>
-																		<div class="choice"><span><input type="radio" name="visibility" class="styled"></span></div>
-																		Visible to my colleagues only
-																	</label>
-																</div>
-															</div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Email</label>
+                                                        <input type="text" readonly="readonly" value="eugene@kopyov.com"
+                                                               class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label>Your country</label>
+                                                        <select class="select select2-hidden-accessible" tabindex="-1"
+                                                                aria-hidden="true">
+                                                            <option value="germany" selected="selected">Germany</option>
+                                                            <option value="france">France</option>
+                                                            <option value="spain">Spain</option>
+                                                            <option value="netherlands">Netherlands</option>
+                                                            <option value="other">...</option>
+                                                            <option value="uk">United Kingdom</option>
+                                                        </select><span
+                                                            class="select2 select2-container select2-container--default"
+                                                            dir="ltr" style="width: 100%;"><span class="selection"><span
+                                                            class="select2-selection select2-selection--single"
+                                                            role="combobox" aria-haspopup="true" aria-expanded="false"
+                                                            tabindex="0" aria-labelledby="select2-ht9h-container"><span
+                                                            class="select2-selection__rendered"
+                                                            id="select2-ht9h-container"
+                                                            title="Germany">Germany</span><span
+                                                            class="select2-selection__arrow" role="presentation"><b
+                                                            role="presentation"></b></span></span></span><span
+                                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-															<div class="col-md-6">
-																<label>Notifications</label>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Phone #</label>
+                                                        <input type="text" value="+99-99-9999-9999"
+                                                               class="form-control">
+                                                        <span class="help-block">+99-99-9999-9999</span>
+                                                    </div>
 
-																<div class="checkbox">
-																	<label>
-																		<div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
-																		Password expiration notification
-																	</label>
-																</div>
+                                                    <div class="col-md-6">
+                                                        <label class="display-block">Upload profile image</label>
+                                                        <div class="uploader"><input type="file"
+                                                                                     class="file-styled"><span
+                                                                class="filename" style="user-select: none;">No file selected</span><span
+                                                                class="action btn bg-warning"
+                                                                style="user-select: none;">Choose File</span></div>
+                                                        <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-																<div class="checkbox">
-																	<label>
-																		<div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
-																		New message notification
-																	</label>
-																</div>
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-primary">Save <i
+                                                        class="icon-arrow-right14 position-right"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /profile info -->
 
-																<div class="checkbox">
-																	<label>
-																		<div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
-																		New task notification
-																	</label>
-																</div>
 
-																<div class="checkbox">
-																	<label>
-																		<div class="checker"><span><input type="checkbox" class="styled"></span></div>
-																		New contact request notification
-																	</label>
-																</div>
-															</div>
-														</div>
-													</div>
+                                <!-- Account settings -->
+                                <div class="panel panel-flat">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Account settings<a class="heading-elements-toggle"><i
+                                                class="icon-more"></i></a></h6>
+                                        <div class="heading-elements">
+                                            <ul class="icons-list">
+                                                <li><a data-action="collapse"></a></li>
+                                                <li><a data-action="reload"></a></li>
+                                                <li><a data-action="close"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
 
-							                        <div class="text-right">
-							                        	<button type="submit" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
-							                        </div>
-						                        </form>
-											</div>
-										</div>
-										<!-- /account settings -->
+                                    <div class="panel-body">
+                                        <form action="#">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Username</label>
+                                                        <input type="text" value="Kopyov" readonly="readonly"
+                                                               class="form-control">
+                                                    </div>
 
-									</div>
-								</div>
-							</div>
-						</div>
+                                                    <div class="col-md-6">
+                                                        <label>Current password</label>
+                                                        <input type="password" value="password" readonly="readonly"
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
 
-						<div class="col-lg-3">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>New password</label>
+                                                        <input type="password" placeholder="Enter new password"
+                                                               class="form-control">
+                                                    </div>
 
-							<!-- User thumbnail -->
-							<div class="thumbnail">
-								<div class="thumb thumb-rounded thumb-slide">
-									<img src="{{ user.avatar_url }}" alt="">
-									<div class="caption">
+                                                    <div class="col-md-6">
+                                                        <label>Repeat password</label>
+                                                        <input type="password" placeholder="Repeat new password"
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Profile visibility</label>
+
+                                                        <div class="radio">
+                                                            <label>
+                                                                <div class="choice"><span class="checked"><input
+                                                                        type="radio" name="visibility" class="styled"
+                                                                        checked="checked"></span></div>
+                                                                Visible to everyone
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="radio">
+                                                            <label>
+                                                                <div class="choice"><span><input type="radio"
+                                                                                                 name="visibility"
+                                                                                                 class="styled"></span>
+                                                                </div>
+                                                                Visible to friends only
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="radio">
+                                                            <label>
+                                                                <div class="choice"><span><input type="radio"
+                                                                                                 name="visibility"
+                                                                                                 class="styled"></span>
+                                                                </div>
+                                                                Visible to my connections only
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="radio">
+                                                            <label>
+                                                                <div class="choice"><span><input type="radio"
+                                                                                                 name="visibility"
+                                                                                                 class="styled"></span>
+                                                                </div>
+                                                                Visible to my colleagues only
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <label>Notifications</label>
+
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <div class="checker"><span class="checked"><input
+                                                                        type="checkbox" class="styled"
+                                                                        checked="checked"></span></div>
+                                                                Password expiration notification
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <div class="checker"><span class="checked"><input
+                                                                        type="checkbox" class="styled"
+                                                                        checked="checked"></span></div>
+                                                                New message notification
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <div class="checker"><span class="checked"><input
+                                                                        type="checkbox" class="styled"
+                                                                        checked="checked"></span></div>
+                                                                New task notification
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <div class="checker"><span><input type="checkbox"
+                                                                                                  class="styled"></span>
+                                                                </div>
+                                                                New contact request notification
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-primary">Save <i
+                                                        class="icon-arrow-right14 position-right"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /account settings -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+
+                    <!-- User thumbnail -->
+                    <div class="thumbnail">
+                        <div class="thumb thumb-rounded thumb-slide">
+                            <img src="{{ user.avatar_url }}" alt="">
+                            <div class="caption">
 										<span>
-											<a href="#" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
-											<a href="user_pages_profile.html" class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
+											<a href="#" class="btn bg-success-400 btn-icon btn-xs"
+                                               data-popup="lightbox"><i class="icon-plus2"></i></a>
+											<a href="user_pages_profile.html"
+                                               class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
 										</span>
-									</div>
-								</div>
+                            </div>
+                        </div>
 
-						    	<div class="caption text-center">
-						    		<h6 class="text-semibold no-margin">{{ user.login }}</h6>
-					    			<ul class="icons-list mt-15">
-{#				                    	<li><a href="#" data-popup="tooltip" title="" data-original-title="Google Drive"><i class="icon-google-drive"></i></a></li>#}
-{#				                    	<li><a href="#" data-popup="tooltip" title="" data-original-title="Twitter"><i class="icon-twitter"></i></a></li>#}
-				                    	<li><a href="{{ user.github_url }}" data-popup="tooltip" title="" data-original-title="Github"><i class="icon-github"></i></a></li>
-			                    	</ul>
-						    	</div>
-					    	</div>
-					    	<!-- /user thumbnail -->
-
-
-							<!-- Navigation -->
-					    	<div class="panel panel-flat">
-								<div class="panel-heading">
-									<h6 class="panel-title">Navigation<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-									<div class="heading-elements">
-										<a href="#" class="heading-text">See all →</a>
-				                	</div>
-								</div>
-
-								<div class="list-group no-border no-padding-top">
-									<a href="#" class="list-group-item"><i class="icon-user"></i> My profile</a>
-									<a href="#" class="list-group-item"><i class="icon-cash3"></i> Balance</a>
-									<a href="#" class="list-group-item"><i class="icon-tree7"></i> Connections <span class="badge bg-danger pull-right">29</span></a>
-									<a href="#" class="list-group-item"><i class="icon-users"></i> Friends</a>
-									<div class="list-group-divider"></div>
-									<a href="#" class="list-group-item"><i class="icon-calendar3"></i> Events <span class="badge bg-teal-400 pull-right">48</span></a>
-									<a href="#" class="list-group-item"><i class="icon-cog3"></i> Account settings</a>
-								</div>
-							</div>
-							<!-- /navigation -->
-						</div>
-					</div>
-					<!-- /user profile -->
+                        <div class="caption text-center">
+                            <h6 class="text-semibold no-margin">{{ user.name }}</h6>
+                            <ul class="icons-list mt-15">
+                                {#				                    	<li><a href="#" data-popup="tooltip" title="" data-original-title="Google Drive"><i class="icon-google-drive"></i></a></li>#}
+                                {#				                    	<li><a href="#" data-popup="tooltip" title="" data-original-title="Twitter"><i class="icon-twitter"></i></a></li>#}
+                                <li><a href="{{ user.github_url }}" data-popup="tooltip" title=""
+                                       data-original-title="Github"><i class="icon-github"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /user thumbnail -->
 
 
-					<!-- Footer -->
-					<div class="footer text-muted">
-						© 2015. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
-					</div>
-					<!-- /footer -->
+                    <!-- Navigation -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">Navigation<a class="heading-elements-toggle"><i
+                                    class="icon-more"></i></a></h6>
+                            <div class="heading-elements">
+                                <a href="#" class="heading-text">See all →</a>
+                            </div>
+                        </div>
 
-				</div>
-				<!-- /content area -->
+                        <div class="list-group no-border no-padding-top">
+                            <a href="#" class="list-group-item"><i class="icon-user"></i> My profile</a>
+                            <a href="#" class="list-group-item"><i class="icon-cash3"></i> Balance</a>
+                            <a href="#" class="list-group-item"><i class="icon-tree7"></i> Connections <span
+                                    class="badge bg-danger pull-right">29</span></a>
+                            <a href="#" class="list-group-item"><i class="icon-users"></i> Friends</a>
+                            <div class="list-group-divider"></div>
+                            <a href="#" class="list-group-item"><i class="icon-calendar3"></i> Events <span
+                                    class="badge bg-teal-400 pull-right">48</span></a>
+                            <a href="#" class="list-group-item"><i class="icon-cog3"></i> Account settings</a>
+                        </div>
+                    </div>
+                    <!-- /navigation -->
+                </div>
+            </div>
+            <!-- /user profile -->
 
-			</div>
+
+            <!-- Footer -->
+            <div class="footer text-muted">
+                © 2015. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov"
+                                                                    target="_blank">Eugene Kopyov</a>
+            </div>
+            <!-- /footer -->
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <div id="modal_default" class="modal fade in" style="display: none; padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h5 class="modal-title">Vertical form</h5>
+                </div>
+
+                <form id='new_proj_form' action="" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Наименование</label>
+                            <input id="name" type="text" maxlength="25" minlength="4" name="name"><br>
+                            <label for="companyName">Наименование компании</label>
+                            <input id="companyName" type="text" maxlength="25" minlength="4" name="companyName"><br>
+                            <label for="companyLocation">Местоположение омпании</label>
+                            <input id="companyLocation" type="text" maxlength="25" minlength="4" name="companyLocation"><br>
+                            <label for="link">Линк</label>
+                            <input id="link" type="text" maxlength="25" minlength="4" name="link"><br>
+                            <label for="avatar">Аватар</label>
+                            <input id="avatar" type="file" name="avatar"><br>
+                            <label for="description">Описание</label>
+                            <textarea id="description" name="description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            $('#new_proj_form').submit(function (e) {
+                e.preventDefault();
+                var options = {
+                    url: window.location.pathname,
+                    type: 'post'
+                };
+
+                $(this).ajaxSubmit(options)
+            })
+        })()
+    </script>
+
+
 {% endblock %}
 

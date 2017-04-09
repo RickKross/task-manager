@@ -1,16 +1,16 @@
-from sqlalchemy import BINARY
-from sqlalchemy import Binary
+from sqlalchemy import BLOB
+from sqlalchemy import LargeBinary
 from sqlalchemy import TypeDecorator
 
 
-class UnicodeString(TypeDecorator, Binary):
+class UnicodeString(TypeDecorator, LargeBinary):
     """
     Потому что просто Unicode sux.
     В базе данные хранятся в байтах
     При доставании, декодируются в юникод
     """
 
-    impl = BINARY()
+    impl = BLOB()
 
     def process_bind_param(self, value, dialect):
         return value.encode()
