@@ -1,0 +1,9 @@
+.description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    whitespace: no-wrap;
+}
+
+.row {
+  display: flex; /* equal height of the children */
+}

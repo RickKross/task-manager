@@ -1,4 +1,5 @@
 {% extends "main_navbar.html" %}
+{% from "macros.html" import project, timeline_el %}
 {% block title %}
 {{ title }}
 {% endblock %}
@@ -85,37 +86,15 @@
 											<div class="timeline-container">
 
 												<!-- Sales stats -->
-												<div class="timeline-row">
-													<div class="timeline-icon">
-														<a href="#"><img src="assets/images/demo/users/face24.jpg" alt=""></a>
-													</div>
-
-													<div class="panel panel-flat timeline-content">
-														<div class="panel-heading">
-															<h6 class="panel-title">Daily statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-															<div class="heading-elements">
-																<span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>
-
-																<ul class="icons-list">
-											                		<li><a data-action="reload"></a></li>
-											                	</ul>
-										                	</div>
-														</div>
-
-														<div class="panel-body">
-															<div class="chart-container">
-																<div class="chart has-fixed-height" id="sales" _echarts_instance_="1491670329631" style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"><div style="position: relative; overflow: hidden; width: 616px; height: 400px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 1040px; height: 400px; user-select: none;"></div><canvas width="616" height="400" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 616px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="616" height="400" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 616px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="616" height="400" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 616px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><div class="echarts-tooltip zr-element" style="position: absolute; display: none; border-style: solid; white-space: nowrap; transition: left 0.4s, top 0.4s; background-color: rgba(0, 0, 0, 0.8); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-family: Roboto, sans-serif; padding: 8px 12px; left: 395px; top: 118.5px;">Sat<br>Profit : 220<br>Income : 450<br>Expenses : -230</div></div></div>
-															</div>
-														</div>
-													</div>
-												</div>
+                                                {{ timeline_el(None, project(None)) }}
+                                                {{ timeline_el(None, project(None)) }}
 												<!-- /sales stats -->
 
 
 												<!-- Blog post -->
 												<div class="timeline-row">
 													<div class="timeline-icon">
-														<img src="assets/images/demo/users/face12.jpg" alt="">
+														<img src="" alt="">
 													</div>
 
 													<div class="panel panel-flat timeline-content">
@@ -144,7 +123,7 @@
 
 														<div class="panel-body">
 															<a href="#" class="display-block content-group">
-																<img src="assets/images/demo/cover3.jpg" class="img-responsive content-group" alt="">
+																<img src="" class="img-responsive content-group" alt="">
 															</a>
 
 															<h6 class="content-group">
@@ -501,61 +480,6 @@
 								</div>
 							</div>
 							<!-- /navigation -->
-
-
-							<!-- Share your thoughts -->
-							<div class="panel panel-flat">
-								<div class="panel-heading">
-									<h6 class="panel-title">Share your thoughts<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-									<div class="heading-elements">
-										<ul class="icons-list">
-					                		<li><a data-action="close"></a></li>
-					                	</ul>
-				                	</div>
-								</div>
-
-								<div class="panel-body">
-									<form action="#">
-										<div class="form-group">
-											<textarea name="enter-message" class="form-control mb-15" rows="3" cols="1" placeholder="What's on your mind?"></textarea>
-										</div>
-
-										<div class="row">
-				                    		<div class="col-xs-6">
-					                        	<ul class="icons-list icons-list-extended mt-10">
-					                                <li><a href="#" data-popup="tooltip" title="" data-container="body" data-original-title="Add photo"><i class="icon-images2"></i></a></li>
-					                            	<li><a href="#" data-popup="tooltip" title="" data-container="body" data-original-title="Add video"><i class="icon-film2"></i></a></li>
-					                                <li><a href="#" data-popup="tooltip" title="" data-container="body" data-original-title="Add event"><i class="icon-calendar2"></i></a></li>
-					                            </ul>
-				                    		</div>
-
-				                    		<div class="col-xs-6 text-right">
-					                            <button type="button" class="btn btn-primary btn-labeled btn-labeled-right">Share <b><i class="icon-circle-right2"></i></b></button>
-				                    		</div>
-				                    	</div>
-			                    	</form>
-		                    	</div>
-							</div>
-							<!-- /share your thoughts -->
-
-
-							<!-- Balance chart -->
-							<div class="panel panel-flat">
-								<div class="panel-heading">
-									<h6 class="panel-title">Balance changes<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-									<div class="heading-elements">
-										<span class="heading-text"><i class="icon-arrow-down22 text-danger"></i> <span class="text-semibold">- 29.4%</span></span>
-				                	</div>
-								</div>
-
-								<div class="panel-body">
-									<div class="chart-container">
-										<div class="chart" id="visits" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0);" _echarts_instance_="1491670329632"><div style="position: relative; overflow: hidden; width: 187px; height: 300px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 328px; height: 300px; user-select: none;"></div><canvas width="187" height="300" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 187px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="187" height="300" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 187px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="187" height="300" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 187px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas></div></div>
-									</div>
-		                    	</div>
-							</div>
-							<!-- /balance chart -->
-
 						</div>
 					</div>
 					<!-- /user profile -->

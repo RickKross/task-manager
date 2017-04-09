@@ -1,0 +1,335 @@
+{% macro ticket(_id, name, date, state, priority="Normal", app="", description="", users=[]) %}
+    <div class="col-md-6">
+        <div id="ticket_{{ _id }}" class="panel border-left-lg border-left-primary">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6 class="no-margin-top"><a href="task_manager_detailed.html">#{{ _id }}. {{ name }}</a></h6>
+                        <p class="mb-15">{{ description }}</p>
+                        {# default #}
+                        <img src="../static/images/users/girl-placeholder.png" class="img-circle img-xs" alt="">
+                        <img src="../static/images/users/man-placeholder.png" class="img-circle img-xs" alt="">
+                        <img src="../static/images/users/woman-placeholder.png" class="img-circle img-xs" alt="">
+                        {# end default #}
+                        {% for user in users %}
+                            <a href="#">
+                                {# TODO user image and link
+                            <img src="assets/images/demo/users/face1.jpg" class="img-circle img-xs" alt="">
+                            <img src="assets/images/demo/users/face1.jpg" class="img-circle img-xs" alt="">
+                             #}
+                                User
+                            </a>
+                        {% endfor %}
+                        <a href="#" class="text-default">&nbsp;<i class="icon-plus22"></i></a>
+                    </div>
+
+                    <div class="col-md-4">
+                        <ul class="list task-details">
+                            <li>{{ date }}</li>
+                            <li class="dropdown">
+                                Priority: &nbsp;
+                                <a href="#" class="priority label dropdown-toggle"
+                                   data-toggle="dropdown">{{ priority|capitalize }}
+
+                                    <ul class="chose-priority dropdown-menu dropdown-menu-right active">
+                                        <li><a class="chooser" href="#"><span
+                                                class="highest status-mark position-left bg-danger"></span> Highest
+                                            priority</a></li>
+                                        <li><a class="chooser" href="#"><span
+                                                class="high status-mark position-left bg-info"></span> High
+                                            priority</a></li>
+                                        <li><a class="chooser" href="#"><span
+                                                class="normal status-mark position-left bg-primary"></span> Normal
+                                            priority</a></li>
+                                        <li><a class="chooser" href="#"><span
+                                                class="low status-mark position-left bg-success"></span> Low
+                                            priority</a></li>
+                                    </ul>
+                            </li>
+                            <li><a href="#">Eternity app</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer panel-footer-condensed"><a class="heading-elements-toggle"><i
+                    class="icon-more"></i></a><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                <div class="heading-elements">
+                    <span class="heading-text">Due: <span class="text-semibold">23 hours</span></span>
+
+                    <ul class="list-inline list-inline-condensed heading-text pull-right">
+                        <li class="dropdown">
+                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown">Open
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-right active">
+                                <li class="active"><a href="#">{{ state|capitalize }}</a></li>
+                                <li><a href="#">On hold</a></li>
+                                <li><a href="#">Resolved</a></li>
+                                <li><a href="#">Closed</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Dublicate</a></li>
+                                <li><a href="#">Invalid</a></li>
+                                <li><a href="#">Wontfix</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
+                                    class="icon-menu7"></i> <span class="caret"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#"><i class="icon-alarm-add"></i> Check in</a></li>
+                                <li><a href="#"><i class="icon-attachment"></i> Attach screenshot</a>
+                                </li>
+                                <li><a href="#"><i class="icon-rotate-ccw2"></i> Reassign</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><i class="icon-pencil7"></i> Edit task</a></li>
+                                <li><a href="#"><i class="icon-cross2"></i> Remove</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function (e) {
+
+
+            var $root = $('#ticket_{{ _id }}');
+
+            var priority = 0 || '{{ priority|capitalize }}';
+
+            function change_priority(newvalue) {
+
+                newvalue = newvalue.toString().capitalize();
+
+                var $priority = $root.find('.priority:first'),
+                    prior_class = {
+                        'Highest': '-danger',
+                        'High': '-info',
+                        'Normal': '-primary',
+                        'Low': '-success'
+                    };
+
+                $.each(prior_class, function (_, v) {
+                    $root.removeClass('border-left' + v);
+                    $priority.removeClass('label' + v);
+
+                });
+
+                $priority.html(newvalue + '<span class="caret"></span></a>').addClass('label' + prior_class[newvalue]);
+                $root.addClass('border-left' + prior_class[newvalue]);
+
+                console.log('------------');
+                console.log($priority.html());
+
+                return true;
+            }
+
+            $root.find('.chose-priority li span.highest').parents('a:first').data("priority", 'Highest');
+            $root.find('.chose-priority li span.high').parents('a:first').data("priority", 'High');
+            $root.find('.chose-priority li span.normal').parents('a:first').data("priority", 'Normal');
+            $root.find('.chose-priority li span.low').parents('a:first').data("priority", 'Low');
+
+            console.log(priority);
+            change_priority(priority);
+
+            $root.find('.{{ priority|lower }}').parents('li:first').addClass('active');
+
+            $root.find('.chose-priority li').click(function () {
+                console.log($(this).find('a.chooser').data('priority'));
+                change_priority($(this).find('a.chooser').data('priority'));
+            })
+
+
+        })
+    </script>
+{% endmacro %}
+{% macro timeline_el(user, content) %}
+    <div class="timeline-row">
+        <div class="timeline-icon">
+            {% if user %}
+                <a href="/user/{{ user.login }}"><img src="{{ user.avatar_url }}" alt=""></a>
+            {% else %}
+                <a href="#"><img src="../static/images/users/man-placeholder.png" alt=""></a>
+            {% endif %}
+        </div>
+        {{ content }}
+        {#        <div class="panel panel-flat timeline-content">#}
+        {#            <div class="panel-heading">#}
+        {#                <h6 class="panel-title">Daily statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a>#}
+        {#                </h6>#}
+        {#                <div class="heading-elements">#}
+        {#                    <span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>#}
+        {##}
+        {#                    <ul class="icons-list">#}
+        {#                        <li><a data-action="reload"></a></li>#}
+        {#                    </ul>#}
+        {#                </div>#}
+        {#            </div>#}
+        {##}
+        {#            <div class="panel-body">#}
+        {#                <div class="chart-container">#}
+        {#                    {{ content }}#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
+{% endmacro %}
+
+{% macro project(project_el) %}
+    <div class="panel panel-flat" style="max-height: 450px">
+        <div class="panel-heading" style="padding-bottom: 10px; padding-top: 10px">
+            <h3 class="panel-title">project name <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+            </h3>
+            <div class="heading-elements">
+                <a href="#" class="text-default">
+                    <span class="heading-text">
+                        Перейти к проекту
+                        <i class="icon-circle-right2 position-right"></i>
+                    </span>
+                </a>
+
+                {#                <ul class="icons-list">#}
+                {#                    <li><a data-action="reload"></a></li>#}
+                {#                </ul>#}
+            </div>
+        </div>
+
+        <div class="container-fluid" style="max-height: inherit">
+            <div class="row" style="overflow: hidden;">
+                <div class="col-xs-3">
+
+                    <!-- Project thumbnail -->
+                    <div class="panel text-center panel-image">
+                        <div class="panel-body">
+                            <img class="img-circle img-responsive" src="../static/images/projects/proj_demo_1.png"
+                                 alt="" style="">
+                            {#                            <div class="caption">#}
+                            {#                                <span>#}
+                            {#                                    <a href="#" class="btn bg-success-400 btn-icon btn-xs"#}
+                            {#                                       data-popup="lightbox"><i class="icon-plus2"></i></a>#}
+                            {#                                    {% %}#}
+                            {#                                    <a href="user_pages_profile.html"#}
+                            {#                                       class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>#}
+                            {#                                </span>#}
+                            {#                            </div>#}
+                            <div class="caption ">
+                                <h6 class="text-semibold no-margin">Project name
+                                    <small class="display-block">Company name</small>
+                                </h6>
+                                <div class="text-size-mini text-muted">
+                                    <i class="icon-pin text-size-small"></i> &nbsp;Company location
+                                </div>
+                            </div>
+                            <ul class="icons-list mt-15">
+                                <li><a href="#" data-popup="tooltip" title="" data-original-title="Google Drive"><i
+                                        class="icon-google-drive"></i></a></li>
+                                <li><a href="#" data-popup="tooltip" title="" data-original-title="Twitter"><i
+                                        class="icon-twitter"></i></a></li>
+                                <li><a href="#" data-popup="tooltip" title="" data-original-title="Github"><i
+                                        class="icon-github"></i></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /Project thumbnail -->
+
+                </div>
+                <div class="col-xs-9">
+                    <!-- Project thumbnail -->
+                    <div class="panel panel-description">
+                        <div class="panel-heading">
+                            <h6 class="panel-title text-semibold no-margin">Описание
+                                {#                                <small class="display-block">Company name</small>#}
+                            </h6>
+                        </div>
+                        <div class="panel-body text-default description">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                            Ipsum
+                            has been the industry's standard dummy text ever since the 1500s, when an unknown
+                            printer took a galley of type and scrambled it to make a type specimen book. It has
+                            survived not only five centuries, but also the leap into electronic typesetting,
+                            remaining essentially unchanged. It was popularised in the 1960s with the release of
+                            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+                            Why do we use it?
+                            It is a long established fact that a reader will be distracted by the readable
+                            content
+                            of a page when looking at its layout. The point of using Lorem Ipsum is that it has
+                            a
+                            more-or-less normal distribution of letters, as opposed to using 'Content here,
+                            content
+                            here', making it look like readable English. Many desktop publishing packages and
+                            web
+                            page editors now use Lorem Ipsum as their default model text, and a search for
+                            'lorem
+                            ipsum' will uncover many web sites still in their infancy. Various versions have
+                            evolved
+                            over the years, sometimes by accident, sometimes on purpose (injected humour and the
+                            like).
+                        </div>
+                        <div class="panel-footer">
+{#                                <span class="heading-text">Active user:</span>#}
+                                <ul class="heading-thumbnails text-center">
+                                    <li>
+                                        <a class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"><i class="icon-person"></i></a>
+
+                                        <span class="badge bg-danger">5</span>
+                                    </li>
+                                    <li>
+                                        <a class="btn border-success text-success btn-flat btn-rounded btn-xs valign-text-bottom">LOW</a>
+                                        <span class="badge bg-danger">1</span>
+                                    </li>
+                                    <li>
+                                        <a class="btn border-primary text-primary btn-flat btn-rounded btn-xs valign-text-bottom">NORMAL</a>
+                                        <span class="badge bg-danger">2</span>
+                                    </li>
+                                    <li>
+                                        <a class="btn border-info text-info btn-flat btn-rounded btn-xs valign-text-bottom">HIGH</a>
+                                        <span class="badge bg-danger">3</span>
+                                    </li>
+                                    <li>
+                                        <a class="btn border-danger text-danger btn-flat btn-rounded btn-xs valign-text-bottom">HIGHEST</a>
+                                        <span class="badge bg-danger">4</span>
+                                    </li>
+
+                                </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- /Project thumbnail -->
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script type="text/javascript">
+        function dot_description() {
+            var $desc = $('.description'),
+                img_panel_height = $desc.closest('.row').find('.panel-image').outerHeight(),
+                header_height = $desc.siblings('.panel-heading').outerHeight(),
+                footer_height = $desc.siblings('.panel-footer').outerHeight(),
+                padding = 40,
+                height = Math.floor(img_panel_height - header_height - footer_height - padding);
+            $desc.dotdotdot({
+                ellipsis: '...',
+                wrap: 'word',
+                height: height
+            })
+        }
+
+        (function () {
+            dot_description()
+        })();
+
+        $(window).on('resize', function () {
+            dot_description();
+        })
+    </script>
+{% endmacro %}
+
