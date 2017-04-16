@@ -641,32 +641,74 @@
     <div id="modal_default" class="modal fade in" style="display: none; padding-right: 15px;">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h5 class="modal-title">Vertical form</h5>
-                </div>
-
                 <form id='new_proj_form' action="" method="post">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="name">Наименование</label>
-                            <input id="name" type="text" maxlength="25" minlength="4" name="name"><br>
-                            <label for="companyName">Наименование компании</label>
-                            <input id="companyName" type="text" maxlength="25" minlength="4" name="companyName"><br>
-                            <label for="companyLocation">Местоположение омпании</label>
-                            <input id="companyLocation" type="text" maxlength="25" minlength="4" name="companyLocation"><br>
-                            <label for="link">Линк</label>
-                            <input id="link" type="text" maxlength="25" minlength="4" name="link"><br>
-                            <label for="avatar">Аватар</label>
-                            <input id="avatar" type="file" name="avatar"><br>
-                            <label for="description">Описание</label>
-                            <textarea id="description" name="description"></textarea>
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Добавить проект<a class="heading-elements-toggle"><i
+                                    class="icon-more"></i></a></h5>
+                            <div class="heading-elements">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit">Submit</button>
+
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label>Наименование проекта:</label>
+                                <input id="name" type="text" class="form-control" maxlength="25" minlength="4"
+                                       name="name" placeholder="Наименование проекта">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Наименование компании:</label>
+                                <input id="companyName" type="text" class="form-control" maxlength="25" minlength="4"
+                                       name="companyName" placeholder="Наименование компании">
+                            </div>
+                            {#TODO select#}
+                            <div class="form-group">
+                                <label>Местоположение компании:</label>
+                                <input id="companyLocation" class="form-control" type="text" maxlength="25"
+                                       minlength="4" name="companyLocation" placeholder="Местоположение">
+                            </div>
+                            <div class="form-group">
+                                <label>Ссылка на компанию:</label>
+                                <input id="link" type="url" class="form-control" maxlength="25" minlength="4"
+                                       name="link" placeholder="http://www.example.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Аватар:</label>
+                                <input id="avatar" type="file" name="avatar" class="file">
+{#                                       accept=".gif, .png, .jpg, .jpeg">#}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Описание:</label>
+                                <textarea id="description" name="description" rows="5" cols="5"
+                                          class="form-control elastic elastic-manual"
+                                          placeholder="Введите описание проекта"></textarea>
+                            </div>
+
+                            <div class="text-right">
+                                <button id="submit_new_proj_form" type="submit" class="btn btn-primary">Добавить <i
+                                        class="icon-arrow-right14 position-right"></i></button>
+                            </div>
                         </div>
                     </div>
                 </form>
+
+                {#                <form id='new_proj_form' action="" method="post">#}
+                {#
+                {#                        <div class="form-group">#}
+                {#                            <label for="avatar">Аватар</label>#}
+                {#                            <input id="avatar" type="file" name="avatar"><br>#}
+                {#                            <label for="description">Описание</label>#}
+                {#                            <textarea id="description" name="description"></textarea>#}
+                {#                        </div>#}
+                {#                        <div class="form-group">#}
+                {#                            <button type="submit">Submit</button>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </form>#}
 
 
             </div>
@@ -675,7 +717,18 @@
 
     <script>
         (function () {
+
+            $('#avatar').fileinput({
+                language: 'ru',
+                showPreview: false,
+                uploadUrl: '#',
+                allowedFileExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+                showUpload: false
+
+            });
+
             $('#new_proj_form').submit(function (e) {
+                console.log('submit')
                 e.preventDefault();
                 var options = {
                     url: window.location.pathname,

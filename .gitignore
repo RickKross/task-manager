@@ -93,3 +93,4 @@ limitless/
 migrations/
 
 app/upload/
+config.py

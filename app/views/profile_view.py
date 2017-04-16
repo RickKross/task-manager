@@ -3,11 +3,11 @@ import os
 from flask import Blueprint, render_template
 from flask import flash
 from flask import request
-from werkzeug.utils import secure_filename
+from flask import url_for
+from werkzeug.utils import secure_filename, redirect
 
 from app import app, g
 from app.controllers.git_api_controller import get_user
-from app.forms import AddProjectForm
 from app.models import Projects
 from app.utils import myprint
 from config import ALLOWED_EXTENSIONS
@@ -22,10 +22,10 @@ def allowed_file(filename):
 
 @app.route('/user/<login>', methods=['GET', 'POST'])
 def profile(login):
-    form = AddProjectForm(request.form)
     if not g.user:
-        get_user()
-    if request.method == 'POST' and form.validate():
+        return redirect(url_for('logout'))
+
+    if request.method == 'POST':
         if request.form.get('name'):
             data = {k: v[0] if isinstance(v, list) else v for k, v in request.form.items() if k != 'avatar'}
             data['owner'] = g.user
@@ -40,6 +40,7 @@ def profile(login):
             Projects(**data)
             flash('its ok')
 
+        return redirect(url_for('profile', login=login))
     projects = Projects.query.filter_by(owner=g.user).all()
-    content = {'title': "Profile", 'user': g.user.__dict__, 'form': form, 'projects': projects}
+    content = {'title': "Profile", 'user': g.user.__dict__, 'projects': projects}
     return render_template('profile.html', **content)
