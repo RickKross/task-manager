@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from app.utils import A
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.config.from_object('config.DevConf')
 
 g = A()

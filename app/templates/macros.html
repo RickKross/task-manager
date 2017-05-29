@@ -7,9 +7,9 @@
                         <h6 class="no-margin-top"><a href="task_manager_detailed.html">#{{ _id }}. {{ name }}</a></h6>
                         <p class="mb-15">{{ description }}</p>
                         {# default #}
-                        <img src="../static/images/users/girl-placeholder.png" class="img-circle img-xs" alt="">
-                        <img src="../static/images/users/man-placeholder.png" class="img-circle img-xs" alt="">
-                        <img src="../static/images/users/woman-placeholder.png" class="img-circle img-xs" alt="">
+                        <img src="{{ url_for('static', filename='images/users/girl-placeholder.png') }}" class="img-circle img-xs" alt="">
+                        <img src="{{ url_for('static', filename='images/users/man-placeholder.png') }}" class="img-circle img-xs" alt="">
+                        <img src="{{ url_for('static', filename='images/users/woman-placeholder.png') }}" class="img-circle img-xs" alt="">
                         {# end default #}
                         {% for user in users %}
                             <a href="#">
@@ -151,7 +151,7 @@
             {% if user %}
                 <a href="/user/{{ user.login }}"><img src="{{ user.avatar_url }}" alt=""></a>
             {% else %}
-                <a href="#"><img src="../static/images/users/man-placeholder.png" alt=""></a>
+                <a href="#"><img src="{{ url_for('static', filename='images/users/man-placeholder.png') }}" alt=""></a>
             {% endif %}
         </div>
         {{ content }}
@@ -208,7 +208,7 @@
                                      alt="">
 
                             {% else %}
-                                <img class="img-circle img-responsive" src="../static/images/projects/proj_demo_1.png"
+                                <img class="img-circle img-responsive" src="{{ url_for('static', filename='images/projects/proj_demo_1.png') }}"
                                      alt="">
                             {% endif %}
                             {#                            <div class="caption">#}
@@ -225,7 +225,7 @@
                                     <small class="display-block">{{ project_el.companyName if project_el else 'Company name' }}</small>
                                 </h6>
                                 <div class="text-size-mini text-muted">
-                                    <i class="icon-pin text-size-small"></i> &nbsp;{{ project_el.companyLocation if project_el else 'Company location' }}
+                                    <i class="icon-pin text-size-small"></i> {{ project_el.companyLocation if project_el else 'Company location' }}
                                 </div>
                             </div>
                             <ul class="icons-list mt-15">
