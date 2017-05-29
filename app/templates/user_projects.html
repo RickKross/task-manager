@@ -16,8 +16,8 @@
                     <h4><i class="icon-user position-left"></i> <span class="text-semibold">{{ title }}</span></h4>
 
                     <ul class="breadcrumb position-right">
-                        <li class="active">Profile</li>
-                        <li><a href="/dashboard">Dashboard</a></li>
+                        <li class="active">{{ title }}</li>
+                        <li><a href="/dashboard">Все тикеты</a></li>
                     </ul>
                     <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
 
@@ -97,8 +97,10 @@
                                     <div class="timeline-container">
 
                                         <!-- Sales stats -->
+                                        {%  for proj in projects %}
+                                            {{ timeline_el(user, project(proj   )) }}
+                                        {% endfor %}
 
-                                        {{ timeline_el(user, project(projects[0])) }}
                                         {{ timeline_el(None, project(None)) }}
                                         {{ timeline_el(None, project(None)) }}
                                         <!-- /sales stats -->

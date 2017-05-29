@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 
 from app import app
-from app.controllers.base_controller import d
-from app.controllers.git_api_controller import oauth_exchange_code_to_token
-from app.utils import myprint
+from app.controllers.auth_controller import handle_login, handle_register
+from app.controllers.git_api_controller import oauth_exchange_code_to_token, oauth_request_user_url
 
 auth_view = Blueprint('auth_view', __name__, static_folder='static', template_folder='templates')
 
@@ -26,7 +25,43 @@ def auth_index():
             return render_template('auth.html', myvar='403')
 
 
+@app.route('/auth/github')
+def auth_via_github():
+    return redirect(oauth_request_user_url())
+
+
+@app.route('/auth/login', methods=['POST'])
+def auth_login():
+    status = handle_login(request.values)
+    if status:
+        return redirect(url_for('dashboard'))
+    else:
+        return redirect(url_for('root'))
+
+
+@app.route('/auth/register', methods=['POST'])
+def auth_register():
+    status = handle_register(request.values)
+    if status:
+        return redirect(url_for('dashboard'))
+    else:
+        return redirect(url_for('root'))
+
+
+@app.route('/auth/set_password', methods=['GET', 'POST'])
+def auth_set_password():
+    if request.method == 'GET':
+        content = {'user_id': session.get('user', None) and session.get('user', None)['id']}
+        return render_template('set_password.html', **content)
+    elif request.method == 'POST':
+        user = session.get('user')
+        password = request.values.get('password')
+        if user and session.get('user_need_password') and session.get('user_need_password')[user.id] and password:
+            user.set_password(password)
+    return redirect(url_for('root'))
+
+
 @app.route('/auth/logout', methods=['GET'])
 def logout():
     session.clear()
-    return redirect(url_for('root'))
+    return redirect('/')

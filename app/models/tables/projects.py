@@ -1,9 +1,12 @@
 import datetime
+
 from sqlalchemy import Date
 from sqlalchemy.orm import relationship
 
 from app import db, g
 from app.models.structure.classes import UnicodeString
+
+__all__ = ['Projects', 'Tickets']
 
 
 class Projects(db.Model):
@@ -21,19 +24,11 @@ class Projects(db.Model):
 
     # TODO projects <-> users assotiation
 
-    def __init__(self, name, companyName='', companyLocation='', link='', avatar_path='', description='', owner_id=None, owner=None):
+    def __init__(self, name, **kwargs):
         self.name = name
-        self.companyName = companyName
-        self.companyLocation = companyLocation
 
-        self.link = link
-        self.avatar_path = avatar_path
-        self.description = description
-
-        if owner:
-            self.owner = owner
-        elif owner_id:
-            self.owner_id = owner_id
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
         g.s.add(self)
         g.s.commit()
@@ -53,7 +48,6 @@ class Tickets(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
     project = relationship('Projects', backref='tickets')
 
-
     # TODO tickets <-> users assotiation
 
     dateCreate = db.Column(Date, default=now)
@@ -61,23 +55,13 @@ class Tickets(db.Model):
 
     dateDeadline = db.Column(Date, default=now + datetime.timedelta(days=7))
 
-    def __init__(self, id, name, state, priority='Normal', description='', project_id=None, project=None, deadline=None, commit=True):
+    def __init__(self, id, name, state, **kwargs):
         self.id = id
         self.name = name
         self.state = state
-        self.priority = priority
-        self.description = description
 
-        if project_id:
-            self.project_id = project_id
-        elif project:
-            self.project = project
-        else:
-            return
-
-        if deadline and isinstance(deadline, datetime.datetime):
-            self.dateDeadline = deadline
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
         g.s.add(self)
-        if commit:
-            g.s.commit()
+        g.s.commit()
