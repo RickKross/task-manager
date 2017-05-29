@@ -11,7 +11,7 @@ def d(v, color=30, end='\n'):
 
 
 def is_logged():
-    if session.get('token') is not None:
+    if session.get('token') is not None or session.get('user') is not None:
         return True
     else:
         return False

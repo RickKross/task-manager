@@ -3,11 +3,13 @@ from urllib.parse import urlencode, urlsplit, parse_qsl
 from uuid import uuid4
 
 import requests
+from flask import redirect
 from flask import session
+from flask import url_for
 
 from app import g
+from app.controllers.base_controller import d
 from app.models.tables.users import Users
-from app.utils import myprint
 
 
 def oauth_request_user_url():
@@ -42,20 +44,30 @@ def get_state():
 
 def get_user():
     if session.get('token'):
-        if g.user and g.user.login:
-            return g.user
+        if session.get('user') and session.get('user').login:
+            return session.get('user')
         else:
+            d(session.__dict__)
             r = requests.get('https://api.github.com/user', {'access_token': session['token']})
             if r.status_code == 200 and r.text:
                 r = json.loads(r.text)
-                myprint(r, color=32)
-                g.user = Users.query.filter_by(id=r['id']).first() or Users(id=r['id'],
-                                                                            login=r['login'],
-                                                                            name=r['name'],
-                                                                            email=r['email'],
-                                                                            api_url=r['url'],
-                                                                            github_url=r['html_url'],
-                                                                            avatar_url=r['avatar_url'])
+
+                user = Users.query.filter_by(id=r['id']).first()
+                if user:
+
+                    session['user'] = user
+                else:
+                    session['user'] = Users.create(id=r['id'],
+                                                   login=r['login'],
+                                                   password='',
+                                                   name=r['name'],
+                                                   email=r['email'],
+                                                   api_url=r['url'],
+                                                   github_url=r['html_url'],
+                                                   avatar_url=r['avatar_url'])
+                    session['user_need_password'] = {session['user'].id: True}
+                    return redirect(url_for('auth_set_password'))
+
             else:
                 # TODO err with http code
                 pass

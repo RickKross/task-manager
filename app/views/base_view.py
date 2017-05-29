@@ -3,8 +3,6 @@ from flask import session
 
 from app import app
 from app.controllers.base_controller import is_logged
-from app.controllers.git_api_controller import oauth_request_user_url
-
 view = Blueprint('view', __name__, static_folder='static', template_folder='templates')
 
 
@@ -13,4 +11,5 @@ def root():
     if is_logged():
         return redirect(url_for('dashboard'))
     else:
-        return redirect(oauth_request_user_url())
+        return render_template('auth.html')
+

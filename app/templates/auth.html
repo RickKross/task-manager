@@ -1,11 +1,175 @@
-{% include "base.html" %}
-
+{% extends "base.html" %}
 {% block title %}
-    OAuth
+    Авторизация
 {% endblock %}
 
-{% block content%}
+{% block base_content %}
 
-    {{ myvar }}
+    <body class="login-container" background="../static/images/login-bg.png">
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main content -->
+            <div class="content-wrapper">
+
+                <!-- Content area -->
+                <div class="content pb-20">
+
+                    <!-- Tabbed form -->
+                    <div class="tabbable panel login-form width-400">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="active"><a href="#basic-tab1" data-toggle="tab"><h6>Войти</h6></a></li>
+                            <li><a href="#basic-tab2" data-toggle="tab"><h6>Зарегистрироваться</h6></a></li>
+                        </ul>
+
+                        <div class="tab-content panel-body">
+                            <div class="tab-pane fade in active" id="basic-tab1">
+                                <form action="/auth/login" method="post">
+                                    <div class="text-center">
+                                        <div class="icon-object border-slate-300 text-slate-300"><i
+                                                class="icon-reading"></i></div>
+                                        <h5 class="content-group">Войдите в свою учетную запись </h5>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-user"></i></span>
+                                                <input type="text" class="form-control" placeholder="Логин"
+                                                       name="login" required="required">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-lock2"></i></span>
+                                                <input type="password" class="password form-control"
+                                                       placeholder="Пароль"
+                                                       name="password" required="required">
+                                                <div class="input-group-btn ">
+                                                    <button type="button" class="eye btn btn-default btn-icon"><i
+                                                            class="icon-eye"></i></button>
+                                                </div>
+                                                {#                                                <span class="input-group-addon eye"><i class="icon-eye4"></i></span>#}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group login-options">
+                                        <div class="row">
+                                            <div class="col-sm-12 text-right">
+                                                <a href="login_password_recover.html">Забыли пароль?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn bg-blue btn-block">Войти <i
+                                                class="icon-circle-right2 position-right"></i></button>
+                                    </div>
+                                </form>
+
+                                <div class="content-divider text-muted form-group"><span>или войдите с помощью</span>
+                                </div>
+                                <ul class="list-inline form-group list-inline-condensed text-center">
+                                    <li><a href="/auth/github"
+                                           class="btn border-slate-600 text-slate-600 btn-flat btn-icon btn-rounded"><i
+                                            class="icon-github"></i></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-pane fade" id="basic-tab2">
+                                <form action="/auth/register" method="POST">
+                                    <div class="text-center">
+                                        <div class="icon-object border-success text-success"><i class="icon-plus3"></i>
+                                        </div>
+                                        <h5 class="content-group">Создать нового пользователя
+                                            <small class="display-block">Все поля являются обязательными</small>
+                                        </h5>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i
+                                                        class="icon-user-check   "></i></span>
+                                                <input type="text" class="password form-control" placeholder="Ваш логин"
+                                                       name="login" required="required">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-user-lock"></i></span>
+                                                <input type="password" class="password form-control"
+                                                       placeholder="Придумайте пароль"
+                                                       name="password" required="required">
+                                                <div class="input-group-btn ">
+                                                    <button type="button" class="eye btn btn-default btn-icon"><i
+                                                            class="icon-eye"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-mention"></i></span>
+                                                <input type="text" class="password form-control" placeholder="Ваш email"
+                                                       name="email" required="required">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn bg-indigo-400 btn-block">Зарегистрироваться <i
+                                            class="icon-circle-right2 position-right"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /tabbed form -->
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <script type="text/javascript">
+
+        var pass_show = false;
+
+        {#        $('.eye').click(function(e){#}
+        {#            e.preventDefault();#}
+        {#            pass_show = !pass_show;#}
+        {#            console.log(pass_show);#}
+        {#            $(this).find('i').toggleClass('icon-eye icon-eye-blocked');#}
+        {#            if (pass_show) {#}
+        {#                console.log('to text')#}
+        {#                $(this).attr('placeholder', 'text')#}
+        {#                console.log($(this).attr('placeholder'))#}
+        {#            } else {#}
+        {#                console.log('to paswd')#}
+        {#                $(this).attr('placeholder', 'password')#}
+        {#                console.log($(this).attr('placeholder'))#}
+        {#            }#}
+        {#        })#}
+    </script>
+    <!-- /page container -->
+
+    </body>
 
 {% endblock %}

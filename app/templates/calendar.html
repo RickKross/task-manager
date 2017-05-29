@@ -1,0 +1,187 @@
+{% extends "main_navbar.html" %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class=" icon-calendar position-left"></i> <span
+                        class="text-semibold">{{title}}</span></h4>
+
+                <ul class="breadcrumb position-right">
+                    <li><a href="/user/{{ user.login }}">Проекты</a></li>
+                    <li class="active">{{title}}</li>
+                </ul>
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+
+
+            </div>
+        </div>
+        <!-- /page header -->
+    <div class="content">
+        <div class="clearfix">
+            <div class="pull-left">
+
+                <a href="/todo/?d=-7" role="button" title="Предыдущая неделя"
+                   class="btn btn-default tooltips legitRipple" data-placement="bottom"> &lt; </a>
+                <div class="btn-group">
+                    <button id="btnGroupVerticalDrop5" type="button"
+                            class="btn btn-default dropdown-toggle legitRipple"
+                            data-toggle="dropdown" aria-expanded="false">
+                        Неделя 17.04 - 23.04 <i class="fa fa-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu pull-left" role="menu" aria-labelledby="btnGroupVerticalDrop5">
+                        <li>
+                            <a href="/?time=Y">
+                                Перейти к текущей неделе </a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="/todo/?d=7" role="button" title="Следующая неделя"
+                   class="btn btn-default tooltips legitRipple"
+                   data-placement="bottom"> &gt; </a>
+            </div>
+
+
+            {#    errtime <h2 class="no-margin-top text-danger text-right"></h2>#}
+        </div>
+        <br>
+        <form action="" method="post">
+            <input type="hidden" name="action" value="time">
+
+            <table id="tickets" class="table table-striped table-bordered  table-hover table-xxs">
+
+                <tbody>
+                <tr>
+                    <th>id</th>
+                    <th class="nowrap "></th>
+                    <th>Название</th>
+                    <th>Пн</th>
+                    <th>Вт</th>
+                    <th>Ср</th>
+                    <th>Чт</th>
+                    <th>Пт</th>
+                    <th>Сб</th>
+                    <th>Вс</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="text-center"><span class="icon-watch2"></span></td>
+                    <td><b>Начало дня</b></td>
+                    <td><input type="text" name="t[Start][0]" value="10:19" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Start][1]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Start][2]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Start][3]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Start][4]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Start][5]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Start][6]" value="" class="form-control width-60"></td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="text-center"><span class="icon-cup2"></span></td>
+                    <td>Обеды\Перекусы</td>
+
+
+                    <td><input type="text" name="t[Food][0]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Food][1]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Food][2]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Food][3]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Food][4]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Food][5]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[Food][6]" value="" class="form-control width-60"></td>
+
+                </tr>
+
+
+                <tr>
+                    <td>
+                        <div class="id">2557</div>
+                    </td>
+                    <td class="nowrap">
+                    </td>
+                    <td><a href="/ticket/2557/">Окно создания корзины</a></td>
+
+
+                    <td><input type="text" name="t[2557][0]" value="00:01" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][1]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][2]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][3]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][4]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][5]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][6]" value="" class="form-control width-60"></td>
+
+                </tr>
+
+
+                <tr>
+                    <td></td>
+                    <td class="text-center"><span class="icon-watch2"></span></td>
+                    <td><b>Окончание дня</b></td>
+
+
+                    <td><input type="text" name="t[End][0]" value="18:50" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[End][1]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[End][2]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[End][3]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[End][4]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[End][5]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[End][6]" value="" class="form-control width-60"></td>
+
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td class="text-center"><span class="icon-office"></span></td>
+                    <td><b>Работа вне офиса</b></td>
+
+
+                    <td><input type="text" name="t[NotOffice][0]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[NotOffice][1]" value="" class="form-control width-60">
+                    </td>
+                    <td><input type="text" disabled="" name="t[NotOffice][2]" value="" class="form-control width-60">
+                    </td>
+                    <td><input type="text" disabled="" name="t[NotOffice][3]" value="" class="form-control width-60">
+                    </td>
+                    <td><input type="text" disabled="" name="t[NotOffice][4]" value="" class="form-control width-60">
+                    </td>
+                    <td><input type="text" disabled="" name="t[NotOffice][5]" value="" class="form-control width-60">
+                    </td>
+                    <td><input type="text" disabled="" name="t[NotOffice][6]" value="" class="form-control width-60">
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td class="hr" colspan="11">&nbsp;</td>
+                </tr>
+
+                <tr>
+                    <td><input type="text" name="new" class="form-control input-xs width-60"></td>
+                    <td class="text-center"><span class="icon-arrow-left8"></span></td>
+                    <td>Для добавления задачи введите номер слева</td>
+
+
+                    <td><input type="text" name="t[new][0]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[new][1]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[new][2]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[new][3]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[new][4]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[new][5]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[new][6]" value="" class="form-control width-60"></td>
+
+                </tr>
+
+
+                </tbody>
+            </table>
+            <br>
+            <button class="btn bg-main legitRipple">Сохранить</button>
+        </form>
+        <br>
+        <a href="?time=Y&amp;d=0&amp;action=table&amp;blank=1" role="button" class="btn btn-default legitRipple">Выгрузить
+            табель</a>
+    </div>
+{% endblock %}

@@ -92,5 +92,5 @@ ENV/
 limitless/
 migrations/
 
-app/upload/
+upload/*
 config.py
