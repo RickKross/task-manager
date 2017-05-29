@@ -1,3 +1,4 @@
-from app.models.tables.users import Users
-from app.models.tables.projects import Projects, Tickets
+from app.models.tables.users import *
+from app.models.tables.projects import *
+from app.models.tables.etc import *
 

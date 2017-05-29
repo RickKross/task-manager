@@ -76,7 +76,7 @@ class Tasks(db.Model):
     release_id = db.Column(Integer, db.ForeignKey('releases.id'))
     release = db.relationship('Releases', backref='tasks')
 
-    state_id = db.Column(Integer, db.ForeignKey('task_states.id'))
+    state_id = db.Column(Integer, db.ForeignKey('tasks_states.id'))
     state = db.relationship('TaskStates', backref='tasks')
 
     priority_id = db.Column(Integer, db.ForeignKey('task_prior.id'))
@@ -96,7 +96,7 @@ class Tasks(db.Model):
 
 
 class TaskStates(db.Model):
-    __tablename__ = 'task_states'
+    __tablename__ = 'tasks_states'
     id = Column(Integer, primary_key=True)
     name = Column(VARCHAR(50), nullable=False, unique=True)
 
@@ -118,7 +118,7 @@ class TaskPrior(db.Model):
 
 
 class TaskUser(db.Model):
-    __tablename__ = 'task_users'
+    __tablename__ = 'tasks_users'
     id = Column(Integer, primary_key=True)
 
     task_id = db.Column(Integer, db.ForeignKey('tasks.id'), nullable=False)
@@ -126,6 +126,48 @@ class TaskUser(db.Model):
 
     user_id = db.Column(Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('Users')
+
+    def __init__(self, **kwargs):
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+        g.s.add(self)
+        g.s.commit()
+
+
+class Comments(db.Model):
+    __tablename__ = 'comments'
+    id = Column(Integer, primary_key=True)
+    text = Column(Text, nullable=False)
+
+    date_create = Column(DATETIME)
+
+    owner_id = db.Column(Integer, db.ForeignKey('users.id'))
+    owner = db.relationship('Users')
+
+    task_id = db.Column(Integer, db.ForeignKey('tasks.id'))
+    task = db.relationship('Tasks')
+
+    def __init__(self, text, **kwargs):
+        self.text = text
+
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+        g.s.add(self)
+        g.s.commit()
+
+
+class CommentsFiles(db.Model):
+    __tablename__ = 'comments_files'
+    
+    id = Column(Integer, primary_key=True)
+
+    comment_id = db.Column(Integer, db.ForeignKey('comments.id'))
+    comment = db.relationship('Comments')
+
+    file_id = db.Column(Integer, db.ForeignKey('files.id'))
+    file = db.relationship('Files')
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
