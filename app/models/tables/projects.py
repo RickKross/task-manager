@@ -1,28 +1,33 @@
 import datetime
 
-from sqlalchemy import Date
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, VARCHAR, DATE, DATETIME, Text
+from sqlalchemy.dialects.mysql import TINYINT
 
 from app import db, g
-from app.models.structure.classes import UnicodeString
 
-__all__ = ['Projects', 'Tickets']
+__all__ = ['Projects', 'Releases', 'Tasks', 'TaskStates', 'TaskPrior', 'TaskUser']
+
+
+# TODO META?
 
 
 class Projects(db.Model):
     __tablename__ = 'projects'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(UnicodeString(1024))
-    companyName = db.Column(UnicodeString(1024))
-    companyLocation = db.Column(UnicodeString(1024))
-    link = db.Column(UnicodeString(1024))
-    avatar_path = db.Column(UnicodeString(1024))
-    description = db.Column(UnicodeString(4096))
 
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    owner = relationship('Users', backref='projects')
+    id = Column(Integer, primary_key=True)
+    name = Column(VARCHAR(100), nullable=False, unique=True)
+    active = Column(TINYINT(1), nullable=False, default=0)
 
-    # TODO projects <-> users assotiation
+    company_name = Column(VARCHAR(255))
+    company_location = Column(VARCHAR(255))
+    company_url = Column(VARCHAR(255))
+    description = Column(Text)
+
+    avatar_id = Column(Integer, db.ForeignKey('files.id'))
+    avatar = db.relationship('Files')
+
+    owner_id = db.Column(Integer, db.ForeignKey('users.id'))
+    owner = db.relationship('Users', backref='projects')
 
     def __init__(self, name, **kwargs):
         self.name = name
@@ -34,32 +39,95 @@ class Projects(db.Model):
         g.s.commit()
 
 
-# ticket(_id, name, date, state, priority="Normal", app="", description="", users=[])
-class Tickets(db.Model):
-    now = datetime.datetime.now()
-    __tablename__ = 'tickets'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(UnicodeString(1024))
-    state = db.Column(UnicodeString(512))
-    priority = db.Column(UnicodeString(512))
+class Releases(db.Model):
+    __tablename__ = 'releases'
 
-    description = db.Column(UnicodeString(1000))
+    id = Column(Integer, primary_key=True)
+    name = Column(VARCHAR(100), nullable=False)
+    active = Column(TINYINT(1), nullable=False, default=0)
+    deadline = Column(DATE)
 
-    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
-    project = relationship('Projects', backref='tickets')
+    project_id = Column(Integer, db.ForeignKey('projects.id'))
+    project = db.relationship('Projects')
 
-    # TODO tickets <-> users assotiation
-
-    dateCreate = db.Column(Date, default=now)
-    dateModify = db.Column(Date, default=now)
-
-    dateDeadline = db.Column(Date, default=now + datetime.timedelta(days=7))
-
-    def __init__(self, id, name, state, **kwargs):
-        self.id = id
+    def __init__(self, name, **kwargs):
         self.name = name
-        self.state = state
 
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+        g.s.add(self)
+        g.s.commit()
+
+
+class Tasks(db.Model):
+    __tablename__ = 'tasks'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(VARCHAR(100), nullable=False)
+    active = Column(TINYINT(1), nullable=False, default=0)
+
+    description = Column(Text)
+
+    date_create = Column(DATETIME, nullable=False, default=datetime.datetime.now())
+    date_modify = Column(DATETIME, nullable=False, default=datetime.datetime.now())
+    date_deadline = Column(DATE)
+
+    release_id = db.Column(Integer, db.ForeignKey('releases.id'))
+    release = db.relationship('Releases', backref='tasks')
+
+    state_id = db.Column(Integer, db.ForeignKey('task_states.id'))
+    state = db.relationship('TaskStates', backref='tasks')
+
+    priority_id = db.Column(Integer, db.ForeignKey('task_prior.id'))
+    priority = db.relationship('TaskPrior', backref='tasks')
+
+    creator_id = db.Column(Integer, db.ForeignKey('users.id'))
+    creator = db.relationship('Users', backref='tasks')
+
+    def __init__(self, name, **kwargs):
+        self.name = name
+
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+        g.s.add(self)
+        g.s.commit()
+
+
+class TaskStates(db.Model):
+    __tablename__ = 'task_states'
+    id = Column(Integer, primary_key=True)
+    name = Column(VARCHAR(50), nullable=False, unique=True)
+
+    def __init__(self, name):
+        self.name = name
+        g.s.add(self)
+        g.s.commit()
+
+
+class TaskPrior(db.Model):
+    __tablename__ = 'task_prior'
+    id = Column(Integer, primary_key=True)
+    name = Column(VARCHAR(50), nullable=False, unique=True)
+
+    def __init__(self, name):
+        self.name = name
+        g.s.add(self)
+        g.s.commit()
+
+
+class TaskUser(db.Model):
+    __tablename__ = 'task_users'
+    id = Column(Integer, primary_key=True)
+
+    task_id = db.Column(Integer, db.ForeignKey('tasks.id'), nullable=False)
+    task = db.relationship('Tasks')
+
+    user_id = db.Column(Integer, db.ForeignKey('users.id'), nullable=False)
+    user = db.relationship('Users')
+
+    def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
 

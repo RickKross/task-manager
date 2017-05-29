@@ -1,28 +1,36 @@
 from hashlib import sha512
 
-from sqlalchemy import String
+from sqlalchemy import Column
+from sqlalchemy import Integer
+from sqlalchemy import Text
+from sqlalchemy import VARCHAR
+from sqlalchemy.dialects.mysql import TINYINT
 
 from app import db, app, g
-from app.models.structure.classes import UnicodeString
 
-__all__ = ['Users']
+__all__ = ['Users', 'Groups']
 
 
 class Users(db.Model):
     __tablename__ = 'users'
 
-    avaible_columns = ['id', 'login', 'name', 'email', 'api_url', 'github_url', 'avatar_url']
+    avaible_columns = ['id', 'active', 'login', 'name', 'email', 'api_url', 'github_url', 'avatar_id', 'group_id']
 
-    id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(String(64), nullable=False, unique=True)
-    password_hash = db.Column(String(256))
-    name = db.Column(UnicodeString(1024))
-    email = db.Column(String(256), unique=True)
-    api_url = db.Column(String(256))
-    github_url = db.Column(String(256))
-    avatar_url = db.Column(String(256))
+    id = Column(Integer, primary_key=True)
+    active = Column(TINYINT(1), nullable=False, default=0)
 
-    def __init__(self, login, password, email, commit=True, **kwargs):
+    login = Column(VARCHAR(50), nullable=False, unique=True)
+    password_hash = Column(VARCHAR(256), nullable=False)
+    email = Column(VARCHAR(256))
+
+    name = Column(Text)
+    github_url = Column(Text)
+    api_url = Column(Text)
+
+    avatar_id = Column(Integer, db.ForeignKey('files.id'))
+    avatar = db.relationship('Files')
+
+    def __init__(self, login, password, **kwargs):
         self.login = login
 
         password = sha512((password + login).encode()).hexdigest()
@@ -31,21 +39,18 @@ class Users(db.Model):
         self.password_hash = password
 
         self.name = kwargs.pop('name', login)
-        self.email = email
 
         for k, v in kwargs.items():
             setattr(self, k, v)
 
         g.s.add(self)
-        if commit:
-            g.s.commit()
+        g.s.commit()
 
     @staticmethod
-    def create(login, password, email, **kwargs):
-        return Users(login, password, email, **kwargs)
+    def create(login, password, **kwargs):
+        return Users(login, password, **kwargs)
 
     def set_password(self, password):
-
         password = sha512((password + self.login).encode()).hexdigest()
         password = sha512((password + app.config.get('SALT', '')).encode()).hexdigest()
 
@@ -55,3 +60,26 @@ class Users(db.Model):
 
     def as_dict(self):
         return {k: getattr(self, k) for k in self.avaible_columns}
+
+
+class Groups(db.Model):
+    __tablename__ = 'groups'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(VARCHAR(50))
+
+    def __init__(self, name):
+        self.name = name
+        g.s.add(self)
+        g.s.commit()
+
+
+class UsersGroups(db.Model):
+    __tablename__ = 'users_groups'
+
+    id = Column(Integer, primary_key=True)
+    user_id = db.Column(Integer, db.ForeignKey('users.id'))
+    user = db.relationship('Users', backref='groups')  # Fixme?
+
+    group_id = db.Column(Integer, db.ForeignKey('groups.id'))
+    group = db.relationship('Groups')
