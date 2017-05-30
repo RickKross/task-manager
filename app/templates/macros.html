@@ -7,9 +7,12 @@
                         <h6 class="no-margin-top"><a href="task_manager_detailed.html">#{{ _id }}. {{ name }}</a></h6>
                         <p class="mb-15">{{ description }}</p>
                         {# default #}
-                        <img src="{{ url_for('static', filename='images/users/girl-placeholder.png') }}" class="img-circle img-xs" alt="">
-                        <img src="{{ url_for('static', filename='images/users/man-placeholder.png') }}" class="img-circle img-xs" alt="">
-                        <img src="{{ url_for('static', filename='images/users/woman-placeholder.png') }}" class="img-circle img-xs" alt="">
+                        <img src="{{ url_for('static', filename='images/users/girl-placeholder.png') }}"
+                             class="img-circle img-xs" alt="">
+                        <img src="{{ url_for('static', filename='images/users/man-placeholder.png') }}"
+                             class="img-circle img-xs" alt="">
+                        <img src="{{ url_for('static', filename='images/users/woman-placeholder.png') }}"
+                             class="img-circle img-xs" alt="">
                         {# end default #}
                         {% for user in users %}
                             <a href="#">
@@ -145,42 +148,42 @@
         })
     </script>
 {% endmacro %}
+
 {% macro timeline_el(user, content) %}
     <div class="timeline-row">
         <div class="timeline-icon">
             {% if user %}
-                <a href="/user/{{ user.login }}"><img src="{{ user.avatar_url }}" alt=""></a>
+                <a href="/user/{{ user.login }}"><img src="{{ user.avatar.path }}" alt=""></a>
             {% else %}
-                <a href="#"><img src="{{ url_for('static', filename='images/users/man-placeholder.png') }}" alt=""></a>
+                <a href="#" class="btn border-blue text-blue btn-flat btn-icon btn-rounded"><i class="icon-info22"></i></a>
             {% endif %}
         </div>
         {{ content }}
-        {#        <div class="panel panel-flat timeline-content">#}
-        {#            <div class="panel-heading">#}
-        {#                <h6 class="panel-title">Daily statistics<a class="heading-elements-toggle"><i class="icon-more"></i></a>#}
-        {#                </h6>#}
-        {#                <div class="heading-elements">#}
-        {#                    <span class="heading-text"><i class="icon-history position-left text-success"></i> Updated 3 hours ago</span>#}
-        {##}
-        {#                    <ul class="icons-list">#}
-        {#                        <li><a data-action="reload"></a></li>#}
-        {#                    </ul>#}
-        {#                </div>#}
-        {#            </div>#}
-        {##}
-        {#            <div class="panel-body">#}
-        {#                <div class="chart-container">#}
-        {#                    {{ content }}#}
-        {#                </div>#}
-        {#            </div>#}
-        {#        </div>#}
+
+    </div>
+{% endmacro %}
+
+{% macro blank_time_el() %}
+    <div class="panel panel-flat timeline-content">
+        <div class="panel-heading">
+            <h6 class="panel-title">Информация<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+            </h6>
+        </div>
+        <div class="panel-body">
+            <dev class="content-group">
+                <div>
+                    Здесь будут отображатся все проекты, в которых Вы участвуете
+                </div>
+            </dev>
+        </div>
     </div>
 {% endmacro %}
 
 {% macro project(project_el) %}
     <div class="panel panel-flat" style="max-height: 450px">
         <div class="panel-heading" style="padding-bottom: 10px; padding-top: 10px">
-            <h3 class="panel-title">{{ project_el.name if project_el else 'Project name' }}<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+            <h3 class="panel-title">{{ project_el.name if project_el else 'Project name' }}<a
+                    class="heading-elements-toggle"><i class="icon-more"></i></a>
             </h3>
             <div class="heading-elements">
                 <a href="#" class="text-default">
@@ -204,39 +207,30 @@
                     <div class="panel text-center panel-image">
                         <div class="panel-body">
                             {% if project_el %}
-                                <img class="img-circle img-responsive" src="{{ project_el.avatar_path}}"
+                                <img class="img-circle img-responsive" src="{{ project_el.avatar.path }}"
                                      alt="">
 
                             {% else %}
-                                <img class="img-circle img-responsive" src="{{ url_for('static', filename='images/projects/proj_demo_1.png') }}"
+                                <img class="img-circle img-responsive"
+                                     src="{{ url_for('static', filename='images/projects/proj_demo_1.png') }}"
                                      alt="">
                             {% endif %}
-                            {#                            <div class="caption">#}
-                            {#                                <span>#}
-                            {#                                    <a href="#" class="btn bg-success-400 btn-icon btn-xs"#}
-                            {#                                       data-popup="lightbox"><i class="icon-plus2"></i></a>#}
-                            {#                                    {% %}#}
-                            {#                                    <a href="user_pages_profile.html"#}
-                            {#                                       class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>#}
-                            {#                                </span>#}
-                            {#                            </div>#}
+
                             <div class="caption ">
-                                <h6 class="text-semibold no-margin">{{ project_el.name if project_el else 'Project name' }}
-                                    <small class="display-block">{{ project_el.companyName if project_el else 'Company name' }}</small>
+                                <h6 class="text-semibold no-margin">{{ project_el.company_name}}
                                 </h6>
-                                <div class="text-size-mini text-muted">
-                                    <i class="icon-pin text-size-small"></i> {{ project_el.companyLocation if project_el else 'Company location' }}
-                                </div>
+                                {% if project_el and project_el.company_location %}
+                                    <div class="text-size-mini text-muted">
+                                        <i class="icon-pin text-size-small"></i> {{ project_el.company_location }}
+                                    </div>
+                                {% endif %}
                             </div>
                             <ul class="icons-list mt-15">
-{#                                <li><a href="#" data-popup="tooltip" title="" data-original-title="Google Drive"><i#}
-{#                                        class="icon-google-drive"></i></a></li>#}
-{#                                <li><a href="#" data-popup="tooltip" title="" data-original-title="Twitter"><i#}
-{#                                        class="icon-twitter"></i></a></li>#}
-{#                                <li><a href="#" data-popup="tooltip" title="" data-original-title="Github"><i#}
-{#                                        class="icon-github"></i></a></li>#}
-                                <li><a href="{{ project_el.link or '#'}}" data-popup="tooltip" title="" data-original-title="Github"><i
-                                        class="icon-link"></i></a></li>
+                                {% if project_el.link %}
+                                    <li><a href="{{ project_el.link }}" data-popup="tooltip" title=""
+                                           data-original-title="Официальный сайт"><i
+                                            class="icon-link"></i></a></li>
+                                {% endif %}
                             </ul>
                         </div>
 
@@ -253,33 +247,10 @@
                             </h6>
                         </div>
                         <div class="panel-body text-default description">
-                            {{ project_el.description if project_el else """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                            Ipsum
-                            has been the industry's standard dummy text ever since the 1500s, when an unknown
-                            printer took a galley of type and scrambled it to make a type specimen book. It has
-                            survived not only five centuries, but also the leap into electronic typesetting,
-                            remaining essentially unchanged. It was popularised in the 1960s with the release of
-                            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-                            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-                            Why do we use it?
-                            It is a long established fact that a reader will be distracted by the readable
-                            content
-                            of a page when looking at its layout. The point of using Lorem Ipsum is that it has
-                            a
-                            more-or-less normal distribution of letters, as opposed to using 'Content here,
-                            content
-                            here', making it look like readable English. Many desktop publishing packages and
-                            web
-                            page editors now use Lorem Ipsum as their default model text, and a search for
-                            'lorem
-                            ipsum' will uncover many web sites still in their infancy. Various versions have
-                            evolved
-                            over the years, sometimes by accident, sometimes on purpose (injected humour and the
-                            like).""" }}
+                            {{ project_el.description | safe if project_el else "" }}
                         </div>
                         <div class="panel-footer">
-                            {#                                <span class="heading-text">Active user:</span>#}
+                            <span class="heading-text">Active user:</span>
                             <ul class="heading-thumbnails text-center">
                                 <li>
                                     <a class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"><i

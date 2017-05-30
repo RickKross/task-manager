@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename, redirect
 from app import app, g
 from app.controllers.base_controller import login_required, init_user
 from app.controllers.git_api_controller import get_user
-from app.models import Projects
+from app.models import Projects, Users, Files
 from app.utils import myprint
 
 profile_view = Blueprint('view', __name__, static_folder='static', template_folder='templates')
@@ -25,15 +25,18 @@ def allowed_file(filename):
 @init_user
 @login_required
 def projects(login):
-    myprint(url_for('static', filename='limitlesscss/icons/icomoon/styles.css'))
+    myprint(url_for('static', filename='limitless/css/icons/icomoon/styles.css'), color=34)
     user = session.get('user')
+
     if not user:
         return redirect(url_for('logout'))
 
     if request.method == 'POST':
-        if request.form.get('name'):
-            myprint(request.form.items(), color=31)
-            data = {k: v[0] if isinstance(v, list) else v for k, v in request.form.items() if k != 'avatar'}
+        myprint(request.values, color=32)
+
+        if request.values.get('name'):
+            myprint(request.values.items(), color=31)
+            data = {k: v[0] if isinstance(v, list) else v for k, v in request.values.items() if k != 'avatar'}
             data['owner_id'] = user['id']
 
             file = request.files.get('avatar')
@@ -41,13 +44,24 @@ def projects(login):
                 filename = secure_filename(file.filename)
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(filepath)
-                data['avatar_path'] = filepath
+
+                with open(filepath, 'rb') as f:
+                    file = Files.save(source_data=f.read(), filename=filename)
+                    g.s.commit()
+
+                myprint(file.__dict__, color=31)
+
+                data['avatar'] = file
+            data['active'] = 1
+
+            myprint(data, color=33)
             Projects(**data)
             flash('its ok')
 
-        return redirect(url_for('profile', login=login))
-    projects = Projects.query.filter_by(owner_id=user['id']).all()
-    content = {'title': "Проекты", 'user': user, 'projects': projects}
+        return redirect(url_for('projects', login=login))
+    projects = Projects.query.filter_by(owner_id=user['id'], active=1).order_by(Projects.id.desc()).all()
+    myprint([el.__dict__ for el in projects], color=34)
+    content = {'title': "Профиль", 'user': Users.query.filter_by(id=user['id']).first(), 'projects': projects}
     return render_template('user_projects.html', **content)
 
 
@@ -55,9 +69,11 @@ def projects(login):
 @init_user
 @login_required
 def dashboard():
-    if not (session.get('user') and session.get('user')['name']):
+    user = session.get('user')
+    myprint(user)
+    if not (user and user['name']):
         return redirect(url_for('logout'))
-    content = {'title': "Все тикеты", 'user': session.get('user')}
+    content = {'title': "Все тикеты", 'user': Users.query.filter_by(id=user['id']).first()}
     return render_template('dash_content.html', **content)
 
 
@@ -65,8 +81,9 @@ def dashboard():
 @init_user
 @login_required
 def calendar():
-    if not (session.get('user') and session.get('user')['name']):
+    user = session.get('user')
+    if not (user and user['name']):
         return redirect(url_for('logout'))
 
-    content = {'title': "Календарь", 'user': session.get('user')}
+    content = {'title': "Календарь", 'user': Users.query.filter_by(id=user['id']).first()}
     return render_template('calendar.html', **content)

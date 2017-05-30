@@ -34,7 +34,10 @@ def login_required(func):
 def init_user(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        get_user()
-        return func(*args, **kwargs)
+        dest = get_user()
+        if dest:
+            return redirect(dest)
+        else:
+            return func(*args, **kwargs)
 
     return wrapper

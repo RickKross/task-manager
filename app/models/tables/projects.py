@@ -125,7 +125,7 @@ class TaskUser(db.Model):
     task = db.relationship('Tasks')
 
     user_id = db.Column(Integer, db.ForeignKey('users.id'), nullable=False)
-    user = db.relationship('Users')
+    user = db.relationship('Users', backref='tickets')
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():

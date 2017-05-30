@@ -8,7 +8,9 @@ from flask import session
 from flask import url_for
 
 from app import g
+from app.models import Files
 from app.models.tables.users import Users
+from app.utils import myprint
 
 
 def oauth_request_user_url():
@@ -43,7 +45,7 @@ def get_state():
 
 def get_user():
     if session.get('user') and session.get('user')['login']:
-        return
+        return None
 
     if session.get('token'):
         r = requests.get('https://api.github.com/user', {'access_token': session['token']})
@@ -52,20 +54,24 @@ def get_user():
 
             user = Users.query.filter_by(id=r['id']).first()
             if user:
-                session['user'] = user
-                return
+                session['user'] = user.as_dict()
+                return None
             else:
-                session['user'] = Users.create(id=r['id'],
-                                               login=r['login'],
-                                               password='',
-                                               name=r['name'],
-                                               email=r['email'],
-                                               api_url=r['url'],
-                                               github_url=r['html_url'],
-                                               avatar_url=r['avatar_url'])
-                session['user_need_password'] = {session['user'].id: True}
-                return redirect(url_for('auth_set_password'))
-
+                myprint(r['avatar_url'], color=35)
+                file = Files.save(r['avatar_url'])
+                myprint(file.__dict__, color=31)
+                user = Users.create(id=r['id'],
+                                    login=r['login'],
+                                    password='',
+                                    name=r['name'],
+                                    email=r['email'],
+                                    api_url=r['url'],
+                                    github_url=r['html_url'],
+                                    avatar=file)
+                session['user'] = user.as_dict()
+                session['user_need_password'] = {user.id: True}
+                myprint(url_for('auth_set_password'), color=34)
+                return url_for('auth_set_password')
         else:
             # TODO err with http code
             pass

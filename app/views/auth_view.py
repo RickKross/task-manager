@@ -3,6 +3,8 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 from app import app
 from app.controllers.auth_controller import handle_login, handle_register
 from app.controllers.git_api_controller import oauth_exchange_code_to_token, oauth_request_user_url
+from app.models import Users
+from app.utils import myprint
 
 auth_view = Blueprint('auth_view', __name__, static_folder='static', template_folder='templates')
 
@@ -50,14 +52,17 @@ def auth_register():
 
 @app.route('/auth/set_password', methods=['GET', 'POST'])
 def auth_set_password():
+    myprint('hi there', color=34)
     if request.method == 'GET':
         content = {'user_id': session.get('user', None) and session.get('user', None)['id']}
         return render_template('set_password.html', **content)
     elif request.method == 'POST':
         user = session.get('user')
         password = request.values.get('password')
-        if user and session.get('user_need_password') and session.get('user_need_password')[user.id] and password:
-            user.set_password(password)
+        myprint(session['user_need_password'])
+        if user and session.get('user_need_password') and session.get('user_need_password')[
+            str(user['id'])] and password:
+            Users.query.filter_by(id=user['id']).first().set_password(password)
     return redirect(url_for('root'))
 
 

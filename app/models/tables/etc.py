@@ -1,16 +1,18 @@
 import os
+import re
 from hashlib import md5
 from urllib.request import urlopen, http
 
-from flask import url_for
 from sqlalchemy import Column
+from sqlalchemy import DATE
 from sqlalchemy import Integer
 from sqlalchemy import Text
 from sqlalchemy import VARCHAR
 
-from app import g, db
+from app import g, db, app
+from app.utils import myprint
 
-__all__ = ['Files']
+__all__ = ['Files', 'Calendar']
 
 
 def get_file_from_url(request_obj):
@@ -45,21 +47,30 @@ class Files(db.Model):
         g.s.commit()
 
     @staticmethod
-    def save(path):
-        filename = os.path.basename(path)
+    def save(path='', source_data='', filename=''):
         data = ''
-        try:
-            with urlopen(path) as request:
-                data = get_file_from_url(request)
-        except ValueError:
-            try:
-                with open(path, 'rb') as file:
-                    data = file.read()
-            except FileNotFoundError:
-                pass
+        if path and not source_data:
 
-        if not data:
+            filename = os.path.basename(path)
+            try:
+                with urlopen(path) as request:
+                    data = get_file_from_url(request)
+            except ValueError:
+                try:
+                    with open(path, 'rb') as file:
+                        data = file.read()
+                except FileNotFoundError:
+                    pass
+
+        data = source_data or data
+        if not (data and filename):
             return None
+
+        _, ext = os.path.splitext(filename)
+
+        if not ext:
+            filename += '.png'
+        filename = re.sub('[^a-zA-Z0-9_\-\.]', '_', filename)
 
         size = len(data)
         _hash = md5(data).hexdigest()
@@ -71,9 +82,30 @@ class Files(db.Model):
         hashed_file = files_by_size.first()
 
         if not hashed_file:
-            new_path = url_for('static') + filename
+
+            new_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            # new_path = url_for('static') + filename
             with open(new_path, 'wb') as f:
                 f.write(data)
-            Files(new_path, size, _hash)
+            file = Files(new_path.split('app')[1], size, _hash)
+            g.s.commit()
+            myprint(file.__dict__, color=32)
+            return file
+
         else:
             return hashed_file
+
+
+class Calendar(db.Model):
+    __tablename__ = 'calendar'
+
+    id = Column(Integer, primary_key=True)
+
+    time = Column(Integer, nullable=False)
+    date = Column(DATE, nullable=False)
+
+    user_id = db.Column(Integer, db.ForeignKey('users.id'))
+    user = db.relationship('Users')
+
+    task_id = db.Column(Integer, db.ForeignKey('tasks.id'))
+    task = db.relationship('Tasks')

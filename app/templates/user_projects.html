@@ -1,5 +1,5 @@
 {% extends "main_navbar.html" %}
-{% from "macros.html" import project, timeline_el, add_project_form %}
+{% from "macros.html" import project, timeline_el, add_project_form, blank_time_el %}
 {% block title %}
     {{ title }}
 {% endblock %}
@@ -15,21 +15,13 @@
                 <div class="page-title">
                     <h4><i class="icon-user position-left"></i> <span class="text-semibold">{{ title }}</span></h4>
 
-                    <ul class="breadcrumb position-right">
-                        <li class="active">{{ title }}</li>
-                        <li><a href="/dashboard">Все тикеты</a></li>
-                    </ul>
+{#                    <ul class="breadcrumb position-right">#}
+{#                        <li class="active">{{ title }}</li>#}
+{#                        <li><a href="/dashboard">Все тикеты</a></li>#}
+{#                    </ul>#}
                     <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
 
                 <div class="heading-elements">
-                    <div class="heading-btn-group">
-                        <a href="#" class="btn btn-link btn-float has-text"><i
-                                class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
-                        <a href="#" class="btn btn-link btn-float has-text"><i class="icon-calculator text-primary"></i>
-                            <span>Invoices</span></a>
-                        <a href="#" class="btn btn-link btn-float has-text"><i class="icon-calendar5 text-primary"></i>
-                            <span>Schedule</span></a>
-                    </div>
                 </div>
             </div>
             <!-- /header content -->
@@ -44,34 +36,42 @@
 
                 <div class="navbar-collapse collapse" id="navbar-filter">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#activity" data-toggle="tab"><i
-                                class="icon-menu7 position-left"></i> Activity</a></li>
-                        <li><a href="#schedule" data-toggle="tab"><i class="icon-calendar3 position-left"></i> Schedule
-                            <span class="badge badge-success badge-inline position-right">32</span></a></li>
-                        <li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> Settings</a>
+                        <li class="active"><a href="#projects_list" data-toggle="tab"><i
+                                class="icon-menu7 position-left"></i> Список проектов
+                            {% if projects | length > 0 %}
+                                <span class="badge badge-success badge-inline position-right">{{ projects | length }}</span>
+                            {% endif %}
+                        </a></li>
+                        <li><a href="#tasks" data-toggle="tab"><i class="icon-task position-left"></i> Все задания
+                            <span class="badge badge-success badge-inline position-right">{# TICKETS COUNT #}</span></a>
+                        </li>
+                        <li><a href="#" class="text-muted" data-toggle="tab"><i
+                                class="icon-bubble-notification position-left"></i>Уведомления
+                            <span class="badge badge-info badge-inline position-right">2</span></a></li>
+                        <li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> Настройки</a>
                         </li>
                     </ul>
 
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
                             <li><a href="#" data-toggle="modal" data-target="#modal_default"><i
-                                    class="add-project icon-stack-text position-left"></i>Добавить проект</a>
+                                    class="add-project  icon-add position-left"></i>Добавить проект</a>
                             </li>
-                            <li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>
-                            <li><a href="#"><i class="icon-images3 position-left"></i> Photos</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i>
-                                    <span class="visible-xs-inline-block position-right"> Options</span> <span
-                                            class="caret"></span></a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
-                                    <li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
-                                    <li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
-                                    <li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
-                                </ul>
-                            </li>
+                            {#                            <li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>#}
+                            {#                            <li><a href="#"><i class="icon-images3 position-left"></i> Photos</a></li>#}
+                            {#                            <li class="dropdown">#}
+                            {#                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i>#}
+                            {#                                    <span class="visible-xs-inline-block position-right"> Options</span> <span#}
+                            {#                                            class="caret"></span></a>#}
+                            {#                                <ul class="dropdown-menu dropdown-menu-right">#}
+                            {#                                    <li><a href="#"><i class="icon-image2"></i> Update cover</a></li>#}
+                            {#                                    <li><a href="#"><i class="icon-clippy"></i> Update info</a></li>#}
+                            {#                                    <li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>#}
+                            {#                                    <li class="divider"></li>#}
+                            {#                                    <li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>#}
+                            {#                                    <li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>#}
+                            {#                                </ul>#}
+                            {#                            </li>#}
                         </ul>
                     </div>
                 </div>
@@ -90,102 +90,24 @@
                 <div class="col-lg-9">
                     <div class="tabbable">
                         <div class="tab-content">
-                            <div class="tab-pane fade in active" id="activity">
+                            <div class="tab-pane fade in active" id="projects_list">
 
                                 <!-- Timeline -->
                                 <div class="timeline timeline-left content-group">
                                     <div class="timeline-container">
 
                                         <!-- Sales stats -->
-                                        {%  for proj in projects %}
-                                            {{ timeline_el(user, project(proj   )) }}
+                                        {% if not projects %}
+                                            {{ timeline_el(None, blank_time_el()) }}
+                                        {% endif %}
+                                        {% for proj in projects %}
+                                            {{ timeline_el(user, project(proj)) }}
                                         {% endfor %}
 
-                                        {{ timeline_el(None, project(None)) }}
-                                        {{ timeline_el(None, project(None)) }}
+                                        {#                                        {{ timeline_el(None, project(None)) }}#}
+                                        {#                                        {{ timeline_el(None, project(None)) }}#}
                                         <!-- /sales stats -->
 
-
-                                        <!-- Blog post -->
-                                        <div class="timeline-row">
-                                            <div class="timeline-icon">
-                                                <img src="" alt="">
-                                            </div>
-
-                                            <div class="panel panel-flat timeline-content">
-                                                <div class="panel-heading">
-                                                    <h6 class="panel-title">Himalayan sunset<a
-                                                            class="heading-elements-toggle"><i
-                                                            class="icon-more"></i></a></h6>
-                                                    <div class="heading-elements">
-                                                        <span class="heading-text"><i
-                                                                class="icon-checkmark-circle position-left text-success"></i> 49 minutes ago</span>
-                                                        <ul class="icons-list">
-                                                            <li class="dropdown">
-                                                                <a href="#" class="dropdown-toggle"
-                                                                   data-toggle="dropdown">
-                                                                    <i class="icon-arrow-down12"></i>
-                                                                </a>
-
-                                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                                    <li><a href="#"><i class="icon-user-lock"></i> Hide
-                                                                        user posts</a></li>
-                                                                    <li><a href="#"><i class="icon-user-block"></i>
-                                                                        Block user</a></li>
-                                                                    <li><a href="#"><i class="icon-user-minus"></i>
-                                                                        Unfollow user</a></li>
-                                                                    <li class="divider"></li>
-                                                                    <li><a href="#"><i class="icon-embed"></i> Embed
-                                                                        post</a></li>
-                                                                    <li><a href="#"><i class="icon-blocked"></i> Report
-                                                                        this post</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                                <div class="panel-body">
-                                                    <a href="#" class="display-block content-group">
-                                                        <img src="" class="img-responsive content-group" alt="">
-                                                    </a>
-
-                                                    <h6 class="content-group">
-                                                        <i class="icon-comment-discussion position-left"></i>
-                                                        Comment from <a href="#">Jason Ansley</a>:
-                                                    </h6>
-
-                                                    <blockquote>
-                                                        <p>When suspiciously goodness labrador understood rethought
-                                                            yawned grew piously endearingly inarticulate oh goodness
-                                                            jeez trout distinct hence cobra despite taped laughed the
-                                                            much audacious less inside tiger groaned darn stuffily
-                                                            metaphoric unihibitedly inside cobra.</p>
-                                                        <footer>Jason, <cite title="Source Title">10:39 am</cite>
-                                                        </footer>
-                                                    </blockquote>
-                                                </div>
-
-                                                <div class="panel-footer panel-footer-transparent"><a
-                                                        class="heading-elements-toggle"><i class="icon-more"></i></a>
-                                                    <div class="heading-elements">
-                                                        <ul class="list-inline list-inline-condensed heading-text">
-                                                            <li><a href="#" class="text-default"><i
-                                                                    class="icon-eye4 position-left"></i> 438</a></li>
-                                                            <li><a href="#" class="text-default"><i
-                                                                    class="icon-comment-discussion position-left"></i>
-                                                                71</a></li>
-                                                        </ul>
-
-                                                        <span class="heading-btn pull-right">
-																	<a href="#" class="btn btn-link">Read post <i
-                                                                            class="icon-arrow-right14 position-right"></i></a>
-																</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /blog post -->
                                     </div>
                                 </div>
                                 <!-- /timeline -->
@@ -193,7 +115,7 @@
                             </div>
 
 
-                            <div class="tab-pane fade" id="schedule">
+                            <div class="tab-pane fade" id="tasks">
 
                                 <!-- Available hours -->
                                 <div class="panel panel-flat">
@@ -577,7 +499,7 @@
                     <!-- User thumbnail -->
                     <div class="thumbnail">
                         <div class="thumb thumb-rounded thumb-slide">
-                            <img src="{{ user.avatar_url }}" alt="">
+                            <img src="{{ user.avatar.path }}" alt="">
                             <div class="caption">
 										<span>
 											<a href="#" class="btn bg-success-400 btn-icon btn-xs"
@@ -662,14 +584,14 @@
 
                             <div class="form-group">
                                 <label>Наименование компании:</label>
-                                <input id="companyName" type="text" class="form-control" maxlength="25" minlength="4"
-                                       name="companyName" placeholder="Наименование компании">
+                                <input id="company_name" type="text" class="form-control" maxlength="25" minlength="4"
+                                       name="company_name" placeholder="Наименование компании">
                             </div>
                             {#TODO select#}
                             <div class="form-group">
                                 <label>Местоположение компании:</label>
-                                <input id="companyLocation" class="form-control" type="text" maxlength="25"
-                                       minlength="4" name="companyLocation" placeholder="Местоположение">
+                                <input id="company_location" class="form-control" type="text" maxlength="25"
+                                       minlength="4" name="company_location" placeholder="Местоположение">
                             </div>
                             <div class="form-group">
                                 <label>Ссылка на компанию:</label>
@@ -680,7 +602,7 @@
                             <div class="form-group">
                                 <label>Аватар:</label>
                                 <input id="avatar" type="file" name="avatar" class="file">
-{#                                       accept=".gif, .png, .jpg, .jpeg">#}
+                                {#                                       accept=".gif, .png, .jpg, .jpeg">#}
                             </div>
 
                             <div class="form-group">
