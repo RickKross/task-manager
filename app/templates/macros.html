@@ -1,18 +1,19 @@
-{% macro ticket(_id, name, date, state, priority="Normal", app="", description="", users=[]) %}
+{% macro ticket(task) %}
     <div class="col-md-6">
-        <div id="ticket_{{ _id }}" class="panel border-left-lg border-left-primary">
+        <div id="ticket_{{ task.id }}" class="panel border-left-lg border-left-primary">
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-8">
-                        <h6 class="no-margin-top"><a href="task_manager_detailed.html">#{{ _id }}. {{ name }}</a></h6>
-                        <p class="mb-15">{{ description }}</p>
+                        <h6 class="no-margin-top"><a href="task_manager_detailed.html">#{{ task.id }}. {{ task.name }}</a></h6>
+                        <p class="mb-15">{{ task.description }}</p>
                         {# default #}
-                        <img src="{{ url_for('static', filename='images/users/girl-placeholder.png') }}"
-                             class="img-circle img-xs" alt="">
-                        <img src="{{ url_for('static', filename='images/users/man-placeholder.png') }}"
-                             class="img-circle img-xs" alt="">
-                        <img src="{{ url_for('static', filename='images/users/woman-placeholder.png') }}"
-                             class="img-circle img-xs" alt="">
+{#                    TODO USERS#}
+{#                        <img src="{{ url_for('static', filename='images/users/girl-placeholder.png') }}"#}
+{#                             class="img-circle img-xs" alt="">#}
+{#                        <img src="{{ url_for('static', filename='images/users/man-placeholder.png') }}"#}
+{#                             class="img-circle img-xs" alt="">#}
+{#                        <img src="{{ url_for('static', filename='images/users/woman-placeholder.png') }}"#}
+{#                             class="img-circle img-xs" alt="">#}
                         {# end default #}
                         {% for user in users %}
                             <a href="#">
@@ -28,28 +29,29 @@
 
                     <div class="col-md-4">
                         <ul class="list task-details">
-                            <li>{{ date }}</li>
+                            <li>{{ task.date_create.strftime('%Y-%m-%d') }}</li>
                             <li class="dropdown">
-                                Priority: &nbsp;
+                                Приоритет: &nbsp;
                                 <a href="#" class="priority label dropdown-toggle"
-                                   data-toggle="dropdown">{{ priority|capitalize }}
+                                   data-toggle="dropdown">{{ task.priority.name|capitalize }}
 
                                     <ul class="chose-priority dropdown-menu dropdown-menu-right active">
+{#                                        TODO BY DB PRIORITY #}
                                         <li><a class="chooser" href="#"><span
-                                                class="highest status-mark position-left bg-danger"></span> Highest
-                                            priority</a></li>
+                                                class="Наивысший status-mark position-left bg-danger"></span> Наивысший
+                                            приоритет</a></li>
                                         <li><a class="chooser" href="#"><span
-                                                class="high status-mark position-left bg-info"></span> High
-                                            priority</a></li>
+                                                class="Высокий status-mark position-left bg-info"></span> Высокий
+                                            приоритет</a></li>
                                         <li><a class="chooser" href="#"><span
-                                                class="normal status-mark position-left bg-primary"></span> Normal
-                                            priority</a></li>
+                                                class="Средний status-mark position-left bg-primary"></span> Средний
+                                            приоритет</a></li>
                                         <li><a class="chooser" href="#"><span
-                                                class="low status-mark position-left bg-success"></span> Low
-                                            priority</a></li>
+                                                class="Низкий status-mark position-left bg-success"></span> Низкий
+                                            приоритет</a></li>
                                     </ul>
                             </li>
-                            <li><a href="#">Eternity app</a></li>
+                            <li><a href="#">{{ task.release.project.name }} |{{ task.release.name }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -58,14 +60,15 @@
             <div class="panel-footer panel-footer-condensed"><a class="heading-elements-toggle"><i
                     class="icon-more"></i></a><a class="heading-elements-toggle"><i class="icon-more"></i></a>
                 <div class="heading-elements">
-                    <span class="heading-text">Due: <span class="text-semibold">23 hours</span></span>
+{#                    <span class="heading-text">Due: <span class="text-semibold">23 hours</span></span>#}
 
                     <ul class="list-inline list-inline-condensed heading-text pull-right">
                         <li class="dropdown">
-                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown">Open
+                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown">{{ task.state.name|capitalize }}
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu dropdown-menu-right active">
-                                <li class="active"><a href="#">{{ state|capitalize }}</a></li>
+                                <li class="active"><a href="#">{{ task.state.name|capitalize }}</a></li>
+{#                                TODO STATES FROM DB#}
                                 <li><a href="#">On hold</a></li>
                                 <li><a href="#">Resolved</a></li>
                                 <li><a href="#">Closed</a></li>
@@ -80,6 +83,7 @@
                             <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
                                     class="icon-menu7"></i> <span class="caret"></span></a>
                             <ul class="dropdown-menu dropdown-menu-right">
+{#                                TODO FUNCTIONS#}
                                 <li><a href="#"><i class="icon-alarm-add"></i> Check in</a></li>
                                 <li><a href="#"><i class="icon-attachment"></i> Attach screenshot</a>
                                 </li>
@@ -96,11 +100,11 @@
     </div>
     <script>
         $(document).ready(function (e) {
+{#            TODO REMAKE SCRIPT#}
 
+            var $root = $('#ticket_{{ task.id }}');
 
-            var $root = $('#ticket_{{ _id }}');
-
-            var priority = 0 || '{{ priority|capitalize }}';
+            var priority = 0 || '{{ task.priority.name |capitalize }}';
 
             function change_priority(newvalue) {
 
@@ -108,10 +112,10 @@
 
                 var $priority = $root.find('.priority:first'),
                     prior_class = {
-                        'Highest': '-danger',
-                        'High': '-info',
-                        'Normal': '-primary',
-                        'Low': '-success'
+                        'Наивысший': '-danger',
+                        'Высокий': '-info',
+                        'Средний': '-primary',
+                        'Низкий': '-success'
                     };
 
                 $.each(prior_class, function (_, v) {
@@ -129,15 +133,15 @@
                 return true;
             }
 
-            $root.find('.chose-priority li span.highest').parents('a:first').data("priority", 'Highest');
-            $root.find('.chose-priority li span.high').parents('a:first').data("priority", 'High');
-            $root.find('.chose-priority li span.normal').parents('a:first').data("priority", 'Normal');
-            $root.find('.chose-priority li span.low').parents('a:first').data("priority", 'Low');
+            $root.find('.chose-priority li span.Наивысший').parents('a:first').data("priority", 'Наивысший');
+            $root.find('.chose-priority li span.Высокий').parents('a:first').data("priority", 'Высокий');
+            $root.find('.chose-priority li span.Средний').parents('a:first').data("priority", 'Средний');
+            $root.find('.chose-priority li span.Низкий').parents('a:first').data("priority", 'Низкий');
 
             console.log(priority);
             change_priority(priority);
 
-            $root.find('.{{ priority|lower }}').parents('li:first').addClass('active');
+            $root.find('.{{ task.priority.name |lower }}').parents('li:first').addClass('active');
 
             $root.find('.chose-priority li').click(function () {
                 console.log($(this).find('a.chooser').data('priority'));
@@ -250,29 +254,17 @@
                             {{ project_el.description | safe if project_el else "" }}
                         </div>
                         <div class="panel-footer">
-                            <span class="heading-text">Active user:</span>
+
                             <ul class="heading-thumbnails text-center">
                                 <li>
                                     <a class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"><i
                                             class="icon-person"></i></a>
-
                                     <span class="badge bg-danger">5</span>
                                 </li>
                                 <li>
-                                    <a class="btn border-success text-success btn-flat btn-rounded btn-xs valign-text-bottom">LOW</a>
+                                    <a class="btn border-success text-success btn-flat btn-rounded btn-xs valign-text-bottom"><i
+                                            class="icon-task"></i></a>
                                     <span class="badge bg-danger">1</span>
-                                </li>
-                                <li>
-                                    <a class="btn border-primary text-primary btn-flat btn-rounded btn-xs valign-text-bottom">NORMAL</a>
-                                    <span class="badge bg-danger">2</span>
-                                </li>
-                                <li>
-                                    <a class="btn border-info text-info btn-flat btn-rounded btn-xs valign-text-bottom">HIGH</a>
-                                    <span class="badge bg-danger">3</span>
-                                </li>
-                                <li>
-                                    <a class="btn border-danger text-danger btn-flat btn-rounded btn-xs valign-text-bottom">HIGHEST</a>
-                                    <span class="badge bg-danger">4</span>
                                 </li>
 
                             </ul>

@@ -44,7 +44,7 @@ def get_state():
 
 
 def get_user():
-    if session.get('user') and session.get('user')['login']:
+    if session.get('user') and session.get('user')['login'] or g.user and g.user.login:
         return None
 
     if session.get('token'):
@@ -54,7 +54,7 @@ def get_user():
 
             user = Users.query.filter_by(id=r['id']).first()
             if user:
-                session['user'] = user.as_dict()
+                g.user = user
                 return None
             else:
                 myprint(r['avatar_url'], color=35)
@@ -68,7 +68,7 @@ def get_user():
                                     api_url=r['url'],
                                     github_url=r['html_url'],
                                     avatar=file)
-                session['user'] = user.as_dict()
+                g.user = user
                 session['user_need_password'] = {user.id: True}
                 myprint(url_for('auth_set_password'), color=34)
                 return url_for('auth_set_password')

@@ -2,8 +2,9 @@ from hashlib import sha512
 
 from flask import session
 
-from app import app
+from app import app, g
 from app.models import Users
+from app.utils import myprint
 
 
 def handle_login(data):
@@ -27,10 +28,11 @@ def handle_register(data):
 
     if login and password and email:
         try:
-            user = Users.create(login, password, email)
+            user = Users.create(login, password, email=email)
+            g.s.commit()
             if user:
-                session['user'] = user.__dict__
+                session['user'] = user.as_dict()
                 return True
-        except:
-            pass
+        except Exception as e:
+            myprint(e, color=35)
     return False

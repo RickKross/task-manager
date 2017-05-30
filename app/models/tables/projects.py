@@ -82,8 +82,8 @@ class Tasks(db.Model):
     priority_id = db.Column(Integer, db.ForeignKey('task_prior.id'))
     priority = db.relationship('TaskPrior', backref='tasks')
 
-    creator_id = db.Column(Integer, db.ForeignKey('users.id'))
-    creator = db.relationship('Users', backref='tasks')
+    creator_id = db.Column(Integer, db.ForeignKey('users.id'), default=g.user.id if g.user else None)
+    creator = db.relationship('Users')
 
     def __init__(self, name, **kwargs):
         self.name = name
@@ -93,6 +93,21 @@ class Tasks(db.Model):
 
         g.s.add(self)
         g.s.commit()
+
+    @staticmethod
+    def create(name, **kwargs):
+        task = Tasks(name, **kwargs)
+        g.scommit()
+        if task and task.id:
+            if 'creator_id' in kwargs.keys():
+                TaskUser.create(task=task, user_id=kwargs['creator_id'])
+            elif 'creator' in kwargs.keys():
+                TaskUser.create(task=task, user=kwargs['creator'])
+            elif g.user:
+                TaskUser.create(task=task, user=g.user)
+        g.s.commit()
+
+        return task
 
 
 class TaskStates(db.Model):
@@ -125,7 +140,7 @@ class TaskUser(db.Model):
     task = db.relationship('Tasks')
 
     user_id = db.Column(Integer, db.ForeignKey('users.id'), nullable=False)
-    user = db.relationship('Users', backref='tickets')
+    user = db.relationship('Users', backref='user_tasks')
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -133,6 +148,14 @@ class TaskUser(db.Model):
 
         g.s.add(self)
         g.s.commit()
+
+    @staticmethod
+    def create(**kwargs):
+        tu = TaskUser.query.filter_by(**kwargs).first()
+        if not tu:
+            tu = TaskUser(**kwargs)
+            g.s.commit()
+        return tu
 
 
 class Comments(db.Model):
@@ -160,7 +183,7 @@ class Comments(db.Model):
 
 class CommentsFiles(db.Model):
     __tablename__ = 'comments_files'
-    
+
     id = Column(Integer, primary_key=True)
 
     comment_id = db.Column(Integer, db.ForeignKey('comments.id'))

@@ -4,6 +4,7 @@ from functools import wraps
 from flask import redirect, session, url_for
 
 from app.controllers.git_api_controller import get_user
+from app.utils import myprint
 
 
 def d(v, color=30, end='\n'):

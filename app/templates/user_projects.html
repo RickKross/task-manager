@@ -37,12 +37,12 @@
                 <div class="navbar-collapse collapse" id="navbar-filter">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#projects_list" data-toggle="tab"><i
-                                class="icon-menu7 position-left"></i> Список проектов
+                                class="icon-menu7 position-left"></i> Мои проекты
                             {% if projects | length > 0 %}
                                 <span class="badge badge-success badge-inline position-right">{{ projects | length }}</span>
                             {% endif %}
                         </a></li>
-                        <li><a href="#tasks" data-toggle="tab"><i class="icon-task position-left"></i> Все задания
+                        <li><a href="#tasks" data-toggle="tab"><i class="icon-task position-left"></i> Мои задания
                             <span class="badge badge-success badge-inline position-right">{# TICKETS COUNT #}</span></a>
                         </li>
                         <li><a href="#" class="text-muted" data-toggle="tab"><i
@@ -499,7 +499,16 @@
                     <!-- User thumbnail -->
                     <div class="thumbnail">
                         <div class="thumb thumb-rounded thumb-slide">
+                            {% if user.avatar %}
                             <img src="{{ user.avatar.path }}" alt="">
+                            <div class="caption">
+										<span>
+											<a href="#" class="btn bg-success-400 btn-icon btn-xs"
+                                               data-popup="lightbox"><i class="icon-plus2"></i></a>
+										</span>
+                            </div>
+                                {% else %}
+                                <img src="{{ url_for('static', filename='images/users/man-placeholder.png') }}" alt="">
                             <div class="caption">
 										<span>
 											<a href="#" class="btn bg-success-400 btn-icon btn-xs"
@@ -508,15 +517,16 @@
                                                class="btn bg-success-400 btn-icon btn-xs"><i class="icon-link"></i></a>
 										</span>
                             </div>
+                            {% endif %}
                         </div>
 
                         <div class="caption text-center">
                             <h6 class="text-semibold no-margin">{{ user.name }}</h6>
                             <ul class="icons-list mt-15">
-                                {#				                    	<li><a href="#" data-popup="tooltip" title="" data-original-title="Google Drive"><i class="icon-google-drive"></i></a></li>#}
-                                {#				                    	<li><a href="#" data-popup="tooltip" title="" data-original-title="Twitter"><i class="icon-twitter"></i></a></li>#}
+                                {% if user.github_url %}
                                 <li><a href="{{ user.github_url }}" data-popup="tooltip" title=""
                                        data-original-title="Github"><i class="icon-github"></i></a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -524,27 +534,24 @@
 
 
                     <!-- Navigation -->
-                    <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">Navigation<a class="heading-elements-toggle"><i
-                                    class="icon-more"></i></a></h6>
-                            <div class="heading-elements">
-                                <a href="#" class="heading-text">See all →</a>
-                            </div>
-                        </div>
-
-                        <div class="list-group no-border no-padding-top">
-                            <a href="#" class="list-group-item"><i class="icon-user"></i> My profile</a>
-                            <a href="#" class="list-group-item"><i class="icon-cash3"></i> Balance</a>
-                            <a href="#" class="list-group-item"><i class="icon-tree7"></i> Connections <span
-                                    class="badge bg-danger pull-right">29</span></a>
-                            <a href="#" class="list-group-item"><i class="icon-users"></i> Friends</a>
-                            <div class="list-group-divider"></div>
-                            <a href="#" class="list-group-item"><i class="icon-calendar3"></i> Events <span
-                                    class="badge bg-teal-400 pull-right">48</span></a>
-                            <a href="#" class="list-group-item"><i class="icon-cog3"></i> Account settings</a>
-                        </div>
-                    </div>
+{#                    <div class="panel panel-flat">#}
+{#                        <div class="panel-heading">#}
+{#                            <h6 class="panel-title">Navigation<a class="heading-elements-toggle"><i#}
+{#                                    class="icon-more"></i></a></h6>#}
+{#                            <div class="heading-elements">#}
+{#                                <a href="#" class="heading-text">See all →</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="list-group no-border no-padding-top">#}
+{#                            <a href="#" class="list-group-item"><i class="icon-user"></i> My profile</a>#}
+{#                            <a href="#" class="list-group-item"><i class="icon-cash3"></i> Balance</a>#}
+{#                            <a href="#" class="list-group-item"><i class="icon-tree7"></i> Connections <span#}
+{#                                    class="badge bg-danger pull-right">29</span></a>#}
+{#                            <a href="#" class="list-group-item"><i class="icon-users"></i> Friends</a>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
                     <!-- /navigation -->
                 </div>
             </div>
@@ -552,10 +559,10 @@
 
 
             <!-- Footer -->
-            <div class="footer text-muted">
-                © 2015. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov"
-                                                                    target="_blank">Eugene Kopyov</a>
-            </div>
+{#            <div class="footer text-muted">#}
+{#                © 2015. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov"#}
+{#                                                                    target="_blank">Eugene Kopyov</a>#}
+{#            </div>#}
             <!-- /footer -->
 
         </div>
