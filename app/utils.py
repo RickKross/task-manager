@@ -5,8 +5,17 @@ class A(dict):
     def __setitem__(self, key, item):
         self.__dict__[key] = item
 
+    def __setattr__(self, key, value):
+        self.__dict__[key] = value
+
     def __getitem__(self, key):
         return self.__dict__[key]
+
+    def __getattr__(self, key):
+        if key in self.__dict__:
+            return self.__dict__[key]
+        else:
+            return A()
 
     def __repr__(self):
         return repr(self.__dict__)
