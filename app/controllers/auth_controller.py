@@ -4,7 +4,6 @@ from flask import session
 
 from app import app, g
 from app.models import Users
-from app.utils import myprint
 
 
 def handle_login(data):
@@ -34,5 +33,5 @@ def handle_register(data):
                 session['user'] = user.as_dict()
                 return True
         except Exception as e:
-            myprint(e, color=35)
+            app.d(e, color=35)
     return False

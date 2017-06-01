@@ -1,20 +1,13 @@
-import pprint
 from functools import wraps
 
 from flask import redirect, session, url_for
 
+from app import g
 from app.controllers.git_api_controller import get_user
-from app.utils import myprint
-
-
-def d(v, color=30, end='\n'):
-    print("\033[1;%sm" % color, end=end)
-    pprint.pprint(v)
-    print('\033[1;37m ', end=end)
 
 
 def is_logged():
-    if session.get('token') is not None or session.get('user') is not None:
+    if session.get('token') is not None or session.get('user') is not None or g.user is not None:
         return True
     else:
         return False
@@ -27,7 +20,7 @@ def login_required(func):
             return func(*args, **kwargs)
         else:
             # FIXME 403?
-            return redirect(url_for('root'))
+            return redirect(url_for('logout'))
 
     return wrapper
 
@@ -35,10 +28,7 @@ def login_required(func):
 def init_user(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        dest = get_user()
-        if dest:
-            return redirect(dest)
-        else:
-            return func(*args, **kwargs)
+        get_user()
+        return func(*args, **kwargs)
 
     return wrapper

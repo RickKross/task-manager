@@ -11,7 +11,7 @@
                         class="text-semibold">{{title}}</span></h4>
 
                 <ul class="breadcrumb position-right">
-                    <li><a href="/user/{{ user.login }}">Проекты</a></li>
+                    <li><a href="/user/{{ user.login }}">Профиль</a></li>
                     <li class="active">{{title}}</li>
                 </ul>
                 <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
@@ -70,7 +70,7 @@
                     <td></td>
                     <td class="text-center"><span class="icon-watch2"></span></td>
                     <td><b>Начало дня</b></td>
-                    <td><input type="text" name="t[Start][0]" value="10:19" class="form-control width-60"></td>
+                    <td><input type="text" name="t[Start][0]" value="10:30" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[Start][1]" value="" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[Start][2]" value="" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[Start][3]" value="" class="form-control width-60"></td>
@@ -85,7 +85,7 @@
                     <td>Обеды\Перекусы</td>
 
 
-                    <td><input type="text" name="t[Food][0]" value="" class="form-control width-60"></td>
+                    <td><input type="text" name="t[Food][0]" value=00:30 class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[Food][1]" value="" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[Food][2]" value="" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[Food][3]" value="" class="form-control width-60"></td>
@@ -98,14 +98,32 @@
 
                 <tr>
                     <td>
-                        <div class="id">2557</div>
+                        <div class="id">1</div>
                     </td>
                     <td class="nowrap">
                     </td>
-                    <td><a href="/ticket/2557/">Окно создания корзины</a></td>
+                    <td><a href="/ticket/1/">Первое задание</a></td>
 
 
-                    <td><input type="text" name="t[2557][0]" value="00:01" class="form-control width-60"></td>
+                    <td><input type="text" name="t[2557][0]" value="04:00" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][1]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][2]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][3]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][4]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][5]" value="" class="form-control width-60"></td>
+                    <td><input type="text" disabled="" name="t[2557][6]" value="" class="form-control width-60"></td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <div class="id">2</div>
+                    </td>
+                    <td class="nowrap">
+                    </td>
+                    <td><a href="/ticket/2/">Второй тикет</a></td>
+
+
+                    <td><input type="text" name="t[2557][0]" value="04:00" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[2557][1]" value="" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[2557][2]" value="" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[2557][3]" value="" class="form-control width-60"></td>
@@ -122,7 +140,7 @@
                     <td><b>Окончание дня</b></td>
 
 
-                    <td><input type="text" name="t[End][0]" value="18:50" class="form-control width-60"></td>
+                    <td><input type="text" name="t[End][0]" value="19:00" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[End][1]" value="" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[End][2]" value="" class="form-control width-60"></td>
                     <td><input type="text" disabled="" name="t[End][3]" value="" class="form-control width-60"></td>
@@ -181,7 +199,14 @@
             <button class="btn bg-main legitRipple">Сохранить</button>
         </form>
         <br>
-        <a href="?time=Y&amp;d=0&amp;action=table&amp;blank=1" role="button" class="btn btn-default legitRipple">Выгрузить
-            табель</a>
+        <form action="{{ url_for('calendar') }}" method="POST">
+            <input style="display: none;" name="action" value="export">
+            <input style="display: none;" name="d" value="0">
+            <button href="#" type="submit" class="btn btn-default legitRipple">Выгрузить
+            табель</button>
+        </form>
+
     </div>
+
+
 {% endblock %}

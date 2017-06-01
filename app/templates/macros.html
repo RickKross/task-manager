@@ -30,7 +30,7 @@
                     <div class="col-md-4">
                         <ul class="list task-details">
                             <li>{{ task.date_create.strftime('%Y-%m-%d') }}</li>
-                            <li class="dropdown">
+                            <li class="dropdown" style="white-space: nowrap;">
                                 Приоритет: &nbsp;
                                 <a href="#" class="priority label dropdown-toggle"
                                    data-toggle="dropdown">{{ task.priority.name|capitalize }}
@@ -51,7 +51,7 @@
                                             приоритет</a></li>
                                     </ul>
                             </li>
-                            <li><a href="#">{{ task.release.project.name }} |{{ task.release.name }}</a></li>
+                            <li style="white-space: nowrap"><a href="#">{{ task.release.project.name }} |{{ task.release.name }}</a></li>
                         </ul>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template, url_for
 from flask import session
 
 from app import app
-from app.controllers.base_controller import is_logged
+from app.controllers.main_controller import is_logged
 view = Blueprint('view', __name__, static_folder='static', template_folder='templates')
 
 

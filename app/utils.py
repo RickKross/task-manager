@@ -60,10 +60,24 @@ class A(dict):
         return iter(self.__dict__)
 
 
-def myprint(*args, color=30, end='\n', separate=True):
+def d(*args, color=30, end='\n', separate=True):
     print("\033[1;%sm" % color, end=end)
     for arg in args:
         pprint.pprint(arg)
         if separate and len(args) > 1:
             print()
     print('\033[1;30m ', end=end)
+
+
+def i(num, default=0):
+    try:
+        return int(num)
+    except:
+        return default
+
+
+def f(num, default=0):
+    try:
+        return float(num)
+    except:
+        return default

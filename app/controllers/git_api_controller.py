@@ -3,14 +3,13 @@ from urllib.parse import urlencode, urlsplit, parse_qsl
 from uuid import uuid4
 
 import requests
-from flask import redirect
 from flask import session
 from flask import url_for
+from werkzeug.routing import RequestRedirect
 
 from app import g
 from app.models import Files
 from app.models.tables.users import Users
-from app.utils import myprint
 
 
 def oauth_request_user_url():
@@ -57,9 +56,7 @@ def get_user():
                 g.user = user
                 return None
             else:
-                myprint(r['avatar_url'], color=35)
                 file = Files.save(r['avatar_url'])
-                myprint(file.__dict__, color=31)
                 user = Users.create(id=r['id'],
                                     login=r['login'],
                                     password='',
@@ -70,8 +67,7 @@ def get_user():
                                     avatar=file)
                 g.user = user
                 session['user_need_password'] = {user.id: True}
-                myprint(url_for('auth_set_password'), color=34)
-                return url_for('auth_set_password')
+                raise RequestRedirect(url_for('auth_set_password'))
         else:
             # TODO err with http code
             pass

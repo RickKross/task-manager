@@ -9,10 +9,10 @@ from sqlalchemy import Integer
 from sqlalchemy import Text
 from sqlalchemy import VARCHAR
 
-from app import g, db, app
-from app.utils import myprint
+from app import g, db, app, A
+from app.models.structure.classes import Base
 
-__all__ = ['Files', 'Calendar']
+__all__ = ['Files', 'Calendar_el']
 
 
 def get_file_from_url(request_obj):
@@ -83,23 +83,31 @@ class Files(db.Model):
 
         if not hashed_file:
 
-            new_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            new_path = os.path.join(g.UPLOAD_FOLDER, filename)
             # new_path = url_for('static') + filename
             with open(new_path, 'wb') as f:
                 f.write(data)
             file = Files(new_path.split('app')[1], size, _hash)
             g.s.commit()
-            myprint(file.__dict__, color=32)
             return file
 
         else:
             return hashed_file
 
 
-class Calendar(db.Model):
+class Calendar_el(db.Model, Base):
+    _type = A(
+        Start=1,
+        End=2,
+        Food=3,
+        NotOffice=4
+    )
+
     __tablename__ = 'calendar'
 
     id = Column(Integer, primary_key=True)
+
+    type = Column(Integer, default=0, nullable=False)
 
     time = Column(Integer, nullable=False)
     date = Column(DATE, nullable=False)

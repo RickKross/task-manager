@@ -1,6 +1,7 @@
 from hashlib import sha512
 
 from sqlalchemy import Column
+from sqlalchemy import DATE
 from sqlalchemy import Integer
 from sqlalchemy import Text
 from sqlalchemy import VARCHAR
@@ -27,6 +28,8 @@ class Users(db.Model):
     github_url = Column(Text)
     api_url = Column(Text)
 
+    last_started_day = Column(DATE)
+
     avatar_id = Column(Integer, db.ForeignKey('files.id'))
     avatar = db.relationship('Files')
 
@@ -45,6 +48,9 @@ class Users(db.Model):
 
         g.s.add(self)
         g.s.commit()
+
+    def __str__(self):
+        return self.name or self.login
 
     @staticmethod
     def create(login, password, **kwargs):
