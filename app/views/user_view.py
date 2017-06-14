@@ -61,8 +61,6 @@ def profile(login):
 @init_user
 @login_required
 def dashboard():
-    if not (g.user and g.user.name):
-        return redirect(url_for('logout'))
 
     tasks = g.s.query(Tasks).outerjoin(TaskUser, TaskUser.task_id == Tasks.id).filter(
         or_(TaskUser.user == g.user, Tasks.creator == g.user)).all()
@@ -71,43 +69,9 @@ def dashboard():
     return render_template('dash_content.html', **content)
 
 
-@app.route('/test1')
-def test():
-    app.d('hi there', color=31)
-    app.d(os.path.join(g.UPLOAD_FOLDER, 'logo_1.jpg'))
-    # return redirect(url_for('dashboard'))
-    return send_from_directory(directory=g.UPLOAD_FOLDER, filename='logo_1.jpg', as_attachment=True)
-
-
-@app.route('/calendar', methods=['GET', 'POST'])
+@app.route('/calendar/xls', methods=['POST'])
 @init_user
 @login_required
 def calendar():
-    if not (g.user and g.user.name):
-        return redirect(url_for('logout'))
-
-    today = datetime.date.today()
-
-    monday = today - datetime.timedelta(days=today.weekday())
-    sunday = monday + datetime.timedelta(days=6)
-    delta = app.i(request.values.get('d'))
-    app.d(delta, color=31)
-
-    weekday = -1 if delta else today.weekday()
-    day_started = (g.user.last_started_day - monday).days if g.user.last_started_day else -1
-    has_started_day = g.user.last_started_day
-
-    weekdays = [(monday + datetime.timedelta(days=x)).strftime('%a, %d %b').replace('май', 'мая') for x in range(0, 7)]
-    empty_days = get_empty_days(monday, weekday)
-    errors = autofinish_day()
-
-    if request.method == 'POST':
-        action = request.values.get('action')
-        if action == 'set_time':
-            set_time(request.values)
-        elif action == 'export':
-            app.d('export')
-            return send_file(export_timesheet(), attachment_filename="timesheet.xls", as_attachment=True)
-
-    content = {'title': "Календарь", 'user': g.user}
-    return render_template('calendar.html', **content)
+    return send_file(export_timesheet(),
+                     attachment_filename="timesheet.xls", as_attachment=True)

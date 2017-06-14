@@ -50,10 +50,6 @@ def autofinish_day():
     return ""
 
 
-def set_time(data):
-    pass
-
-
 def export_timesheet():
     import xlwt, xlrd
     from xlutils.copy import copy
@@ -63,44 +59,62 @@ def export_timesheet():
     today = datetime.date.today()
 
     def _getOutCell(outSheet, colIndex, rowIndex):
-        """ HACK: Extract the internal xlwt cell representation. """
+        """
+        Функция получения ячейки
+        :param outSheet: лист xls-таблицы
+        :param colIndex: номер столбца
+        :param rowIndex: номер строки
+        :return: ячейка таблицы
+        """
+        # получаем строку
         row = outSheet._Worksheet__rows.get(rowIndex)
         if not row: return None
 
+        # получаем ячейку в строке
         cell = row._Row__cells.get(colIndex)
         return cell
 
     def setOutCell(outSheet, col, row, value):
-        """ Change cell value without changing formatting. """
-        # HACK to retain cell style.
+        """
+        Функция установки значения в ячейку
+        :param outSheet: лист xls-таблицы
+        :param col: номер столбца
+        :param row: номер строки
+        :param value: значение, которое надо установить
+        """
+        # получаем начальное состояние ячейки
         previousCell = _getOutCell(outSheet, col, row)
-        # END HACK, PART I
 
+        # записываем значение
         outSheet.write(row, col, value)
 
-        # HACK, PART II
+        # восстанавливаем исходное форматирование
         if previousCell:
             newCell = _getOutCell(outSheet, col, row)
             if newCell:
                 newCell.xf_idx = previousCell.xf_idx
-                # END HACK
 
-    f = io.BytesIO()  # create a file-like object
+    # создаем буфер, в который потом сохраним наш xls
+    f = io.BytesIO()
 
     filename = 'timesheet.xls'
 
+    # открываем шаблон документа для выгрузки
     rb = xlrd.open_workbook(os.path.join(g.UPLOAD_FOLDER, filename), formatting_info=True)
     wb = copy(rb)
     ws = wb.get_sheet(0)
 
+    # устанавливаем имя пользователя
     setOutCell(ws, 3, 7, str(g.user))
 
     locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
+    # устанавливаем месяц и дату выгрузки отчета
     setOutCell(ws, 9, 7, today.strftime("%b.%y"))
     setOutCell(ws, 9, 9, datetime.date.today().strftime("%d.%m.%Y"))
 
     coord = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
 
+    # заполняем основное пространство таблицы
     for i in range(31):
         row = 14 + i
         setOutCell(ws, 10, row - 1, xlwt.Formula("SUM(D%s:H%s)" % (row, row)))
@@ -112,13 +126,15 @@ def export_timesheet():
         setOutCell(ws, col, 44, xlwt.Formula("SUM(%s14:%s44)" % (colL, colL)))
         setOutCell(ws, col, 45, xlwt.Formula("%s45/8" % colL))
 
-    projects = {}
-    projectTiming = {}
+    projects = {}  # список проектов, над которыми работал пользователь
+    projectTiming = {}  # время, затраченное на задачи по проекту
 
-    timeFrom = datetime.date(today.year, today.month, 1)
+    timeFrom = datetime.date(today.year, today.month, 1)  # дата начала месяца
     timeTo = datetime.date(today.year, 12, 31) if today.month == 12 else \
-        (datetime.date(today.year, today.month + 1, 1) - datetime.timedelta(days=1))
+        (datetime.date(today.year, today.month + 1, 1) - datetime.timedelta(days=1))  # дата конца месяца
 
+    # выбираем все записи учета времени из БД для данного пользователя в указанный выше промежуток времени
+    # и для каждой заносим информацию в соотв массив
     for t in Calendar_el.all(user=g.user, type=0).filter(Calendar_el.date <= timeTo).filter(
                     Calendar_el.date >= timeFrom):
         projectId = t.task.release.project.id
@@ -133,6 +149,7 @@ def export_timesheet():
         projectTiming[projectId][day] += t.time
 
     i = 0
+    # заносим данные по времени для каждого проекта в xls-таблицу
     for projectId, projectName in projects.items():
         col = 3 + i
         setOutCell(ws, col, 11, projectName)
@@ -144,8 +161,11 @@ def export_timesheet():
 
         i += 1
 
+    # сохраняем данные xls-документа в буфер
     wb.save(f)
 
+    # устанавливаем указатель в начало файла
     f.seek(0)
 
+    # возвращаем буфер
     return f

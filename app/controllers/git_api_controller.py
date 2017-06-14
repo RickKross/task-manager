@@ -13,24 +13,37 @@ from app.models.tables.users import Users
 
 
 def oauth_request_user_url():
+    """
+    Функция генерации url, при переходе по которому пользователю будет предложено авторизоваться в системе GitHub
+    """
+    # параметры запроса
     params = {
-        'client_id': g.CLIENT_ID,
+        'client_id': g.CLIENT_ID,  # id приложения (находится в настройках GitHub)
         'state': get_state(),
-        'scope': 'user, public_repo, repo, repo_deployment, delete_repo'
+        'scope': 'user, public_repo, repo, repo_deployment, delete_repo'  # разрешения доступа (данные пользователя, данные репозиториев и тп)
     }
     return 'https://github.com/login/oauth/authorize?' + urlencode(params)
 
 
 def oauth_exchange_code_to_token(code):
+    """
+    Функция обмена кода на токен доступа
+    :param code: код
+    :return: данные ответа от сервера GitHub, содержащие (при успешном обмене) токен доступа
+    """
     state = get_state()
+    # параметры запроса
     params = {
         'client_id': g.CLIENT_ID,
         'client_secret': g.CLIENT_SECRET,
         'state': state,
         'code': code
     }
+    # отправляем запрос к GitHub
     r = requests.post('https://github.com/login/oauth/access_token', data=params)
+    # если запрос успешен
     if r.status_code == 200:
+        # достаем словарь данных из запроса и возвращаем его
         data = dict(parse_qsl(urlsplit(r.text).path))
         return data
     else:
@@ -38,6 +51,10 @@ def oauth_exchange_code_to_token(code):
 
 
 def get_state():
+    """
+    Функция генерирует уникальное значение, использующееся для подтверждения обменов с GitHub:
+    если в процессе запроса вернулся не переданный state, что-то не так
+    """
     state = session['state'] = session.get('state', str(uuid4()))
     return state
 

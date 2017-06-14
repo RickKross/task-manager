@@ -7,7 +7,7 @@ from app.controllers.git_api_controller import get_user
 
 
 def is_logged():
-    if session.get('token') is not None or session.get('user') is not None or g.user is not None:
+    if session.get('token') is not None or session.get('user') is not None or (g.user is not None and g.user.name is not None):
         return True
     else:
         return False

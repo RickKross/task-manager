@@ -282,14 +282,14 @@
     </div>
     <script type="text/javascript">
         function dot_description() {
-            var $desc = $('.description'),
-                img_panel_height = $desc.closest('.row').find('.panel-image').outerHeight(),
-                header_height = $desc.siblings('.panel-heading').outerHeight(),
-                footer_height = $desc.siblings('.panel-footer').outerHeight(),
-                padding = 40,
-                height = Math.floor(img_panel_height - header_height - footer_height - padding);
-            $desc.height(height);
-            $desc.dotdotdot({
+            var $desc = $('.description'), //элемент описания
+                img_panel_height = $desc.closest('.row').find('.panel-image').outerHeight(), //ширина панели с изображением
+                header_height = $desc.siblings('.panel-heading').outerHeight(), //ширина заголовка
+                footer_height = $desc.siblings('.panel-footer').outerHeight(), //ширина нижней части
+                padding = 40, //отступ
+                height = Math.floor(img_panel_height - header_height - footer_height - padding); //рассчитанная ширина описания
+            $desc.height(height); //устанавливаем ширину элемента как рассчитанную выше
+            $desc.dotdotdot({ // применяем функцию dotdotdot суказанной шириной. функция сторонняя
                 ellipsis: '...',
                 wrap: 'word',
                 height: height

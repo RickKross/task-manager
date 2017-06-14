@@ -9,31 +9,36 @@ auth_view = Blueprint('auth_view', __name__, static_folder='static', template_fo
 
 @app.route('/auth', methods=['GET'])
 def auth_index():
-    if request.method == 'GET':
-        state = request.args.get('state')
-        if state in session.get('state', ''):
-            code = request.args.get('code')
-            data = oauth_exchange_code_to_token(code)
-            if data and data.get('access_token'):
-                session['token'] = data['access_token']
+    """
+    Функция обработки запросов с данными авторизации, пришедших с GitHub (адрес настраивается в GitHub)
+    """
+    state = request.args.get('state')
+    # проверяем ,что state текущего обмена у нас есть, а не пришел откуда-то с третьей стороны
+    if state in session.get('state', ''):
+        # получаем из запроса код и меняем его на токен доступа
+        code = request.args.get('code')
+        data = oauth_exchange_code_to_token(code)
+        # если токен есть, сохраняем его  в сессии и переходим на главный экран
+        if data and data.get('access_token'):
+            session['token'] = data['access_token']
+            return redirect(url_for('dashboard'))
 
-                return redirect(url_for('dashboard'))
-            else:
-                pass  # FIXME auth error
-                return render_template('auth.html', myvar='auth error')
-        else:
-            return render_template('auth.html', myvar='403')
+    # если что-то пошло не так, разлогиниваем пользователя
+    return redirect(url_for('logout'))
 
 
 @app.route('/auth/github')
 def auth_via_github():
+    """
+    При заходе на страницу '/auth/github' пользователя переадресует на GitHub для авторизации с помощью этого сервиса
+    """
     return redirect(oauth_request_user_url())
 
 
 @app.route('/auth/login', methods=['POST'])
 def auth_login():
-    status = handle_login(request.values)
-    if status:
+    # если авторизация успешна, переходим на гравный экран. иначе назад к авторизации
+    if handle_login(request.values):
         return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('root'))
@@ -41,8 +46,8 @@ def auth_login():
 
 @app.route('/auth/register', methods=['POST'])
 def auth_register():
-    status = handle_register(request.values)
-    if status:
+    # если авторизация успешна, переходим на гравный экран. иначе назад к регистрации
+    if handle_register(request.values):
         return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('root'))
