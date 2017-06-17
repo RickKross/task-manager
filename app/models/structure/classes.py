@@ -58,7 +58,6 @@ class Base(object):
         g.s.commit()
         return o
     
-    @classmethod
     def remove(self):
         g.s.delete(self)
         g.s.commit()
