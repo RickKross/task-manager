@@ -15,7 +15,7 @@ __all__ = ['Users', 'Groups']
 class Users(db.Model):
     __tablename__ = 'users'
 
-    avaible_columns = ['id', 'active', 'login', 'name', 'email', 'api_url', 'github_url', 'avatar_id']
+    available_columns = ['id', 'active', 'login', 'name', 'email', 'api_url', 'github_url', 'avatar_id']
 
     id = Column(Integer, primary_key=True)
     active = Column(TINYINT(1), nullable=False, default=0)
@@ -65,7 +65,7 @@ class Users(db.Model):
         g.s.commit()
 
     def as_dict(self):
-        return {k: getattr(self, k) for k in self.avaible_columns}
+        return {k: getattr(self, k) for k in self.available_columns}
 
 
 class Groups(db.Model):
