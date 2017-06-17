@@ -24,10 +24,17 @@ class UnicodeString(TypeDecorator, LargeBinary):
 class Base(object):
     __table_args__ = {'mysql_charset': 'utf8', 'mysql_engine': 'InnoDB'}
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, s=g.s, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        g.s.add(self)
-        g.s.commit()
+        
+        for k, v in kwargs:
+            try:
+                setattr(self, k, v)
+            except:
+                pass
+            
+        s.add(self)
+        s.commit()
 
     @classmethod
     def _all(cls, filter):
@@ -50,7 +57,8 @@ class Base(object):
         o = cls(**kwargs)
         g.s.commit()
         return o
-
+    
+    @classmethod
     def remove(self):
         g.s.delete(self)
         g.s.commit()
