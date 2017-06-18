@@ -16,18 +16,14 @@ class Users(db.Model):
     __tablename__ = 'users'
 
     available_columns = ['id', 'active', 'login', 'name', 'email', 'api_url', 'github_url', 'avatar_id']
-
     id = Column(Integer, primary_key=True)
     active = Column(TINYINT(1), nullable=False, default=0)
-
     login = Column(VARCHAR(50), nullable=False, unique=True)
     password_hash = Column(VARCHAR(256), nullable=False)
     email = Column(VARCHAR(256))
-
     name = Column(Text)
     github_url = Column(Text)
     api_url = Column(Text)
-
     last_started_day = Column(DATE)
 
     avatar_id = Column(Integer, db.ForeignKey('files.id'))
@@ -35,17 +31,12 @@ class Users(db.Model):
 
     def __init__(self, login, password, **kwargs):
         self.login = login
-
         password = sha512((password + login).encode()).hexdigest()
         password = sha512((password + app.config.get('SALT', '')).encode()).hexdigest()
-
         self.password_hash = password
-
         self.name = kwargs.pop('name', login)
-
         for k, v in kwargs.items():
             setattr(self, k, v)
-
         g.s.add(self)
         g.s.commit()
 
@@ -59,7 +50,6 @@ class Users(db.Model):
     def set_password(self, password):
         password = sha512((password + self.login).encode()).hexdigest()
         password = sha512((password + app.config.get('SALT', '')).encode()).hexdigest()
-
         self.password_hash = password
         g.s.add(self)
         g.s.commit()
