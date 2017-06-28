@@ -30,7 +30,9 @@ def auth_index():
 @app.route('/auth/github')
 def auth_via_github():
     """
-    При заходе на страницу '/auth/github' пользователя переадресует на GitHub для авторизации с помощью этого сервиса
+    При заходе на страницу '/auth/github' 
+    пользователя переадресует на GitHub для авторизации 
+    с помощью этого сервиса
     """
     return redirect(oauth_request_user_url())
 
