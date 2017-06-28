@@ -14,13 +14,16 @@ from app.models.tables.users import Users
 
 def oauth_request_user_url():
     """
-    Функция генерации url, при переходе по которому пользователю будет предложено авторизоваться в системе GitHub
+    Функция генерации url, при переходе по которому 
+    пользователю будет предложено авторизоваться в системе GitHub
     """
     # параметры запроса
     params = {
         'client_id': g.CLIENT_ID,  # id приложения (находится в настройках GitHub)
         'state': get_state(),
-        'scope': 'user, public_repo, repo, repo_deployment, delete_repo'  # разрешения доступа (данные пользователя, данные репозиториев и тп)
+        
+        # разрешения доступа (данные пользователя, данные репозиториев и тп)
+        'scope': 'user, public_repo, repo, repo_deployment, delete_repo'  
     }
     return 'https://github.com/login/oauth/authorize?' + urlencode(params)
 
